@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "join_requests",
+  "info": {
+    "singularName": "join-request",
+    "pluralName": "join-requests",
+    "displayName": "Join Request"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "details": {
+      "type": "text"
+    }
+  }
+}
