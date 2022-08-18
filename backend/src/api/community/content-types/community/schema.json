@@ -38,6 +38,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::suggestion.suggestion",
+      "private": true,
       "mappedBy": "community"
     }
   }
