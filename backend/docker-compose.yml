@@ -1,0 +1,15 @@
+version: "3.6"
+name: "decom"
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: decom
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5433:5432"
+volumes:
+  db_data:
