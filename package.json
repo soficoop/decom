@@ -1,0 +1,10 @@
+{
+  "name": "decom",
+  "version": "1.0.0",
+  "repository": "git@github.com:soficoop/decom.git",
+  "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "2.7.1"
+  }
+}
