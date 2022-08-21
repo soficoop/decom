@@ -36,10 +36,11 @@ function CommunitiesProvider({ children }: { children: JSX.Element }) {
     <CommunitiesContext.Provider
       value={{
         data: data?.communities?.data?.map(
-          (community: { attributes: Community; id: string }) => ({
-            ...community.attributes,
-            id: community.id,
-          })
+          (community: { attributes: Community; id: string }) =>
+            ({
+              ...community.attributes,
+              id: community.id,
+            } || [])
         ),
         loading,
       }}
