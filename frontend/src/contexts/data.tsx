@@ -7,12 +7,12 @@ import {
 import { createContext, useEffect, useState } from "react";
 import { apiUrl } from "../utils/constants";
 
-const DataContext = createContext<{
+const ApiContext = createContext<{
   password?: string;
   setPassword: (value: string) => void;
 }>({ setPassword: () => {} });
 
-function DataProvider({ children }: { children: JSX.Element }) {
+function ApiProvider({ children }: { children: JSX.Element }) {
   const [password, setPassword] = useState<string>();
   const [client, setClient] = useState<ApolloClient<NormalizedCacheObject>>(
     new ApolloClient({
@@ -37,11 +37,11 @@ function DataProvider({ children }: { children: JSX.Element }) {
 
   return (
     <ApolloProvider client={client}>
-      <DataContext.Provider value={{ password, setPassword }}>
+      <ApiContext.Provider value={{ password, setPassword }}>
         {children}
-      </DataContext.Provider>
+      </ApiContext.Provider>
     </ApolloProvider>
   );
 }
 
-export { DataContext, DataProvider };
+export { ApiContext, ApiProvider };
