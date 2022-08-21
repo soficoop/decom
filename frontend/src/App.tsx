@@ -6,6 +6,8 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material/styles";
 import { Button, Container, CssBaseline, Typography } from "@mui/material";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./views";
 
 function App() {
   const theme = createTheme({
@@ -27,6 +29,7 @@ function App() {
     components: {
       MuiButton: {
         defaultProps: {
+          variant: "contained",
           disableElevation: true,
         },
       },
@@ -46,10 +49,11 @@ function App() {
         <CssBaseline />
         <StyledThemeProvider theme={theme}>
           <Container maxWidth="xs">
-            <Typography variant="h1">קהילה זו מוגנת בסיסמא</Typography>
-            <Button variant="contained" color="primary">
-              דוגמה
-            </Button>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+              </Routes>
+            </BrowserRouter>
           </Container>
         </StyledThemeProvider>
       </MuiThemeProvider>
