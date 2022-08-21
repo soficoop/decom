@@ -5,11 +5,14 @@ import {
   createTheme,
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material/styles";
-import { Button, Container, CssBaseline, Typography } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./views";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { apiUrl } from "./utils/constants";
 
 function App() {
+  const client = new ApolloClient({ uri: apiUrl, cache: new InMemoryCache() });
   const theme = createTheme({
     palette: {
       primary: {
@@ -45,18 +48,20 @@ function App() {
   });
   return (
     <div className="App">
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <StyledThemeProvider theme={theme}>
-          <Container maxWidth="xs">
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Home />} />
-              </Routes>
-            </BrowserRouter>
-          </Container>
-        </StyledThemeProvider>
-      </MuiThemeProvider>
+      <ApolloProvider client={client}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <StyledThemeProvider theme={theme}>
+            <Container maxWidth="xs">
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                </Routes>
+              </BrowserRouter>
+            </Container>
+          </StyledThemeProvider>
+        </MuiThemeProvider>
+      </ApolloProvider>
     </div>
   );
 }
