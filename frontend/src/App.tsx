@@ -8,7 +8,7 @@ import {
 import { Container, CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./views";
-import { ApiProvider } from "./contexts";
+import { ApiProvider, CommunitiesProvider } from "./contexts";
 
 function App() {
   const theme = createTheme({
@@ -47,18 +47,20 @@ function App() {
   return (
     <div className="App">
       <ApiProvider>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <StyledThemeProvider theme={theme}>
-            <Container maxWidth="xs">
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                </Routes>
-              </BrowserRouter>
-            </Container>
-          </StyledThemeProvider>
-        </MuiThemeProvider>
+        <CommunitiesProvider>
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <StyledThemeProvider theme={theme}>
+              <Container maxWidth="xs">
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                  </Routes>
+                </BrowserRouter>
+              </Container>
+            </StyledThemeProvider>
+          </MuiThemeProvider>
+        </CommunitiesProvider>
       </ApiProvider>
     </div>
   );

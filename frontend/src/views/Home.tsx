@@ -1,11 +1,19 @@
 import { Button, Stack, Typography } from "@mui/material";
-import React from "react";
+import { useContext } from "react";
+import { CommunitiesContext } from "../contexts";
 
 export function Home() {
+  const { loading, data } = useContext(CommunitiesContext);
   return (
     <Stack>
-      <Typography variant="h1">קהילה זו מוגנת בסיסמא</Typography>
-      <Button>this is a test</Button>
+      {loading ? (
+        <Typography>Loading...</Typography>
+      ) : (
+        <Stack>
+          <Typography variant="h1">קהילה זו מוגנת בסיסמא</Typography>
+          <Button>this is a test</Button>
+        </Stack>
+      )}
     </Stack>
   );
 }
