@@ -7,7 +7,9 @@ export default ({ env }) => ({
       database: env("DATABASE_NAME", "decom"),
       user: env("DATABASE_USERNAME", "postgres"),
       password: env("DATABASE_PASSWORD", "postgrespassword"),
-      ssl: env.bool("DATABASE_SSL", false),
+      ssl: env.bool('DATABASE_SSL', true) && {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false),
+      },
     },
   },
 });
