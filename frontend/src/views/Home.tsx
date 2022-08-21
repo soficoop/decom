@@ -10,8 +10,11 @@ export function Home() {
         <Typography>Loading...</Typography>
       ) : (
         <Stack>
-          <Typography variant="h1">קהילה זו מוגנת בסיסמא</Typography>
-          <Button>this is a test</Button>
+          {data.map((community) => (
+            <Typography variant="h1" key={community.id}>
+              {community.name}
+            </Typography>
+          ))}
         </Stack>
       )}
     </Stack>

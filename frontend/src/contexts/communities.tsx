@@ -1,8 +1,13 @@
 import { gql, useQuery } from "@apollo/client";
 import { createContext } from "react";
 
+interface Community {
+  name: string;
+  id: string;
+}
+
 const CommunitiesContext = createContext<{
-  data: { name: string; id: string }[];
+  data: Community[];
   loading: boolean;
 }>({ data: [], loading: false });
 
@@ -28,7 +33,17 @@ function CommunitiesProvider({ children }: { children: JSX.Element }) {
     }
   `);
   return (
-    <CommunitiesContext.Provider value={{ data, loading }}>
+    <CommunitiesContext.Provider
+      value={{
+        data: data?.communities?.data?.map(
+          (community: { attributes: Community; id: string }) => ({
+            ...community.attributes,
+            id: community.id,
+          })
+        ),
+        loading,
+      }}
+    >
       {children}
     </CommunitiesContext.Provider>
   );
