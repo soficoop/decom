@@ -5,7 +5,7 @@ import {
   createTheme,
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material/styles";
-import { CssBaseline, Typography } from "@mui/material";
+import { Button, Container, CssBaseline, Typography } from "@mui/material";
 
 function App() {
   const theme = createTheme({
@@ -16,7 +16,22 @@ function App() {
       secondary: {
         main: "#011756",
       },
+      background: {
+        default: "#FCFDFF",
+        paper: "#FFF",
+      },
     },
+    shape: {
+      borderRadius: 16,
+    },
+    components: {
+      MuiButton: {
+        defaultProps: {
+          disableElevation: true,
+        },
+      },
+    },
+    direction: "rtl",
     typography: {
       fontFamily: "'Noto Sans Hebrew', sans-serif",
       h1: {
@@ -30,7 +45,12 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <StyledThemeProvider theme={theme}>
-          <Typography variant="h1">קהילה זו מוגנת בסיסמא</Typography>
+          <Container maxWidth="xs">
+            <Typography variant="h1">קהילה זו מוגנת בסיסמא</Typography>
+            <Button variant="contained" color="primary">
+              דוגמה
+            </Button>
+          </Container>
         </StyledThemeProvider>
       </MuiThemeProvider>
     </div>
