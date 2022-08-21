@@ -8,11 +8,9 @@ import {
 import { Container, CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./views";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { apiUrl } from "./utils/constants";
+import { DataProvider } from "./contexts";
 
 function App() {
-  const client = new ApolloClient({ uri: apiUrl, cache: new InMemoryCache() });
   const theme = createTheme({
     palette: {
       primary: {
@@ -48,7 +46,7 @@ function App() {
   });
   return (
     <div className="App">
-      <ApolloProvider client={client}>
+      <DataProvider>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <StyledThemeProvider theme={theme}>
@@ -61,7 +59,7 @@ function App() {
             </Container>
           </StyledThemeProvider>
         </MuiThemeProvider>
-      </ApolloProvider>
+      </DataProvider>
     </div>
   );
 }
