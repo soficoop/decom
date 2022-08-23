@@ -4,6 +4,8 @@ import { createContext } from "react";
 interface Community {
   name: string;
   id: string;
+  image: string;
+  description: string;
 }
 
 const CommunitiesContext = createContext<{
@@ -37,8 +39,9 @@ function CommunitiesProvider({ children }: { children: JSX.Element }) {
       value={{
         data:
           data?.communities?.data?.map(
-            (community: { attributes: Community; id: string }) => ({
+            (community: { attributes: any; id: string }) => ({
               ...community.attributes,
+              image: community.attributes.image?.data?.attributes?.url ?? "",
               id: community.id,
             })
           ) || [],

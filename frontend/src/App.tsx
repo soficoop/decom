@@ -11,13 +11,15 @@ import { Home } from "./views";
 import { ApiProvider, CommunitiesProvider } from "./contexts";
 
 function App() {
-  const theme = createTheme({
+  const secondaryColor = "#011756";
+  let theme = createTheme({
+    direction: "rtl",
     palette: {
       primary: {
         main: "#8BD4DD",
       },
       secondary: {
-        main: "#011756",
+        main: secondaryColor,
       },
       background: {
         default: "#FCFDFF",
@@ -28,6 +30,17 @@ function App() {
       borderRadius: 16,
     },
     components: {
+      MuiCard: {
+        variants: [
+          {
+            props: { variant: undefined },
+            style: {
+              boxShadow: "2px 2px 0px #000000",
+              border: "2px solid #011756",
+            },
+          },
+        ],
+      },
       MuiButton: {
         defaultProps: {
           variant: "contained",
@@ -35,12 +48,17 @@ function App() {
         },
       },
     },
-    direction: "rtl",
     typography: {
       fontFamily: "'Noto Sans Hebrew', sans-serif",
       h1: {
-        fontSize: "26px",
+        fontSize: "28px",
         fontWeight: "700",
+        color: secondaryColor,
+      },
+      h2: {
+        fontSize: "24px",
+        fontWeight: "700",
+        color: secondaryColor,
       },
     },
   });
