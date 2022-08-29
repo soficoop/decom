@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface Suggestion {
   id: number | undefined;
@@ -108,28 +108,32 @@ function SuggestionsProvider({ children }: { children: JSX.Element }) {
   const [selectedSuggestion, setSelectedSuggestion] = useState<
     Suggestion | undefined
   >();
-  const { data, loading } = useQuery(gql`
-    query {
-      suggestions {
-        data {
-          id
-          attributes {
-            content
-            score
-            upvotes
-            downvotes
-            image {
-              data {
-                attributes {
-                  url
+  const { selectedCommunity } = useContext(CommunitiesContext);
+  const { data, loading } = useQuery(
+    gql`
+      query suggestions($communityId: ID!) {
+        suggestions(filters: { community: { id: { eq: $communityId } } }) {
+          data {
+            id
+            attributes {
+              content
+              score
+              upvotes
+              downvotes
+              image {
+                data {
+                  attributes {
+                    url
+                  }
                 }
               }
             }
           }
         }
       }
-    }
-  `);
+    `,
+    { variables: { communityId: selectedCommunity?.id } }
+  );
 
   return (
     <SuggestionsContext.Provider

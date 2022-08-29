@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import decomtitle from "../assets/decom-title.svg";
 import rightarrow from "../assets/chevron-right.svg";
 import defaultcardimage from "../assets/defaultcardimage.svg";

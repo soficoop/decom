@@ -15,11 +15,9 @@ export function Home() {
             <Link
               to={`community/${community.id}`}
               style={{ textDecoration: "none" }}
-              key={community.name}
+              key={community.id}
             >
-              <Typography variant="h1" key={community.id}>
-                {community.name}
-              </Typography>
+              <Typography variant="h1">{community.name}</Typography>
             </Link>
           ))}
         </Stack>

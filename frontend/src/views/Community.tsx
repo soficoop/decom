@@ -1,48 +1,9 @@
 import { useContext, useEffect } from "react";
 import { CommunitiesContext } from "../contexts";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionCard } from "../components/SuggestionCard";
-import { Typography } from "@mui/material";
-import { ViewWrapper } from "../components/ViewWrapper";
-import { ContentWrapper } from "../components/ContentWrapper";
-const CommunityNameHeader = styled.div`
-  box-sizing: border-box;
-  position: absolute;
-  top: 5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 5rem;
-  background: #ffffff;
-  box-shadow: 0px -7px 16px rgba(0, 0, 0, 0.06);
-  border-radius: 32px 32px 0px 0px;
-  font-family: "Noto Sans Hebrew";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 38px;
-  color: #011756;
-`;
-
-const CommunityDescription = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  font-family: "Noto Sans Hebrew";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  text-align: center;
-  color: #011756;
-  padding: 0rem 1rem;
-  background: #ffffff;
-`;
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 
 const suggestions = [
   {
@@ -85,6 +46,7 @@ const suggestions = [
 ];
 
 export const Community = () => {
+  const theme = useTheme();
   const { loading, data, selectedCommunity, setSelectedCommunity } =
     useContext(CommunitiesContext);
   const { id } = useParams();
@@ -98,38 +60,48 @@ export const Community = () => {
   }, [id]);
   console.log(data);
 
-  const handleSuggestionClick = (id: string) => {
-    // setSelectedSuggestion();
-  };
-
   return (
-    <ViewWrapper>
+    <Stack>
       {selectedCommunity && (
         <>
           <TopHeaderTitleNav bg_image={selectedCommunity?.image} backTo={"/"} />
-          <CommunityNameHeader>{selectedCommunity?.name}</CommunityNameHeader>
-          <CommunityDescription>
-            {selectedCommunity?.description}
-          </CommunityDescription>
-          <ContentWrapper>
-            <Typography variant="h3">הצעות: {suggestions.length}</Typography>
-            {suggestions.map((v) => {
-              return (
-                <SuggestionCard
-                  id={v.id}
-                  title={v.title}
-                  content={v.content}
-                  image={v.image}
-                  score={v.score}
-                  upvotes={v.upvotes}
-                  downvotes={v.downvotes}
-                  // onClick={handleSuggestionClick}
-                />
-              );
-            })}
-          </ContentWrapper>
+          <Box
+            marginTop={-4}
+            borderRadius="32px 32px 0 0"
+            bgcolor={theme.palette.background.paper}
+          >
+            <Typography
+              variant="h2"
+              textAlign="center"
+              marginTop={3}
+              marginBottom={2}
+            >
+              {selectedCommunity?.name}
+            </Typography>
+            <Typography marginBottom={7}>
+              {selectedCommunity?.description}
+            </Typography>
+            <Stack paddingX={1}>
+              <Typography variant="h3">הצעות: {suggestions.length}</Typography>
+              {suggestions.map((v) => {
+                return (
+                  <SuggestionCard
+                    key={v.id}
+                    id={v.id}
+                    title={v.title}
+                    content={v.content}
+                    image={v.image}
+                    score={v.score}
+                    upvotes={v.upvotes}
+                    downvotes={v.downvotes}
+                    // onClick={handleSuggestionClick}
+                  />
+                );
+              })}
+            </Stack>
+          </Box>
         </>
       )}
-    </ViewWrapper>
+    </Stack>
   );
 };
