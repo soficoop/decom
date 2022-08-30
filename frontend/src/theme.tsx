@@ -26,8 +26,8 @@ export const theme = createTheme({
         {
           props: { variant: undefined },
           style: {
-            boxShadow: "2px 2px 0px #000000",
-            border: "2px solid #011756",
+            boxShadow: `2px 2px 0px ${mainBlackColor}`,
+            border: `2px solid ${secondaryColor}`,
           },
         },
         {

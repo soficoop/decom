@@ -23,30 +23,9 @@ function App() {
                 <BrowserRouter>
                   <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route
-                      path="community/:id"
-                      element={
-                        // <RequireAuth>
-                        <Community />
-                        // </RequireAuth>
-                      }
-                    />
-                    <Route
-                      path="suggestion/"
-                      element={
-                        // <RequireAuth>
-                        <Suggestion />
-                        // </RequireAuth>
-                      }
-                    />
-                    <Route
-                      path="new-suggestion/"
-                      element={
-                        // <RequireAuth>
-                        <NewSuggestion />
-                        // </RequireAuth>
-                      }
-                    />
+                    <Route path="community/:id" element={<Community />} />
+                    <Route path="suggestion/" element={<Suggestion />} />
+                    <Route path="new-suggestion/" element={<NewSuggestion />} />
                   </Routes>
                 </BrowserRouter>
               </Container>

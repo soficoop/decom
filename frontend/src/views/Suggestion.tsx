@@ -24,7 +24,7 @@ export const Suggestion = () => {
   return (
     <Stack>
       <TopHeaderTitleNav
-        bg_image={selectedSuggestion?.image}
+        bgImage={selectedSuggestion?.image}
         backTo={selectedCommunity ? "/community/" + selectedCommunity.id : "/"}
       />
       <Stack paddingX={1}>

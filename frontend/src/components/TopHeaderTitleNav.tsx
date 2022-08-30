@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
-import decomtitle from "../assets/decom-title.svg";
+import decomTitle from "../assets/decom-title.svg";
 import decomDarkTitle from "../assets/decom-dark-title.svg";
-import rightarrow from "../assets/chevron-right.svg";
-import defaultcardimage from "../assets/defaultcardimage.svg";
+import rightArrow from "../assets/chevron-right.svg";
+import defaultCardImage from "../assets/defaultcardimage.svg";
 interface HeaderImageAndNavProps {
-  bg_image: any;
+  bgImage: any;
 }
 
 const TopHeaderContainerSC = styled.div`
@@ -15,9 +15,9 @@ const TopHeaderContainerSC = styled.div`
   justify-content: space-between;
   align-items: start;
   ${(props: HeaderImageAndNavProps) =>
-    props.bg_image
-      ? "background-image:url(" + props.bg_image + ");"
-      : "background-image:url(" + defaultcardimage + ");"}
+    props.bgImage
+      ? "background-image:url(" + props.bgImage + ");"
+      : "background-image:url(" + defaultCardImage + ");"}
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -39,27 +39,22 @@ const NewSuggestionTopNavSC = styled.div`
   padding: 0.5rem 1rem;
 `;
 
-const DecomTitle = styled.img`
-  // width: 10%;
-`;
-const NavIcon = styled.img``;
-
 interface TopHeaderTitleNavProps {
-  bg_image?: any;
+  bgImage?: any;
   backTo: string;
 }
 
 export const TopHeaderTitleNav = ({
-  bg_image,
+  bgImage,
   backTo,
 }: TopHeaderTitleNavProps) => {
   return (
-    <TopHeaderContainerSC bg_image={bg_image?.data?.attributes.url}>
+    <TopHeaderContainerSC bgImage={bgImage?.data?.attributes.url}>
       <Link to={backTo}>
-        <NavIcon src={rightarrow} />
+        <img src={rightArrow} alt="right arrow icon" />
       </Link>
       <>
-        <DecomTitle src={decomtitle} alt="title icon" />
+        <img src={decomTitle} alt="title icon" />
       </>
       <>
         <span></span>
@@ -72,10 +67,10 @@ export const NewSuggestionTopNav = () => {
   return (
     <NewSuggestionTopNavSC>
       <Link to={"/"}>
-        <NavIcon src={rightarrow} />
+        <img src={rightArrow} alt="right arrow icon" />
       </Link>
       <>
-        <DecomTitle src={decomDarkTitle} alt="title icon" />
+        <img src={decomTitle} alt="title icon" />
       </>
       <>
         <span></span>

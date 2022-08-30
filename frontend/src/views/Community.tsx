@@ -52,7 +52,6 @@ export const Community = () => {
   const { suggestionsLoading, suggestionsData } =
     useContext(SuggestionsContext);
   const { id } = useParams();
-  const [ok, setOk] = useState(false);
 
   useEffect(() => {
     const res = data.filter((v) => {
@@ -60,19 +59,13 @@ export const Community = () => {
       else return false;
     });
     setSelectedCommunity(res[0]);
-    setOk(true);
   }, [id]);
-  console.log(data);
-
-  useEffect(() => {
-    console.log(suggestionsLoading, suggestionsData);
-  }, [data]);
 
   return (
     <Stack paddingX={0}>
       {selectedCommunity && (
         <>
-          <TopHeaderTitleNav bg_image={selectedCommunity?.image} backTo={"/"} />
+          <TopHeaderTitleNav bgImage={selectedCommunity?.image} backTo={"/"} />
           <Box
             marginTop={-4}
             borderRadius="32px 32px 0 0"
@@ -90,7 +83,20 @@ export const Community = () => {
               {selectedCommunity?.description}
             </Typography>
             <Stack paddingX={1}>
-              <Typography variant="h3">הצעות: {suggestions.length}</Typography>
+              <Stack direction={"row"} marginBottom={3} alignItems="flex-end">
+                <Typography variant="h2" display={"inline"}>
+                  הצעות:
+                </Typography>
+
+                <Typography
+                  variant="h3"
+                  color={"rgba(1, 23, 86, 0.66)"}
+                  display={"inline"}
+                >
+                  {suggestions.length}
+                </Typography>
+              </Stack>
+
               {suggestions.map((v) => {
                 return (
                   <SuggestionCard

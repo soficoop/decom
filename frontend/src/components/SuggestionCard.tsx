@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Card, Typography } from "@mui/material";
+import { Card, Typography, Stack, useTheme } from "@mui/material";
 import uparrow from "../assets/arrow-up.svg";
 import downarrow from "../assets/arrow-down.svg";
 import defaultcover from "../assets/defaultcardimage.svg";
@@ -26,26 +26,6 @@ const SuggestioImage = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-`;
-
-const SuggestionTextContainer = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: right;
-  height: 156px;
-  width: 100%;
-  padding: 1rem 0.5rem;
-  border-bottom: 1px solid #011756;
-`;
-
-const SuggestionTitle = styled.div`
-  width: 100%;
-`;
-
-const SuggestionDescription = styled.div`
-  width: 100%;
 `;
 
 const SuggestionVotingFooter = styled.div`
@@ -78,7 +58,7 @@ export const SuggestionCard = ({
 }: SuggestionCardProps) => {
   const [votes, setVotes] = useState({ up: false, down: false });
   const { setSelectedSuggestion } = useContext(SuggestionsContext);
-
+  const theme = useTheme();
   const handleUpVote = () => {
     setVotes({ up: !votes.up, down: false });
   };
@@ -100,33 +80,31 @@ export const SuggestionCard = ({
   };
 
   return (
-    <Card key={"suggestion" + id} variant="outlined">
+    <Card key={"suggestion" + id} variant="outlined" sx={{ marginBottom: 3 }}>
       <Link to={"/suggestion"} onClick={handleClick}>
         <SuggestioImage image={image} />
-        <SuggestionTextContainer>
-          <SuggestionTitle>
-            <Typography variant="h1">{title}</Typography>
-          </SuggestionTitle>
-          <SuggestionDescription>
-            <Typography variant="body1">{content}</Typography>
-          </SuggestionDescription>
-        </SuggestionTextContainer>
+        <Stack
+          direction={"column"}
+          textAlign={"right"}
+          height={"156px"}
+          padding={"1rem 0.5rem"}
+          borderBottom={`1px solid ${theme.palette.secondary.main}`}
+        >
+          <Typography variant="h1">{title}</Typography>
+          <Typography variant="body1">{content}</Typography>
+        </Stack>
       </Link>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell
           isPicked={votes.down}
           onClick={handleDownVote}
         >
-          <>{downvotes}</>
-          <>
-            <img src={downarrow} alt="down arrow" />
-          </>
+          {downvotes}
+          <img src={downarrow} alt="down arrow" />
         </SuggetsionVotingDownCell>
         <SuggetsionVotingUpCell isPicked={votes.up} onClick={handleUpVote}>
-          <>{upvotes}</>
-          <>
-            <img src={uparrow} alt="up arrow" />
-          </>
+          {upvotes}
+          <img src={uparrow} alt="up arrow" />
         </SuggetsionVotingUpCell>
       </SuggestionVotingFooter>
     </Card>
