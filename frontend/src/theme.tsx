@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material";
 const primaryColor = "#8BD4DD";
 const secondaryColor = "#011756";
-const blackColor = "#000000";
+const mainBlackColor = "#000000";
 
 export const theme = createTheme({
   direction: "rtl",
@@ -64,13 +64,21 @@ export const theme = createTheme({
       textAlign: "right",
       color: secondaryColor,
     },
+    subtitle1: {
+      fontStyle: "normal",
+      fontWeight: "500",
+      fontSize: "14px",
+      lineHeight: "24px",
+      textAlign: "center",
+      color: secondaryColor,
+    },
     body1: {
       fontStyle: "normal",
       fontWeight: "400",
       fontSize: "16px",
       lineHeight: "26px",
       textAlign: "right",
-      color: blackColor,
+      color: mainBlackColor,
     },
   },
 });

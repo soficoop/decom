@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { CommunitiesContext } from "../contexts";
+import { useContext, useEffect, useState } from "react";
+import { CommunitiesContext, SuggestionsContext } from "../contexts";
 import { useParams } from "react-router-dom";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionCard } from "../components/SuggestionCard";
@@ -49,7 +49,10 @@ export const Community = () => {
   const theme = useTheme();
   const { loading, data, selectedCommunity, setSelectedCommunity } =
     useContext(CommunitiesContext);
+  const { suggestionsLoading, suggestionsData } =
+    useContext(SuggestionsContext);
   const { id } = useParams();
+  const [ok, setOk] = useState(false);
 
   useEffect(() => {
     const res = data.filter((v) => {
@@ -57,11 +60,16 @@ export const Community = () => {
       else return false;
     });
     setSelectedCommunity(res[0]);
+    setOk(true);
   }, [id]);
   console.log(data);
 
+  useEffect(() => {
+    console.log(suggestionsLoading, suggestionsData);
+  }, [data]);
+
   return (
-    <Stack>
+    <Stack paddingX={0}>
       {selectedCommunity && (
         <>
           <TopHeaderTitleNav bg_image={selectedCommunity?.image} backTo={"/"} />
@@ -94,7 +102,6 @@ export const Community = () => {
                     score={v.score}
                     upvotes={v.upvotes}
                     downvotes={v.downvotes}
-                    // onClick={handleSuggestionClick}
                   />
                 );
               })}

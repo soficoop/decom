@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { Stack, Typography } from "@mui/material";
-import { ViewWrapper } from "../components/ViewWrapper";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionsContext, CommunitiesContext } from "../contexts";
 import uparrow from "../assets/arrow-up.svg";
@@ -23,12 +22,15 @@ export const Suggestion = () => {
     setVotes({ down: !votes.down, up: false });
   };
   return (
-    <ViewWrapper>
+    <Stack>
       <TopHeaderTitleNav
         bg_image={selectedSuggestion?.image}
         backTo={selectedCommunity ? "/community/" + selectedCommunity.id : "/"}
       />
       <Stack paddingX={1}>
+        <Typography align="center" variant="h2" marginTop={2}>
+          {selectedSuggestion?.title}
+        </Typography>
         <SuggestionVotingCenterContainer>
           <SuggetsionVotingDownCell
             isPicked={votes.down}
@@ -46,13 +48,11 @@ export const Suggestion = () => {
             </>
           </SuggetsionVotingUpCell>
         </SuggestionVotingCenterContainer>
-        <Typography align="center" variant="h2">
-          {selectedSuggestion?.title}
-        </Typography>
+
         <Typography align="right" variant="body1">
           {selectedSuggestion?.content}
         </Typography>
       </Stack>
-    </ViewWrapper>
+    </Stack>
   );
 };

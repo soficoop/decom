@@ -4,8 +4,7 @@ import { ThemeProvider as StyledThemeProvider } from "@emotion/react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { Container, CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Suggestion } from "./views";
-import { Community } from "./views";
+import { Home, Community, Suggestion, NewSuggestion } from "./views";
 import {
   ApiProvider,
   CommunitiesProvider,
@@ -37,6 +36,14 @@ function App() {
                       element={
                         // <RequireAuth>
                         <Suggestion />
+                        // </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="new-suggestion/"
+                      element={
+                        // <RequireAuth>
+                        <NewSuggestion />
                         // </RequireAuth>
                       }
                     />

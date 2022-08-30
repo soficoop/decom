@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import decomtitle from "../assets/decom-title.svg";
+import decomDarkTitle from "../assets/decom-dark-title.svg";
 import rightarrow from "../assets/chevron-right.svg";
 import defaultcardimage from "../assets/defaultcardimage.svg";
 interface HeaderImageAndNavProps {
@@ -24,6 +25,20 @@ const TopHeaderContainerSC = styled.div`
   height: 10rem;
   padding: 0.5rem 1rem;
 `;
+const NewSuggestionTopNavSC = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  background: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 5rem;
+  padding: 0.5rem 1rem;
+`;
+
 const DecomTitle = styled.img`
   // width: 10%;
 `;
@@ -50,5 +65,21 @@ export const TopHeaderTitleNav = ({
         <span></span>
       </>
     </TopHeaderContainerSC>
+  );
+};
+
+export const NewSuggestionTopNav = () => {
+  return (
+    <NewSuggestionTopNavSC>
+      <Link to={"/"}>
+        <NavIcon src={rightarrow} />
+      </Link>
+      <>
+        <DecomTitle src={decomDarkTitle} alt="title icon" />
+      </>
+      <>
+        <span></span>
+      </>
+    </NewSuggestionTopNavSC>
   );
 };
