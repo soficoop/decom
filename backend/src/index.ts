@@ -9,19 +9,19 @@ export default {
   register({ strapi }) {
     strapi.plugin('graphql').service('extension').use({
       resolversConfig: {
-        'Query.suggestions': {
-          middlewares: [
-            async (next, parent, args, context, info) => {
-              const password = context.koaContext.headers['x-password'];
-              if (!password) {
-                throw new Error('No password provided');
-              }
-              const suggestions = await next(parent, args, context, info);
-              suggestions.nodes = suggestions.nodes.filter(suggestion => suggestion.community.password === password);
-              return suggestions;
-            }
-          ]
-        }
+        // 'Query.suggestions': {
+        //   middlewares: [
+        //     async (next, parent, args, context, info) => {
+        //       const password = context.koaContext.headers['x-password'];
+        //       if (!password) {
+        //         throw new Error('No password provided');
+        //       }
+        //       const suggestions = await next(parent, args, context, info);
+        //       suggestions.nodes = suggestions.nodes.filter(suggestion => suggestion.community.password === password);
+        //       return suggestions;
+        //     }
+        //   ]
+        // }
       }
     });
   },
