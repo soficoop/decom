@@ -100,7 +100,7 @@ export const SuggestionCard = ({
   };
 
   return (
-    <Card key={"suggestion" + id}>
+    <Card key={"suggestion" + id} variant="outlined">
       <Link to={"/suggestion"} onClick={handleClick}>
         <SuggestioImage image={image} />
         <SuggestionTextContainer>

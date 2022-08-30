@@ -26,9 +26,13 @@ export const theme = createTheme({
         {
           props: { variant: undefined },
           style: {
-            margin: "1rem 0 ",
-            width: "100%",
-            boxSizing: "border-box",
+            boxShadow: "2px 2px 0px #000000",
+            border: "2px solid #011756",
+          },
+        },
+        {
+          props: { variant: "outlined" },
+          style: {
             border: `2px solid ${secondaryColor}`,
           },
         },
