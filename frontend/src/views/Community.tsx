@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionCard } from "../components/SuggestionCard";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-
+import { NewSuggestionFloatingButton } from "../components/NewSuggestionFloatingButton";
 const suggestions = [
   {
     id: 1,
@@ -111,6 +111,7 @@ export const Community = () => {
                   />
                 );
               })}
+              <NewSuggestionFloatingButton />
             </Stack>
           </Box>
         </>
