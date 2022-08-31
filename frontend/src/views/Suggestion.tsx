@@ -9,14 +9,22 @@ import {
   SuggetsionVotingDownCell,
   SuggetsionVotingUpCell,
 } from "../components/SuggestionVotingCell";
+import { useParams } from "react-router-dom";
+import { Suggestion as Sugg } from "../contexts/suggestions";
 
 export const Suggestion = () => {
-  const { selectedSuggestion } = useContext(SuggestionsContext);
+  const { suggestionsData } = useContext(SuggestionsContext);
   const { selectedCommunity } = useContext(CommunitiesContext);
   const [votes, setVotes] = useState({ up: false, down: false });
   const handleUpVote = () => {
     setVotes({ up: !votes.up, down: false });
   };
+
+  const { suggId } = useParams();
+
+  const selectedSuggestion = suggestionsData.find(
+    (sugg: Sugg) => sugg.id === suggId
+  );
 
   const handleDownVote = () => {
     setVotes({ down: !votes.down, up: false });

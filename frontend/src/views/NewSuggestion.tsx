@@ -2,21 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box } from "@mui/material";
 import styled from "@emotion/styled";
-import { useState } from "react";
 import addImage from "../assets/add-image.svg";
-const StyledPlaceholderBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  height: 248px;
-  background: #ffffff;
-  border-radius: 8px;
-  text-align: right;
-  color: rgba(128, 135, 156, 1);
-  border: 2px solid #011756;
-`;
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -32,6 +18,7 @@ const TXTAREA = styled.textarea`
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
+  white-space: pre-line;
 `;
 
 const StyledAddImageBox = styled(Box)`
@@ -56,30 +43,6 @@ const InputBox = styled(Box)`
 `;
 
 export const NewSuggestion = () => {
-  const [isTextField, setIsTextField] = useState(false);
-
-  const handleClick = () => {
-    setIsTextField(true);
-  };
-
-  const TextFieldPlaceHolder = () => {
-    return (
-      <StyledPlaceholderBox padding={2} onClick={handleClick}>
-        <div>נסו להתייחס לנקודות הבאות:</div>
-        <br />
-        <div>סקירה מעמיקה ומקיפה של הסוגיה</div>
-        <div>הנחות מוצא שהסוגיה מבתבססת עליהן</div>
-        <div>פירוט הקריטריונים החשובים בבחירת פתרון</div>
-      </StyledPlaceholderBox>
-    );
-  };
-
-  const handleOnBlur = (e: any) => {
-    if (e.target.value === "") {
-      setIsTextField(false);
-    }
-  };
-
   return (
     <Stack paddingX={0}>
       <NewSuggestionTopNav />
@@ -97,11 +60,15 @@ export const NewSuggestion = () => {
         </StyledAddImageBox>
         <InputBox marginY={1.5}>
           <InputLabel>פירוט ההצעה</InputLabel>
-          {isTextField ? (
-            <TXTAREA onBlur={handleOnBlur} autoFocus />
-          ) : (
-            <TextFieldPlaceHolder />
-          )}
+          {/* {isTextField ? ( */}
+          <TXTAREA
+            autoFocus
+            placeholder={`נסו להתייחס לנקודות הבאות:
+
+            סקירה מעמיקה ומקיפה של הסוגיה
+            הנחות מוצא שהסוגיה מבתבססת עליהן
+            פירוט הקריטריונים החשובים בבחירת פתרון`}
+          />
         </InputBox>
         <Button>פרסום סוגיה</Button>
       </Stack>

@@ -1,45 +1,35 @@
 import { gql, useQuery } from "@apollo/client";
 import { createContext, useContext, useState } from "react";
 import { CommunitiesContext } from "./communities";
+import { Outlet, useParams } from "react-router-dom";
+
 export interface Suggestion {
-  id: number | undefined;
-  title: string | undefined;
-  content: string | undefined;
-  image: string | undefined;
-  score: number | undefined;
-  upvotes: number | undefined;
-  downvotes: number | undefined;
+  id?: number;
+  title?: string;
+  content?: string;
+  image?: string;
+  score?: number;
+  upvotes?: number;
+  downvotes?: number;
 }
 
 const SuggestionsContext = createContext<{
   suggestionsData: Suggestion[];
   suggestionsLoading: boolean;
-  selectedSuggestion: Suggestion | undefined;
-  setSelectedSuggestion: (sug: Suggestion) => void;
 }>({
   suggestionsData: [],
   suggestionsLoading: false,
-  selectedSuggestion: {
-    id: undefined,
-    title: undefined,
-    content: undefined,
-    image: undefined,
-    score: undefined,
-    upvotes: undefined,
-    downvotes: undefined,
-  },
-  setSelectedSuggestion: (sug: Suggestion) => {},
 });
 
-function SuggestionsProvider({ children }: { children: JSX.Element }) {
-  const [selectedSuggestion, setSelectedSuggestion] = useState<
-    Suggestion | undefined
-  >();
-  const { selectedCommunity } = useContext(CommunitiesContext);
+function SuggestionsProvider() {
+  const { communityId } = useParams();
+  const commId = communityId && parseInt(communityId);
+  console.log(commId);
+
   const { data, loading } = useQuery(
     gql`
-      query suggestions($communityId: ID!) {
-        suggestions(filters: { community: { id: { eq: $communityId } } }) {
+      query suggestions($commId: ID!) {
+        suggestions(filters: { community: { id: { eq: $commId } } }) {
           data {
             id
             attributes {
@@ -59,37 +49,10 @@ function SuggestionsProvider({ children }: { children: JSX.Element }) {
         }
       }
     `,
-    // { variables: { communityId: selectedCommunity?.id } }
-    { variables: { communityId: 1 } }
+    { variables: { commId } }
   );
 
-  const FetchSuggestionBySelectedCommunityId = () => {
-    const { data, loading } = useQuery(
-      gql`
-        query suggestions($communityId: ID!) {
-          suggestions(filters: { community: { id: { eq: $communityId } } }) {
-            data {
-              id
-              attributes {
-                content
-                score
-                upvotes
-                downvotes
-                image {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      `,
-      { variables: { communityId: selectedCommunity?.id } }
-    );
-  };
+  console.info(data);
 
   return (
     <SuggestionsContext.Provider
@@ -102,12 +65,9 @@ function SuggestionsProvider({ children }: { children: JSX.Element }) {
             })
           ) || [],
         suggestionsLoading: loading,
-
-        selectedSuggestion: selectedSuggestion,
-        setSelectedSuggestion: setSelectedSuggestion,
       }}
     >
-      {children}
+      <Outlet />
     </SuggestionsContext.Provider>
   );
 }

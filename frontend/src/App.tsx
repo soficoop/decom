@@ -14,25 +14,28 @@ import { theme } from "./theme";
 function App() {
   return (
     <ApiProvider>
-      <CommunitiesProvider>
-        <SuggestionsProvider>
-          <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-            <StyledThemeProvider theme={theme}>
-              <Container maxWidth="xs">
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="community/:id" element={<Community />} />
-                    <Route path="suggestion/" element={<Suggestion />} />
-                    <Route path="new-suggestion/" element={<NewSuggestion />} />
-                  </Routes>
-                </BrowserRouter>
-              </Container>
-            </StyledThemeProvider>
-          </MuiThemeProvider>
-        </SuggestionsProvider>
-      </CommunitiesProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <StyledThemeProvider theme={theme}>
+          <Container maxWidth="xs">
+            <BrowserRouter>
+              <Routes>
+                <Route element={<CommunitiesProvider />}>
+                  <Route path="/" element={<Home />} />
+                  <Route
+                    path="community/:communityId"
+                    element={<SuggestionsProvider />}
+                  >
+                    <Route path="" element={<Community />} />
+                    <Route path="suggestion/:suggId" element={<Suggestion />} />
+                  </Route>
+                  <Route path="new-suggestion/" element={<NewSuggestion />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </Container>
+        </StyledThemeProvider>
+      </MuiThemeProvider>
     </ApiProvider>
   );
 }

@@ -49,7 +49,7 @@ export const TopHeaderTitleNav = ({
   backTo,
 }: TopHeaderTitleNavProps) => {
   return (
-    <TopHeaderContainerSC bgImage={bgImage?.data?.attributes.url}>
+    <TopHeaderContainerSC bgImage={bgImage}>
       <Link to={backTo}>
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
