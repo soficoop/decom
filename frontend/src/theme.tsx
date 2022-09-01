@@ -3,6 +3,13 @@ const primaryColor = "#8BD4DD";
 const secondaryColor = "#011756";
 const mainBlackColor = "#000000";
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    primary: true;
+    trans: true;
+  }
+}
+
 export const theme = createTheme({
   direction: "rtl",
   palette: {
@@ -39,10 +46,39 @@ export const theme = createTheme({
       ],
     },
     MuiButton: {
-      defaultProps: {
-        variant: "contained",
-        disableElevation: true,
-      },
+      variants: [
+        {
+          props: { variant: "primary" },
+          style: {
+            disableElevation: true,
+            height: "56px",
+            fontFamily: "Noto Sans Hebrew",
+            fontStyle: "normal",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "24px",
+            color: secondaryColor,
+            borderRadius: "16px",
+            background: primaryColor,
+          },
+        },
+        {
+          props: { variant: "trans" },
+          style: {
+            disableElevation: true,
+            height: "56px",
+            fontFamily: "Noto Sans Hebrew",
+            fontStyle: "normal",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "24px",
+            color: secondaryColor,
+            borderRadius: "16px",
+            background: "#FFFFFF",
+            border: "1px solid " + secondaryColor,
+          },
+        },
+      ],
     },
   },
   typography: {

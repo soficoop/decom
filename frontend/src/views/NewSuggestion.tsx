@@ -3,7 +3,9 @@ import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box } from "@mui/material";
 import styled from "@emotion/styled";
 import { useState } from "react";
+import ImageUploading from "react-images-uploading";
 import addImage from "../assets/add-image.svg";
+
 const StyledPlaceholderBox = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -82,7 +84,7 @@ export const NewSuggestion = () => {
 
   return (
     <Stack paddingX={0}>
-      <NewSuggestionTopNav />
+      <NewSuggestionTopNav titleColor="dark" />
       <Typography align="center" variant="h2">
         הצעה חדשה
       </Typography>
@@ -103,7 +105,7 @@ export const NewSuggestion = () => {
             <TextFieldPlaceHolder />
           )}
         </InputBox>
-        <Button>פרסום סוגיה</Button>
+        <Button variant="primary">פרסום סוגיה</Button>
       </Stack>
     </Stack>
   );

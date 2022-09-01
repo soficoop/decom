@@ -4,7 +4,13 @@ import { ThemeProvider as StyledThemeProvider } from "@emotion/react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { Container, CssBaseline } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Community, Suggestion, NewSuggestion } from "./views";
+import {
+  Home,
+  Community,
+  Suggestion,
+  NewSuggestion,
+  SendNewSuggestionSucess,
+} from "./views";
 import {
   ApiProvider,
   CommunitiesProvider,
@@ -26,6 +32,10 @@ function App() {
                     <Route path="community/:id" element={<Community />} />
                     <Route path="suggestion/" element={<Suggestion />} />
                     <Route path="new-suggestion/" element={<NewSuggestion />} />
+                    <Route
+                      path="new-suggestion/success"
+                      element={<SendNewSuggestionSucess />}
+                    />
                   </Routes>
                 </BrowserRouter>
               </Container>

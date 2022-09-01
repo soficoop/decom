@@ -63,14 +63,21 @@ export const TopHeaderTitleNav = ({
   );
 };
 
-export const NewSuggestionTopNav = () => {
+interface NewSuggestionTopNavProps {
+  titleColor: string;
+}
+
+export const NewSuggestionTopNav = ({
+  titleColor,
+}: NewSuggestionTopNavProps) => {
   return (
     <NewSuggestionTopNavSC>
       <Link to={"/"}>
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
+      <>{titleColor === "light" && <img src={decomTitle} alt="title icon" />}</>
       <>
-        <img src={decomTitle} alt="title icon" />
+        {titleColor === "dark" && <img src={decomDarkTitle} alt="title icon" />}
       </>
       <>
         <span></span>
