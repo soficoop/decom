@@ -53,12 +53,7 @@ export const TopHeaderTitleNav = ({
       <Link to={backTo}>
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
-      <>
         <img src={decomTitle} alt="title icon" />
-      </>
-      <>
-        <span></span>
-      </>
     </TopHeaderContainerSC>
   );
 };
