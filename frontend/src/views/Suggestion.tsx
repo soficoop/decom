@@ -37,15 +37,13 @@ export const Suggestion = () => {
             onClick={handleDownVote}
           >
             <>{selectedSuggestion && selectedSuggestion.downvotes}</>
-            <>
-              <img src={downarrow} alt="down arrow" />
-            </>
+
+            <img src={downarrow} alt="down arrow" />
           </SuggetsionVotingDownCell>
           <SuggetsionVotingUpCell isPicked={votes.up} onClick={handleUpVote}>
             <>{selectedSuggestion && selectedSuggestion.upvotes}</>
-            <>
-              <img src={uparrow} alt="up arrow" />
-            </>
+
+            <img src={uparrow} alt="up arrow" />
           </SuggetsionVotingUpCell>
         </SuggestionVotingCenterContainer>
 
