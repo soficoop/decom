@@ -36,12 +36,12 @@ export const Suggestion = () => {
             isPicked={votes.down}
             onClick={handleDownVote}
           >
-            <>{selectedSuggestion && selectedSuggestion.downvotes}</>
+            {selectedSuggestion && selectedSuggestion.downvotes}
 
             <img src={downarrow} alt="down arrow" />
           </SuggetsionVotingDownCell>
           <SuggetsionVotingUpCell isPicked={votes.up} onClick={handleUpVote}>
-            <>{selectedSuggestion && selectedSuggestion.upvotes}</>
+            {selectedSuggestion && selectedSuggestion.upvotes}
 
             <img src={uparrow} alt="up arrow" />
           </SuggetsionVotingUpCell>
