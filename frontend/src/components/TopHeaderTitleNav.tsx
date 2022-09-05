@@ -53,12 +53,8 @@ export const TopHeaderTitleNav = ({
       <Link to={backTo}>
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
-      <>
-        <img src={decomTitle} alt="title icon" />
-      </>
-      <>
-        <span></span>
-      </>
+      <img src={decomTitle} alt="title icon" />
+      <span />
     </TopHeaderContainerSC>
   );
 };
@@ -69,12 +65,8 @@ export const NewSuggestionTopNav = () => {
       <Link to={"/"}>
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
-      <>
-        <img src={decomTitle} alt="title icon" />
-      </>
-      <>
-        <span></span>
-      </>
+      <img src={decomTitle} alt="title icon" />
+      <span />
     </NewSuggestionTopNavSC>
   );
 };
