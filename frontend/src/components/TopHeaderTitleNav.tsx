@@ -54,7 +54,7 @@ export const TopHeaderTitleNav = ({
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
       <img src={decomTitle} alt="title icon" />
-      <span></span>
+      <span />
     </TopHeaderContainerSC>
   );
 };
@@ -66,7 +66,7 @@ export const NewSuggestionTopNav = () => {
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
       <img src={decomTitle} alt="title icon" />
-      <span></span>
+      <span />
     </NewSuggestionTopNavSC>
   );
 };
