@@ -9,7 +9,7 @@ export default ({ env }) => ({
     enabled: env.bool("CRON_ENABLED", false),
     tasks: {
       // every day at 4:00 AM
-      '* * * * *': async ({ strapi }) => {
+      '0 4 * * *': async ({ strapi }) => {
         let suggestions = []
         let start = 0
         do {
