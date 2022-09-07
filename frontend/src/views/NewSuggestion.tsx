@@ -1,4 +1,5 @@
-import { Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { inputAdornmentClasses, Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box, useTheme } from "@mui/material";
 import styled from "@emotion/styled";
@@ -8,6 +9,8 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
+import { useMutation } from "@apollo/client";
+import { ADD_SUGGESTION } from "./postNewSuggestion";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -66,7 +69,11 @@ const ImagePreviewContainer = styled(Stack)`
   border-radius: 8px;
 `;
 
-const ImageUpload = () => {
+interface ImageUploadProps {
+  setImage: (img: ImageType) => void;
+}
+
+const ImageUpload = ({ setImage }: ImageUploadProps) => {
   const theme = useTheme();
   const [images, setImages] = useState<ImageType[]>([]);
 
@@ -77,6 +84,7 @@ const ImageUpload = () => {
     // data for submit
     console.log(imageList, addUpdateIndex);
     setImages(imageList as never[]);
+    setImage(images[0]);
   };
   return (
     <Stack display={"flex"}>
@@ -110,6 +118,26 @@ const ImageUpload = () => {
 };
 
 export const NewSuggestion = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState<ImageType | null>(null);
+
+  const onTitleChange = (e: any) => {
+    setTitle(e.target.value);
+  };
+  const onDescriptionChange = (e: any) => {
+    setDescription(e.target.value);
+  };
+  const [AddSuggestion, { data, loading, error }] = useMutation(
+    ADD_SUGGESTION,
+    {
+      variables: {
+        title,
+        description,
+      },
+    }
+  );
+
   return (
     <Stack paddingX={0}>
       <NewSuggestionTopNav titleColor="dark" />
@@ -117,24 +145,47 @@ export const NewSuggestion = () => {
         הצעה חדשה
       </Typography>
       <Stack>
-        <InputBox marginY={1.5}>
-          <InputLabel>כותרת</InputLabel>
-          <TextField placeholder="תנו שם ברור" fullWidth />
-        </InputBox>
-        <ImageUpload />
-        <InputBox marginY={1.5}>
-          <InputLabel>פירוט ההצעה</InputLabel>
-          {/* {isTextField ? ( */}
-          <TXTAREA
-            autoFocus
-            placeholder={`נסו להתייחס לנקודות הבאות:
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            AddSuggestion({ variables: { title, description } });
+            setTitle("");
+            setDescription("");
+          }}
+        >
+          <InputBox marginY={1.5}>
+            <InputLabel>כותרת</InputLabel>
+            <TextField
+              placeholder="תנו שם ברור"
+              value={title}
+              onChange={onTitleChange}
+              fullWidth
+            />
+          </InputBox>
+          <ImageUpload setImage={setImage} />
+          <InputBox marginY={1.5}>
+            <InputLabel>פירוט ההצעה</InputLabel>
+
+            <TXTAREA
+              placeholder={`נסו להתייחס לנקודות הבאות:
 
             סקירה מעמיקה ומקיפה של הסוגיה
             הנחות מוצא שהסוגיה מבתבססת עליהן
             פירוט הקריטריונים החשובים בבחירת פתרון`}
-          />
-        </InputBox>
-        <Button variant="primary">פרסום סוגיה</Button>
+              value={description}
+              onChange={onDescriptionChange}
+            />
+          </InputBox>
+          <Button
+            type="submit"
+            variant={
+              title === "" || description === "" ? "outlined" : "primary"
+            }
+            disabled={title === "" || description === ""}
+          >
+            {loading ? "מפרסם" : "פרסום סוגיה"}
+          </Button>
+        </form>
       </Stack>
     </Stack>
   );
