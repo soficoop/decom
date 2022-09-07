@@ -4,7 +4,8 @@
   "info": {
     "singularName": "suggestion",
     "pluralName": "suggestions",
-    "displayName": "suggestion"
+    "displayName": "suggestion",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -19,18 +20,20 @@
       "type": "text"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "score": {
       "type": "decimal",
-      "default": 0
+      "default": 0,
+      "required": true
     },
     "community": {
       "type": "relation",
@@ -39,10 +42,14 @@
       "inversedBy": "suggestions"
     },
     "upvotes": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0,
+      "required": true
     },
     "downvotes": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0,
+      "required": true
     }
   }
 }
