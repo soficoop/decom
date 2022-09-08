@@ -19,7 +19,7 @@ function App() {
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
             <StyledThemeProvider theme={theme}>
-              <Container maxWidth="xs">
+              <Container maxWidth="xs" disableGutters>
                 <BrowserRouter>
                   <Routes>
                     <Route path="/" element={<Home />} />
