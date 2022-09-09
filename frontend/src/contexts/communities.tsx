@@ -30,7 +30,6 @@ const CommunitiesContext = createContext<{
 
 function CommunitiesProvider() {
   const { communityId } = useParams();
-  console.info(communityId);
 
   const { data, loading } = useQuery(gql`
     query {

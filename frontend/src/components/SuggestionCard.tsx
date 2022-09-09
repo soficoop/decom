@@ -69,7 +69,7 @@ export const SuggestionCard = ({
 
   return (
     <Card key={"suggestion" + id} variant="outlined" sx={{ marginBottom: 3 }}>
-      <Link to={`/suggestion/${id}`}>
+      <Link to={`suggestion/${id}`}>
         <SuggestioImage image={image} />
         <Stack
           direction={"column"}

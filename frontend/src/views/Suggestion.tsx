@@ -32,7 +32,7 @@ export const Suggestion = () => {
   return (
     <Stack>
       <TopHeaderTitleNav
-        bgImage={selectedSuggestion?.image}
+        bgImage={selectedSuggestion?.image?.data}
         backTo={selectedCommunity ? "/community/" + selectedCommunity.id : "/"}
       />
       <Stack paddingX={1}>

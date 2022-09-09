@@ -7,7 +7,7 @@ export interface Suggestion {
   id?: number;
   title?: string;
   content?: string;
-  image?: string;
+  image?: any;
   score?: number;
   upvotes?: number;
   downvotes?: number;
@@ -24,7 +24,6 @@ const SuggestionsContext = createContext<{
 function SuggestionsProvider() {
   const { communityId } = useParams();
   const commId = communityId && parseInt(communityId);
-  console.log(commId);
 
   const { data, loading } = useQuery(
     gql`
@@ -34,6 +33,7 @@ function SuggestionsProvider() {
             id
             attributes {
               content
+              title
               score
               upvotes
               downvotes
@@ -51,8 +51,7 @@ function SuggestionsProvider() {
     `,
     { variables: { commId } }
   );
-
-  console.info(data);
+  console.log(data);
 
   return (
     <SuggestionsContext.Provider

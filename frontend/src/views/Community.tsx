@@ -35,7 +35,7 @@ export const Community = () => {
             </Typography>
             <Stack paddingX={1}>
               <Stack direction={"row"} marginBottom={3} alignItems="flex-end">
-                <Typography variant="h2" display={"inline"}>
+                <Typography variant="h2" display={"inline"} marginLeft="1rem">
                   הצעות:
                 </Typography>
 
@@ -55,7 +55,7 @@ export const Community = () => {
                     id={v.id}
                     title={v.title}
                     content={v.content}
-                    image={v.image}
+                    image={v?.image?.data}
                     score={v.score}
                     upvotes={v.upvotes}
                     downvotes={v.downvotes}

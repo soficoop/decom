@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { inputAdornmentClasses, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box, useTheme } from "@mui/material";
 import styled from "@emotion/styled";
@@ -119,21 +119,21 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
 
 export const NewSuggestion = () => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
   const [image, setImage] = useState<ImageType | null>(null);
 
   const onTitleChange = (e: any) => {
     setTitle(e.target.value);
   };
   const onDescriptionChange = (e: any) => {
-    setDescription(e.target.value);
+    setContent(e.target.value);
   };
-  const [AddSuggestion, { data, loading, error }] = useMutation(
+  const [createSuggestion, { data, loading, error }] = useMutation(
     ADD_SUGGESTION,
     {
       variables: {
         title,
-        description,
+        content,
       },
     }
   );
@@ -148,9 +148,9 @@ export const NewSuggestion = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            AddSuggestion({ variables: { title, description } });
+            createSuggestion({ variables: { title, content } });
             setTitle("");
-            setDescription("");
+            setContent("");
           }}
         >
           <InputBox marginY={1.5}>
@@ -172,16 +172,15 @@ export const NewSuggestion = () => {
             סקירה מעמיקה ומקיפה של הסוגיה
             הנחות מוצא שהסוגיה מבתבססת עליהן
             פירוט הקריטריונים החשובים בבחירת פתרון`}
-              value={description}
+              value={content}
               onChange={onDescriptionChange}
             />
           </InputBox>
           <Button
+            fullWidth
             type="submit"
-            variant={
-              title === "" || description === "" ? "outlined" : "primary"
-            }
-            disabled={title === "" || description === ""}
+            variant={title === "" || content === "" ? "outlined" : "primary"}
+            disabled={title === "" || content === ""}
           >
             {loading ? "מפרסם" : "פרסום סוגיה"}
           </Button>
