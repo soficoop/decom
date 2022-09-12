@@ -62,7 +62,7 @@ const ImagePreviewContainer = styled(Stack)`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  max-width: 380px;
+  min-width: 380px;
   height: 222px;
   border-radius: 8px;
 `;
@@ -88,7 +88,6 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
     <Stack display={"flex"}>
       <ImageUploading value={images} onChange={onChange} maxNumber={1}>
         {({ onImageUpload, onImageRemoveAll }) => (
-          // write your building UI
           <div className="upload__image-wrapper">
             {images.length > 0 ? (
               <ImagePreviewContainer
@@ -96,7 +95,13 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
                 image={images[0]?.dataURL}
               >
                 <img
-                  style={{ position: "relative", top: "-42%", right: "-45%" }}
+                  style={{
+                    position: "relative",
+                    top: "-90px",
+                    right: "-170px",
+                    width: "1.5rem",
+                    height: "1.5rem",
+                  }}
                   src={trashIcon}
                   onClick={onImageRemoveAll}
                   alt="trash icon"
