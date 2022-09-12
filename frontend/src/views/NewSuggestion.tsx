@@ -9,8 +9,6 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
-import { useMutation } from "@apollo/client";
-import { ADD_SUGGESTION } from "./postNewSuggestion";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -128,15 +126,6 @@ export const NewSuggestion = () => {
   const onDescriptionChange = (e: any) => {
     setContent(e.target.value);
   };
-  const [createSuggestion, { data, loading, error }] = useMutation(
-    ADD_SUGGESTION,
-    {
-      variables: {
-        title,
-        content,
-      },
-    }
-  );
 
   return (
     <Stack paddingX={0}>
@@ -148,7 +137,7 @@ export const NewSuggestion = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            createSuggestion({ variables: { title, content } });
+
             setTitle("");
             setContent("");
           }}
@@ -182,7 +171,7 @@ export const NewSuggestion = () => {
             variant={title === "" || content === "" ? "outlined" : "primary"}
             disabled={title === "" || content === ""}
           >
-            {loading ? "מפרסם" : "פרסום סוגיה"}
+            פרסום סוגיה
           </Button>
         </form>
       </Stack>
