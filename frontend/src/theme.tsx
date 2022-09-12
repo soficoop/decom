@@ -54,7 +54,6 @@ export const theme = createTheme({
           style: {
             disableElevation: true,
             height: "56px",
-            fontFamily: "Noto Sans Hebrew",
             fontStyle: "normal",
             fontWeight: "600",
             fontSize: "16px",
@@ -69,7 +68,6 @@ export const theme = createTheme({
           style: {
             disableElevation: true,
             height: "56px",
-            fontFamily: "Noto Sans Hebrew",
             fontStyle: "normal",
             fontWeight: "600",
             fontSize: "16px",
@@ -85,7 +83,6 @@ export const theme = createTheme({
           style: {
             disableElevation: true,
             height: "56px",
-            fontFamily: "Noto Sans Hebrew",
             fontStyle: "normal",
             fontWeight: "600",
             fontSize: "16px",
@@ -94,6 +91,24 @@ export const theme = createTheme({
             borderRadius: "16px",
             background: disabledColor,
             border: "1px solid " + secondaryColor,
+          },
+        },
+      ],
+    },
+    MuiFab: {
+      variants: [
+        {
+          props: { variant: "extended" },
+          style: {
+            boxShadow: "0px 4px 8px 3px rgba(0, 0, 0, 0.15);",
+            filter: "drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.3))",
+            position: "absolute",
+            bottom: "10px",
+            left: "10px",
+            width: "96px",
+            height: "96px",
+            backgroundColor: primaryColor,
+            zIndex: "9",
           },
         },
       ],
