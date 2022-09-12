@@ -9,6 +9,9 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
+import { ADD_SUGGESTION } from "../utils/mutations";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -79,11 +82,17 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
   ) => {
-    // data for submit
-
     setImages(imageList as never[]);
     setImage(images[0]);
   };
+
+  // const [mutateFunction, { data, loading, error }] = useMutation(
+  //   ADD_SUGGESTION,
+  //   {
+  //     variables,
+  //   }
+  // );
+
   return (
     <Stack display={"flex"}>
       <ImageUploading value={images} onChange={onChange} maxNumber={1}>
@@ -124,22 +133,13 @@ export const NewSuggestion = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<ImageType | null>(null);
-
+  const navigate = useNavigate();
   const onTitleChange = (e: any) => {
     setTitle(e.target.value);
   };
   const onDescriptionChange = (e: any) => {
     setContent(e.target.value);
   };
-
-  // const SendData = (variables: any) => {
-  //   const [createSuggestion, { data, loading, error }] = useMutation(
-  //     ADD_SUGGESTION,
-  //     {
-  //       variables,
-  //     }
-  //   );
-  // };
 
   return (
     <Stack paddingX={0}>
@@ -152,7 +152,7 @@ export const NewSuggestion = () => {
           onSubmit={(e) => {
             e.preventDefault();
 
-            // SendData({
+            // PostNewSuggestion({
             //   title: title,
             //   content: content,
             //   image,
@@ -164,6 +164,7 @@ export const NewSuggestion = () => {
 
             setTitle("");
             setContent("");
+            navigate("/new-suggestion/success");
           }}
         >
           <InputBox marginY={1.5}>

@@ -22,7 +22,7 @@ export const SendNewSuggestionSucess = () => {
           לצפייה בהצעה
         </Button>
 
-        <Button fullWidth variant="trans">
+        <Button fullWidth variant="trans" href="/">
           חזרה לעמוד הבית
         </Button>
       </Stack>
