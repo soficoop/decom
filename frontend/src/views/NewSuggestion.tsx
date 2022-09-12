@@ -127,6 +127,15 @@ export const NewSuggestion = () => {
     setContent(e.target.value);
   };
 
+  // const SendData = (variables: any) => {
+  //   const [createSuggestion, { data, loading, error }] = useMutation(
+  //     ADD_SUGGESTION,
+  //     {
+  //       variables,
+  //     }
+  //   );
+  // };
+
   return (
     <Stack paddingX={0}>
       <NewSuggestionTopNav titleColor="dark" />
@@ -137,6 +146,16 @@ export const NewSuggestion = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+
+            // SendData({
+            //   title: title,
+            //   content: content,
+            //   image,
+            //   community: null,
+            //   score: 0,
+            //   upvotes: 0,
+            //   downvotes: 0,
+            // });
 
             setTitle("");
             setContent("");
