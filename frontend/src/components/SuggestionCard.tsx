@@ -3,8 +3,7 @@ import { Card, Typography, Stack, useTheme } from "@mui/material";
 import uparrow from "../assets/arrow-up.svg";
 import downarrow from "../assets/arrow-down.svg";
 import defaultcover from "../assets/defaultcardimage.svg";
-import { useState, useContext } from "react";
-import { SuggestionsContext } from "../contexts";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   SuggetsionVotingUpCell,
@@ -39,13 +38,13 @@ const SuggestionVotingFooter = styled.div`
 `;
 
 interface SuggestionCardProps {
-  id: number;
+  id?: number;
   image?: string;
-  title: string;
-  content: string;
-  score: number;
-  upvotes: number;
-  downvotes: number;
+  title?: string;
+  content?: string;
+  score?: number;
+  upvotes?: number;
+  downvotes?: number;
 }
 export const SuggestionCard = ({
   id,
@@ -57,7 +56,7 @@ export const SuggestionCard = ({
   downvotes,
 }: SuggestionCardProps) => {
   const [votes, setVotes] = useState({ up: false, down: false });
-  const { setSelectedSuggestion } = useContext(SuggestionsContext);
+
   const theme = useTheme();
   const handleUpVote = () => {
     setVotes({ up: !votes.up, down: false });
@@ -67,21 +66,9 @@ export const SuggestionCard = ({
     setVotes({ down: !votes.down, up: false });
   };
 
-  const handleClick = () => {
-    setSelectedSuggestion({
-      id,
-      title,
-      content,
-      image,
-      score,
-      upvotes,
-      downvotes,
-    });
-  };
-
   return (
     <Card key={"suggestion" + id} variant="outlined" sx={{ marginBottom: 3 }}>
-      <Link to={"/suggestion"} onClick={handleClick}>
+      <Link to={`suggestion/${id}`}>
         <SuggestioImage image={image} />
         <Stack
           direction={"column"}

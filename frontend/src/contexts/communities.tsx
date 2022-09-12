@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { Suggestion } from "./suggestions";
+import { useParams, Outlet } from "react-router-dom";
 
 interface Community {
   name: string | undefined;
@@ -15,7 +16,6 @@ const CommunitiesContext = createContext<{
   data: Community[];
   loading: boolean;
   selectedCommunity: Community | undefined;
-  setSelectedCommunity: (com: Community) => void;
 }>({
   data: [],
   loading: false,
@@ -26,13 +26,10 @@ const CommunitiesContext = createContext<{
     image: undefined,
     password: undefined,
   },
-  setSelectedCommunity: (com: Community) => {},
 });
 
-function CommunitiesProvider({ children }: { children: JSX.Element }) {
-  const [selectedCommunity, setSelectedCommunity] = useState<
-    Community | undefined
-  >();
+function CommunitiesProvider() {
+  const { communityId } = useParams();
 
   const { data, loading } = useQuery(gql`
     query {
@@ -55,23 +52,28 @@ function CommunitiesProvider({ children }: { children: JSX.Element }) {
     }
   `);
 
+  const commData =
+    data?.communities?.data?.map(
+      (community: { attributes: any; id: string }) => ({
+        ...community.attributes,
+        image: community.attributes.image?.data?.attributes?.url ?? "",
+        id: community.id,
+      })
+    ) || [];
+
+  const selectedCommunity = commData.find(
+    (com: Community) => com.id === communityId
+  );
+
   return (
     <CommunitiesContext.Provider
       value={{
-        data:
-          data?.communities?.data?.map(
-            (community: { attributes: any; id: string }) => ({
-              ...community.attributes,
-              image: community.attributes.image?.data?.attributes?.url ?? "",
-              id: community.id,
-            })
-          ) || [],
+        data: commData,
         loading,
-        selectedCommunity: selectedCommunity,
-        setSelectedCommunity: setSelectedCommunity,
+        selectedCommunity,
       }}
     >
-      {children}
+      <Outlet />
     </CommunitiesContext.Provider>
   );
 }

@@ -2,6 +2,15 @@ import { createTheme } from "@mui/material";
 const primaryColor = "#8BD4DD";
 const secondaryColor = "#011756";
 const mainBlackColor = "#000000";
+const disabledColor = "#D3D6E0";
+const whiteColor = "#FFFFFF";
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    primary: true;
+    trans: true;
+  }
+}
 
 export const theme = createTheme({
   direction: "rtl",
@@ -39,10 +48,55 @@ export const theme = createTheme({
       ],
     },
     MuiButton: {
-      defaultProps: {
-        variant: "contained",
-        disableElevation: true,
-      },
+      variants: [
+        {
+          props: { variant: "primary" },
+          style: {
+            disableElevation: true,
+            height: "56px",
+            fontFamily: "Noto Sans Hebrew",
+            fontStyle: "normal",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "24px",
+            color: secondaryColor,
+            borderRadius: "16px",
+            background: primaryColor,
+          },
+        },
+        {
+          props: { variant: "trans" },
+          style: {
+            disableElevation: true,
+            height: "56px",
+            fontFamily: "Noto Sans Hebrew",
+            fontStyle: "normal",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "24px",
+            color: secondaryColor,
+            borderRadius: "16px",
+            background: whiteColor,
+            border: "1px solid " + secondaryColor,
+          },
+        },
+        {
+          props: { variant: "outlined" },
+          style: {
+            disableElevation: true,
+            height: "56px",
+            fontFamily: "Noto Sans Hebrew",
+            fontStyle: "normal",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "24px",
+            color: whiteColor,
+            borderRadius: "16px",
+            background: disabledColor,
+            border: "1px solid " + secondaryColor,
+          },
+        },
+      ],
     },
   },
   typography: {
