@@ -3,8 +3,7 @@ import { Card, Typography, Stack, useTheme } from "@mui/material";
 import uparrow from "../assets/arrow-up.svg";
 import downarrow from "../assets/arrow-down.svg";
 import defaultcover from "../assets/defaultcardimage.svg";
-import { useState, useContext } from "react";
-import { SuggestionsContext } from "../contexts";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   SuggetsionVotingUpCell,

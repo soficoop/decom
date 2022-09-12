@@ -1,13 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext, useContext, useState } from "react";
-import { CommunitiesContext } from "./communities";
+import { createContext } from "react";
 import { Outlet, useParams } from "react-router-dom";
 
 export interface Suggestion {
   id?: number;
   title?: string;
   content?: string;
-  image?: any;
+  image?: string;
   score?: number;
   upvotes?: number;
   downvotes?: number;
@@ -51,16 +50,16 @@ function SuggestionsProvider() {
     `,
     { variables: { commId } }
   );
-  console.log(data);
 
   return (
     <SuggestionsContext.Provider
       value={{
         suggestionsData:
           data?.suggestions?.data?.map(
-            (suggestion: { attributes: Suggestion; id: string }) => ({
+            (suggestion: { attributes: any; id: string }) => ({
               ...suggestion.attributes,
               id: suggestion.id,
+              image: suggestion.attributes.image?.data?.attributes?.url ?? "",
             })
           ) || [],
         suggestionsLoading: loading,

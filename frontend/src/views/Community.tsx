@@ -55,7 +55,7 @@ export const Community = () => {
                     id={v.id}
                     title={v.title}
                     content={v.content}
-                    image={v?.image?.data}
+                    image={v?.image}
                     score={v.score}
                     upvotes={v.upvotes}
                     downvotes={v.downvotes}
