@@ -46,6 +46,17 @@ interface SuggestionCardProps {
   upvotes?: number;
   downvotes?: number;
 }
+
+const truncateAfterWords = (text: string, maxNumOfWords: number): string => {
+  const words = text.split(" ");
+  if (words.length <= maxNumOfWords) return text;
+  return `${words.slice(0, maxNumOfWords).join(" ")}...`;
+};
+
+const CleanLink = styled(Link)`
+  text-decoration: none;
+`;
+
 export const SuggestionCard = ({
   id,
   image,
@@ -67,8 +78,8 @@ export const SuggestionCard = ({
   };
 
   return (
-    <Card key={"suggestion" + id} variant="outlined" sx={{ marginBottom: 3 }}>
-      <Link to={`suggestion/${id}`}>
+    <Card variant="outlined">
+      <CleanLink to={`suggestion/${id}`}>
         <SuggestioImage image={image} />
         <Stack
           direction={"column"}
@@ -78,9 +89,11 @@ export const SuggestionCard = ({
           borderBottom={`1px solid ${theme.palette.secondary.main}`}
         >
           <Typography variant="h1">{title}</Typography>
-          <Typography variant="body1">{content}</Typography>
+          <Typography variant="body1">
+            {content && truncateAfterWords(content, 20)}
+          </Typography>
         </Stack>
-      </Link>
+      </CleanLink>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell
           isPicked={votes.down}
