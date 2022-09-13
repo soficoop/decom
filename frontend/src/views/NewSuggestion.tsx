@@ -9,9 +9,8 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
-import { ADD_SUGGESTION } from "../utils/mutations";
+
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -151,17 +150,6 @@ export const NewSuggestion = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-
-            // PostNewSuggestion({
-            //   title: title,
-            //   content: content,
-            //   image,
-            //   community: null,
-            //   score: 0,
-            //   upvotes: 0,
-            //   downvotes: 0,
-            // });
-
             setTitle("");
             setContent("");
             navigate("/new-suggestion/success");

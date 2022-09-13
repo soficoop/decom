@@ -102,7 +102,7 @@ export const theme = createTheme({
           style: {
             boxShadow: "0px 4px 8px 3px rgba(0, 0, 0, 0.15);",
             filter: "drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.3))",
-            position: "absolute",
+            position: "fixed",
             bottom: "10px",
             left: "10px",
             width: "96px",

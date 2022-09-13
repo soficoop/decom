@@ -1,6 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { createContext } from "react";
 import { Outlet, useParams } from "react-router-dom";
+import { ADD_SUGGESTION } from "../utils/mutations";
 
 export interface Suggestion {
   id?: number;
@@ -51,6 +52,10 @@ function SuggestionsProvider() {
     { variables: { commId } }
   );
 
+  const [AddSuggestionMutateFunc] = useMutation(ADD_SUGGESTION, {
+    refetchQueries: ["suggestions"],
+  });
+
   return (
     <SuggestionsContext.Provider
       value={{
@@ -63,6 +68,7 @@ function SuggestionsProvider() {
             })
           ) || [],
         suggestionsLoading: loading,
+        // AddSuggestionMutateFunc,
       }}
     >
       <Outlet />
