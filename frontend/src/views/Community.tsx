@@ -47,9 +47,8 @@ export const Community = () => {
                   {suggestionsData.length}
                 </Typography>
               </Stack>
-
-              {suggestionsData.map((v) => {
-                return (
+              <Stack spacing={3}>
+                {suggestionsData.map((v) => (
                   <SuggestionCard
                     key={v.id}
                     id={v.id}
@@ -60,8 +59,8 @@ export const Community = () => {
                     upvotes={v.upvotes}
                     downvotes={v.downvotes}
                   />
-                );
-              })}
+                ))}
+              </Stack>
               <NewSuggestionFloatingButton />
             </Stack>
           </Box>
