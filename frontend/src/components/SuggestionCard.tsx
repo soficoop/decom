@@ -47,10 +47,6 @@ interface SuggestionCardProps {
   downvotes?: number;
 }
 
-const CleanLink = styled(Link)`
-  text-decoration: none;
-`;
-
 export const SuggestionCard = ({
   id,
   image,
@@ -73,7 +69,7 @@ export const SuggestionCard = ({
 
   return (
     <Card key={"suggestion" + id} variant="outlined" sx={{ marginBottom: 3 }}>
-      <CleanLink to={`suggestion/${id}`}>
+      <Link to={`suggestion/${id}`}>
         <SuggestioImage image={image} />
         <Stack
           direction={"column"}
@@ -85,7 +81,7 @@ export const SuggestionCard = ({
           <Typography variant="h1">{title}</Typography>
           <Typography variant="body1">{content}</Typography>
         </Stack>
-      </CleanLink>
+      </Link>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell
           isPicked={votes.down}
