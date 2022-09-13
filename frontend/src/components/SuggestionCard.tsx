@@ -53,6 +53,10 @@ const truncateAfterWords = (text: string, maxNumOfWords: number): string => {
   return `${words.slice(0, maxNumOfWords).join(" ")}...`;
 };
 
+const CleanLink = styled(Link)`
+  text-decoration: none;
+`;
+
 export const SuggestionCard = ({
   id,
   image,
@@ -75,7 +79,7 @@ export const SuggestionCard = ({
 
   return (
     <Card key={"suggestion" + id} variant="outlined" sx={{ marginBottom: 3 }}>
-      <Link to={`suggestion/${id}`}>
+      <CleanLink to={`suggestion/${id}`}>
         <SuggestioImage image={image} />
         <Stack
           direction={"column"}
@@ -89,7 +93,7 @@ export const SuggestionCard = ({
             {content && truncateAfterWords(content, 20)}
           </Typography>
         </Stack>
-      </Link>
+      </CleanLink>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell
           isPicked={votes.down}
