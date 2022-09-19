@@ -150,9 +150,6 @@ export const NewSuggestion = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setTitle("");
-            setContent("");
-            navigate("/new-suggestion/success");
           }}
         >
           <InputBox marginY={1.5}>
