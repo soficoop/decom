@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { createContext, useState } from "react";
-import { Suggestion } from "./suggestions";
+import { ISuggestion } from "../types/contexts";
 import { useParams, Outlet } from "react-router-dom";
 
 interface Community {
@@ -8,7 +8,7 @@ interface Community {
   id: string | undefined;
   description: string | undefined;
   image: string | undefined;
-  suggestions?: Suggestion[];
+  suggestions?: ISuggestion[];
   password: string | undefined;
 }
 

@@ -5,7 +5,7 @@ import { Fab } from "@mui/material";
 export const NewSuggestionFloatingButton = () => {
   return (
     <Link to="/new-suggestion">
-      <Fab variant="extended">
+      <Fab>
         <img src={penIcon} alt={"pen icon"} width="30%" />
       </Fab>
     </Link>

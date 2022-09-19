@@ -39,7 +39,7 @@ const SuggestionVotingFooter = styled.div`
 
 interface SuggestionCardProps {
   id?: number;
-  image?: string;
+  image?: any;
   title?: string;
   content?: string;
   score?: number;

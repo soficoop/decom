@@ -95,24 +95,6 @@ export const theme = createTheme({
         },
       ],
     },
-    MuiFab: {
-      variants: [
-        {
-          props: { variant: "extended" },
-          style: {
-            boxShadow: "0px 4px 8px 3px rgba(0, 0, 0, 0.15);",
-            filter: "drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.3))",
-            position: "fixed",
-            bottom: "10px",
-            left: "10px",
-            width: "96px",
-            height: "96px",
-            backgroundColor: primaryColor,
-            zIndex: "9",
-          },
-        },
-      ],
-    },
   },
   typography: {
     fontFamily: "'Noto Sans Hebrew', sans-serif",

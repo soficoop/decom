@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box, useTheme } from "@mui/material";
@@ -9,7 +9,7 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
-
+import { SuggestionsContext } from "../contexts/suggestions";
 import { useNavigate } from "react-router-dom";
 
 const TXTAREA = styled.textarea`
@@ -85,13 +85,6 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
     setImage(images[0]);
   };
 
-  // const [mutateFunction, { data, loading, error }] = useMutation(
-  //   ADD_SUGGESTION,
-  //   {
-  //     variables,
-  //   }
-  // );
-
   return (
     <Stack display={"flex"}>
       <ImageUploading value={images} onChange={onChange} maxNumber={1}>
@@ -132,6 +125,8 @@ export const NewSuggestion = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<ImageType | null>(null);
+  const { addSuggestion, addSuggestionLoading, addSuggestionError } =
+    useContext(SuggestionsContext);
   const navigate = useNavigate();
   const onTitleChange = (e: any) => {
     setTitle(e.target.value);
@@ -140,6 +135,12 @@ export const NewSuggestion = () => {
     setContent(e.target.value);
   };
 
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    const addedSuggestion = await addSuggestion(title, content, image);
+    console.log(addedSuggestion);
+  }
+
   return (
     <Stack paddingX={0}>
       <NewSuggestionTopNav titleColor="dark" />
@@ -147,11 +148,7 @@ export const NewSuggestion = () => {
         הצעה חדשה
       </Typography>
       <Stack>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <InputBox marginY={1.5}>
             <InputLabel>כותרת</InputLabel>
             <TextField
