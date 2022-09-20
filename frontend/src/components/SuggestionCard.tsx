@@ -77,8 +77,10 @@ export const SuggestionCard = ({
           padding={"1rem 0.5rem"}
           borderBottom={`1px solid ${theme.palette.secondary.main}`}
         >
-          <Typography variant="h1">{title}</Typography>
-          <Typography variant="body1">{content}</Typography>
+          <Typography variant="h2" marginBottom={2}>
+            {title}
+          </Typography>
+          <Typography marginBottom={2}>{content}</Typography>
         </Stack>
       </Link>
       <SuggestionVotingFooter>
