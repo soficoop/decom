@@ -10,7 +10,7 @@ import {
   SuggetsionVotingUpCell,
 } from "../components/SuggestionVotingCell";
 import { useParams } from "react-router-dom";
-import { ISuggestion } from "../types/contexts";
+import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
   const { suggestionsData } = useContext(SuggestionsContext);

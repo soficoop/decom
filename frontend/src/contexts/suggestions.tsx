@@ -2,10 +2,24 @@ import { gql, useQuery, useMutation } from "@apollo/client";
 import { createContext } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { addSuggestion as addSuggestionMutation } from "../utils/mutations";
-import { ISuggestionContext } from "../types/contexts";
+import { Suggestion } from "../types/entities";
+import { FetchResult } from "@apollo/client";
 
-const SuggestionsContext = createContext<ISuggestionContext>(
-  {} as ISuggestionContext
+export interface SuggestionContext {
+  suggestionsData: Suggestion[];
+  suggestionsLoading: any;
+  addSuggestion: (
+    title: string,
+    content: string,
+    image: any
+  ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
+  addSuggestionData: any;
+  addSuggestionLoading: boolean;
+  addSuggestionError: any;
+}
+
+const SuggestionsContext = createContext<SuggestionContext>(
+  {} as SuggestionContext
 );
 
 function SuggestionsProvider() {
@@ -50,7 +64,7 @@ function SuggestionsProvider() {
     refetchQueries: ["suggestions"],
   });
 
-  const state: ISuggestionContext = {
+  const state: SuggestionContext = {
     suggestionsData:
       data?.suggestions?.data?.map(
         (suggestion: { attributes: any; id: string }) => ({

@@ -1,16 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext, useState } from "react";
-import { ISuggestion } from "../types/contexts";
+import { createContext } from "react";
+import { Community } from "../types/entities";
 import { useParams, Outlet } from "react-router-dom";
-
-interface Community {
-  name: string | undefined;
-  id: string | undefined;
-  description: string | undefined;
-  image: string | undefined;
-  suggestions?: ISuggestion[];
-  password: string | undefined;
-}
 
 const CommunitiesContext = createContext<{
   data: Community[];
