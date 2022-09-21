@@ -137,7 +137,7 @@ export const NewSuggestion = () => {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    const addedSuggestion = await addSuggestion(title, content, image);
+    const addedSuggestion = await addSuggestion(title, content, image, 0);
     console.log(addedSuggestion);
   }
 
