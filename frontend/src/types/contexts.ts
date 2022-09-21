@@ -17,7 +17,7 @@ export interface ISuggestion {
   id?: number;
   title?: string;
   content?: string;
-  image?: ImageType;
+  image?: string;
   score?: number;
   upvotes?: number;
   downvotes?: number;
