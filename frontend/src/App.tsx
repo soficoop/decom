@@ -33,12 +33,12 @@ function App() {
                   >
                     <Route path="" element={<Community />} />
                     <Route path="suggestion/:suggId" element={<Suggestion />} />
+                    <Route path="new-suggestion" element={<NewSuggestion />} />
+                    <Route
+                      path="new-suggestion/success"
+                      element={<SendNewSuggestionSucess />}
+                    />
                   </Route>
-                  <Route path="new-suggestion/" element={<NewSuggestion />} />
-                  <Route
-                    path="new-suggestion/success"
-                    element={<SendNewSuggestionSucess />}
-                  />
                 </Route>
               </Routes>
             </BrowserRouter>
