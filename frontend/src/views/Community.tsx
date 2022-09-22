@@ -18,60 +18,48 @@ export const Community = () => {
         <>
           <TopHeaderTitleNav bgImage={selectedCommunity?.image} backTo={"/"} />
           <Stack
-            paddingX={3}
+            paddingX={4}
             marginTop={-4}
             borderRadius="32px 32px 0 0"
             bgcolor={theme.palette.background.paper}
             direction="column"
-            alignItems="center"
           >
             <Typography
               variant="h1"
               textAlign="center"
               marginTop={3}
               marginBottom={2}
-              width="347px"
             >
               {selectedCommunity?.name}
             </Typography>
-            <Typography
-              variant="body2"
-              marginBottom={7}
-              width="347px"
-              textAlign="center"
-            >
+            <Typography variant="body2" marginBottom={7} textAlign="center">
               {selectedCommunity?.description}
             </Typography>
-            <Stack paddingX={1}>
-              <Stack direction={"row"} marginBottom={3} alignItems="flex-end">
-                <Typography variant="h3" display={"inline"} marginLeft={1.5}>
-                  הצעות:
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  color={"rgba(1, 23, 86, 0.66)"}
-                  display={"inline"}
-                >
-                  {suggestionsData.length}
-                </Typography>
-              </Stack>
 
-              {suggestionsData.map((v) => {
-                return (
-                  <SuggestionCard
-                    key={v.id}
-                    id={v.id}
-                    title={v.title}
-                    content={v.content}
-                    image={v?.image}
-                    score={v.score}
-                    upvotes={v.upvotes}
-                    downvotes={v.downvotes}
-                  />
-                );
-              })}
-              <NewSuggestionFloatingButton />
+            <Stack direction={"row"} marginBottom={3} alignItems="flex-end">
+              <Typography variant="h3" display={"inline"} marginLeft={1.5}>
+                הצעות:
+              </Typography>
+              <Typography variant="subtitle2" color="info" display="inline">
+                {suggestionsData.length}
+              </Typography>
             </Stack>
+
+            {suggestionsData.map((v) => {
+              return (
+                <SuggestionCard
+                  key={v.id}
+                  id={v.id}
+                  title={v.title}
+                  content={v.content}
+                  image={v?.image}
+                  score={v.score}
+                  upvotes={v.upvotes}
+                  downvotes={v.downvotes}
+                />
+              );
+            })}
+            <NewSuggestionFloatingButton />
           </Stack>
         </>
       )}
