@@ -11,7 +11,7 @@ import ImageUploading, {
 } from "react-images-uploading";
 import { SuggestionsContext } from "../contexts/suggestions";
 import { useNavigate } from "react-router-dom";
-
+import { uploadFile } from "../utils/functions";
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
   width: 100%;
@@ -137,8 +137,16 @@ export const NewSuggestion = () => {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    const addedSuggestion = await addSuggestion(title, content, image, 0);
+    const imageID = image?.file && (await uploadFile(image.file));
+    const addedSuggestion = await addSuggestion(
+      title,
+      content,
+      parseInt(imageID),
+      0
+    );
     console.log(addedSuggestion);
+
+    navigate("success");
   }
 
   return (
