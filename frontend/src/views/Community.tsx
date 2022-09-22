@@ -43,10 +43,16 @@ export const Community = () => {
               <Typography variant="subtitle2" color="info" display="inline">
                 {suggestionsData.length}
               </Typography>
+              <Typography
+                variant="h3"
+                color={"rgba(1, 23, 86, 0.66)"}
+                display={"inline"}
+              >
+                {suggestionsData.length}
+              </Typography>
             </Stack>
-
-            {suggestionsData.map((v) => {
-              return (
+            <Stack spacing={3}>
+              {suggestionsData.map((v) => (
                 <SuggestionCard
                   key={v.id}
                   id={v.id}
@@ -57,8 +63,8 @@ export const Community = () => {
                   upvotes={v.upvotes}
                   downvotes={v.downvotes}
                 />
-              );
-            })}
+              ))}
+            </Stack>
             <NewSuggestionFloatingButton />
           </Stack>
         </>
