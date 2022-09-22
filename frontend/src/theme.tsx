@@ -4,6 +4,7 @@ const secondaryColor = "#011756";
 const mainBlackColor = "#000000";
 const disabledColor = "#D3D6E0";
 const whiteColor = "#FFFFFF";
+const numberColor = "rgba(1, 23, 86, 0.66)";
 
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
@@ -20,6 +21,9 @@ export const theme = createTheme({
     },
     secondary: {
       main: secondaryColor,
+    },
+    info: {
+      main: numberColor,
     },
     background: {
       default: "#FCFDFF",
@@ -104,6 +108,7 @@ export const theme = createTheme({
     h1: {
       fontSize: "28px",
       fontWeight: "700",
+      lineHeight: "38px",
       color: secondaryColor,
     },
     h2: {
@@ -130,13 +135,23 @@ export const theme = createTheme({
       textAlign: "center",
       color: secondaryColor,
     },
+    subtitle2: {
+      fontStyle: "normal",
+      fontWeight: "400",
+      fontSize: "20px",
+      lineHeight: "27px",
+    },
     body1: {
       fontStyle: "normal",
       fontWeight: "400",
       fontSize: "16px",
       lineHeight: "26px",
-      textAlign: "right",
-      color: mainBlackColor,
+    },
+    body2: {
+      fontStyle: "normal",
+      fontWeight: "500",
+      fontSize: "16px",
+      lineHeight: "24px",
     },
   },
 });
