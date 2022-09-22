@@ -136,25 +136,18 @@ export const theme = createTheme({
       fontWeight: "400",
       fontSize: "20px",
       lineHeight: "27px",
-      textAlign: "right",
-      color: "rgba(1, 23, 86, 0.66)",
     },
-
     body1: {
       fontStyle: "normal",
       fontWeight: "400",
       fontSize: "16px",
       lineHeight: "26px",
-      textAlign: "right",
-      color: mainBlackColor,
     },
     body2: {
       fontStyle: "normal",
       fontWeight: "500",
       fontSize: "16px",
       lineHeight: "24px",
-      textAlign: "right",
-      color: mainBlackColor,
     },
   },
 });
