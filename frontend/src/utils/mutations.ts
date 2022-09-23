@@ -6,7 +6,7 @@ export const addSuggestion = gql`
     $title: String!
     $content: String!
     $community: ID!
-    $image: ID
+    $image: ID!
   ) {
     createSuggestion(
       data: {
@@ -21,7 +21,13 @@ export const addSuggestion = gql`
         attributes {
           title
           content
-
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
           score
           upvotes
           downvotes

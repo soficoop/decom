@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box, useTheme } from "@mui/material";
@@ -12,6 +12,8 @@ import ImageUploading, {
 import { SuggestionsContext } from "../contexts/suggestions";
 import { useNavigate } from "react-router-dom";
 import { uploadFile } from "../utils/functions";
+import { canUseLayoutEffect } from "@apollo/client/utilities";
+
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
   width: 100%;
@@ -77,12 +79,15 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
   const theme = useTheme();
   const [images, setImages] = useState<ImageType[]>([]);
 
+  useEffect(() => {
+    setImage(images[0]);
+  }, [images]);
+
   const onChange = (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
   ) => {
     setImages(imageList as never[]);
-    setImage(images[0]);
   };
 
   return (
@@ -137,7 +142,10 @@ export const NewSuggestion = () => {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+
     const imageID = image?.file && (await uploadFile(image.file));
+    console.log(imageID);
+
     const addedSuggestion = await addSuggestion(
       title,
       content,
