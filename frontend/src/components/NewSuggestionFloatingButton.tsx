@@ -11,10 +11,9 @@ export const NewSuggestionFloatingButton = () => {
       maxWidth="xs"
       disableGutters
       sx={{
-        contain: "content",
-        position: "fixed",
+        position: "sticky",
         bottom: 0,
-        padding: 2,
+        paddingY: 2,
         textAlign: "left",
       }}
     >
