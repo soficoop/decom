@@ -1,26 +1,34 @@
-import penIcon from "../assets/penIcon.svg";
-import { Fab } from "@mui/material";
+import { ReactComponent as PenIcon } from "../assets/penIcon.svg";
+import { Fab, SvgIcon } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/system";
 
 export const NewSuggestionFloatingButton = () => {
   const navigate = useNavigate();
 
   return (
-    <Fab
-      color="primary"
-      size="large"
-      onClick={() => {
-        navigate(`new-suggestion`);
-      }}
+    <Container
+      maxWidth="xs"
+      disableGutters
       sx={{
+        contain: "content",
         position: "fixed",
-        bottom: 2,
-        left: 2,
-        width: "96px",
-        height: "96px",
+        bottom: 0,
+        padding: 2,
+        textAlign: "left",
       }}
     >
-      <img src={penIcon} alt="pen icon" />
-    </Fab>
+      <Fab
+        color="primary"
+        size="large"
+        onClick={() => {
+          navigate(`new-suggestion`);
+        }}
+      >
+        <SvgIcon>
+          <PenIcon />
+        </SvgIcon>
+      </Fab>
+    </Container>
   );
 };
