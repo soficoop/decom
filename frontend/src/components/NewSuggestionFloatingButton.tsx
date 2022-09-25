@@ -1,32 +1,33 @@
-import { Link } from "react-router-dom";
-import penIcon from "../assets/penIcon.svg";
-import { Stack, useTheme } from "@mui/material";
-import styled from "@emotion/styled";
+import { ReactComponent as PenIcon } from "../assets/penIcon.svg";
+import { Fab, SvgIcon } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/system";
 
 export const NewSuggestionFloatingButton = () => {
-  const theme = useTheme();
-
-  const FloatingButton = styled(Stack)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ${theme.palette.primary.main};
-    border-radius: 28px;
-    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.3));
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    width: 96px;
-    height: 96px;
-    z-index: 9;
-  `;
+  const navigate = useNavigate();
 
   return (
-    <Link to="/new-suggestion">
-      <FloatingButton>
-        <img src={penIcon} alt={"pen icon"} width="30%" />
-      </FloatingButton>
-    </Link>
+    <Container
+      maxWidth="xs"
+      disableGutters
+      sx={{
+        position: "sticky",
+        bottom: 0,
+        paddingY: 2,
+        textAlign: "left",
+      }}
+    >
+      <Fab
+        color="primary"
+        size="large"
+        onClick={() => {
+          navigate(`new-suggestion`);
+        }}
+      >
+        <SvgIcon>
+          <PenIcon />
+        </SvgIcon>
+      </Fab>
+    </Container>
   );
 };

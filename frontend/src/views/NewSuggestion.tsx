@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import { InputLabel, TextField, Button, Box, useTheme } from "@mui/material";
@@ -9,6 +9,9 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
+import { SuggestionsContext } from "../contexts/suggestions";
+import { useNavigate } from "react-router-dom";
+import { uploadFile } from "../utils/functions";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -62,7 +65,7 @@ const ImagePreviewContainer = styled(Stack)`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  max-width: 380px;
+  min-width: 380px;
   height: 222px;
   border-radius: 8px;
 `;
@@ -75,20 +78,21 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
   const theme = useTheme();
   const [images, setImages] = useState<ImageType[]>([]);
 
+  useEffect(() => {
+    setImage(images[0]);
+  }, [images, setImage]);
+
   const onChange = (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
   ) => {
-    // data for submit
-
     setImages(imageList as never[]);
-    setImage(images[0]);
   };
+
   return (
     <Stack display={"flex"}>
       <ImageUploading value={images} onChange={onChange} maxNumber={1}>
         {({ onImageUpload, onImageRemoveAll }) => (
-          // write your building UI
           <div className="upload__image-wrapper">
             {images.length > 0 ? (
               <ImagePreviewContainer
@@ -96,7 +100,13 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
                 image={images[0]?.dataURL}
               >
                 <img
-                  style={{ position: "relative", top: "-42%", right: "-45%" }}
+                  style={{
+                    position: "relative",
+                    top: "-90px",
+                    right: "-170px",
+                    width: "1.5rem",
+                    height: "1.5rem",
+                  }}
                   src={trashIcon}
                   onClick={onImageRemoveAll}
                   alt="trash icon"
@@ -119,7 +129,9 @@ export const NewSuggestion = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<ImageType | null>(null);
-
+  const { addSuggestion, addSuggestionLoading, addSuggestionError } =
+    useContext(SuggestionsContext);
+  const navigate = useNavigate();
   const onTitleChange = (e: any) => {
     setTitle(e.target.value);
   };
@@ -127,14 +139,11 @@ export const NewSuggestion = () => {
     setContent(e.target.value);
   };
 
-  // const SendData = (variables: any) => {
-  //   const [createSuggestion, { data, loading, error }] = useMutation(
-  //     ADD_SUGGESTION,
-  //     {
-  //       variables,
-  //     }
-  //   );
-  // };
+  async function handleSubmit() {
+    const imageID = image?.file && (await uploadFile(image.file))?.id;
+    await addSuggestion(title, content, imageID);
+    navigate("success");
+  }
 
   return (
     <Stack paddingX={0}>
@@ -143,56 +152,38 @@ export const NewSuggestion = () => {
         הצעה חדשה
       </Typography>
       <Stack>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
+        <InputBox marginY={1.5}>
+          <InputLabel>כותרת</InputLabel>
+          <TextField
+            placeholder="תנו שם ברור"
+            value={title}
+            onChange={onTitleChange}
+            fullWidth
+          />
+        </InputBox>
+        <ImageUpload setImage={setImage} />
+        <InputBox marginY={1.5}>
+          <InputLabel>פירוט ההצעה</InputLabel>
 
-            // SendData({
-            //   title: title,
-            //   content: content,
-            //   image,
-            //   community: null,
-            //   score: 0,
-            //   upvotes: 0,
-            //   downvotes: 0,
-            // });
-
-            setTitle("");
-            setContent("");
-          }}
-        >
-          <InputBox marginY={1.5}>
-            <InputLabel>כותרת</InputLabel>
-            <TextField
-              placeholder="תנו שם ברור"
-              value={title}
-              onChange={onTitleChange}
-              fullWidth
-            />
-          </InputBox>
-          <ImageUpload setImage={setImage} />
-          <InputBox marginY={1.5}>
-            <InputLabel>פירוט ההצעה</InputLabel>
-
-            <TXTAREA
-              placeholder={`נסו להתייחס לנקודות הבאות:
+          <TXTAREA
+            placeholder={`נסו להתייחס לנקודות הבאות:
 
             סקירה מעמיקה ומקיפה של הסוגיה
             הנחות מוצא שהסוגיה מבתבססת עליהן
             פירוט הקריטריונים החשובים בבחירת פתרון`}
-              value={content}
-              onChange={onDescriptionChange}
-            />
-          </InputBox>
-          <Button
-            fullWidth
-            type="submit"
-            variant={title === "" || content === "" ? "outlined" : "primary"}
-            disabled={title === "" || content === ""}
-          >
-            פרסום סוגיה
-          </Button>
-        </form>
+            value={content}
+            onChange={onDescriptionChange}
+          />
+        </InputBox>
+        <Button
+          fullWidth
+          type="submit"
+          variant={title === "" || content === "" ? "outlined" : "primary"}
+          disabled={title === "" || content === ""}
+          onClick={handleSubmit}
+        >
+          פרסום סוגיה
+        </Button>
       </Stack>
     </Stack>
   );

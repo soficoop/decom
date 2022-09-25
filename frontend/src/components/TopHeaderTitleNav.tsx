@@ -71,8 +71,11 @@ export const NewSuggestionTopNav = ({
       <Link to={"/"}>
         <img src={rightArrow} alt="right arrow icon" />
       </Link>
-      {titleColor === "light" && <img src={decomTitle} alt="title icon" />}
-      {titleColor === "dark" && <img src={decomDarkTitle} alt="title icon" />}
+      <img
+        src={titleColor === "light" ? decomTitle : decomDarkTitle}
+        alt="title icon"
+      />
+
       <span />
     </NewSuggestionTopNavSC>
   );

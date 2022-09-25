@@ -4,7 +4,7 @@ const secondaryColor = "#011756";
 const mainBlackColor = "#000000";
 const disabledColor = "#D3D6E0";
 const whiteColor = "#FFFFFF";
-const numberColor = "rgba(1, 23, 86, 0.66)";
+export const numberColor = "rgba(1, 23, 86, 0.66)";
 
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
@@ -51,6 +51,13 @@ export const theme = createTheme({
         },
       ],
     },
+    MuiFab: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+        },
+      },
+    },
     MuiButton: {
       variants: [
         {
@@ -58,7 +65,6 @@ export const theme = createTheme({
           style: {
             disableElevation: true,
             height: "56px",
-            fontFamily: "Noto Sans Hebrew",
             fontStyle: "normal",
             fontWeight: "600",
             fontSize: "16px",
@@ -73,7 +79,6 @@ export const theme = createTheme({
           style: {
             disableElevation: true,
             height: "56px",
-            fontFamily: "Noto Sans Hebrew",
             fontStyle: "normal",
             fontWeight: "600",
             fontSize: "16px",
@@ -89,7 +94,6 @@ export const theme = createTheme({
           style: {
             disableElevation: true,
             height: "56px",
-            fontFamily: "Noto Sans Hebrew",
             fontStyle: "normal",
             fontWeight: "600",
             fontSize: "16px",

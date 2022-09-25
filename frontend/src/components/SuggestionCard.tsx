@@ -9,6 +9,7 @@ import {
   SuggetsionVotingUpCell,
   SuggetsionVotingDownCell,
 } from "../components/SuggestionVotingCell";
+import { truncateAfterWords } from "../utils/functions";
 
 interface SuggestioImageProps {
   image?: string;
@@ -47,14 +48,9 @@ interface SuggestionCardProps {
   downvotes?: number;
 }
 
-const truncateAfterWords = (text: string, maxNumOfWords: number): string => {
-  const words = text.split(" ");
-  if (words.length <= maxNumOfWords) return text;
-  return `${words.slice(0, maxNumOfWords).join(" ")}...`;
-};
-
 const CleanLink = styled(Link)`
   text-decoration: none;
+  color: inherit;
 `;
 
 export const SuggestionCard = ({
@@ -80,19 +76,21 @@ export const SuggestionCard = ({
   return (
     <Card variant="outlined">
       <CleanLink to={`suggestion/${id}`}>
-        <SuggestioImage image={image} />
-        <Stack
-          direction={"column"}
-          textAlign={"right"}
-          height={"156px"}
-          padding={"1rem 0.5rem"}
-          borderBottom={`1px solid ${theme.palette.secondary.main}`}
-        >
-          <Typography variant="h1">{title}</Typography>
-          <Typography variant="body1">
-            {content && truncateAfterWords(content, 20)}
-          </Typography>
-        </Stack>
+        <>
+          <SuggestioImage image={image} />
+          <Stack
+            direction="column"
+            textAlign="right"
+            height="156px"
+            padding="1rem 0.5rem"
+            borderBottom={`1px solid ${theme.palette.secondary.main}`}
+          >
+            <Typography variant="h1">{title}</Typography>
+            <Typography variant="body1">
+              {truncateAfterWords(content ?? "", 20)}
+            </Typography>
+          </Stack>
+        </>
       </CleanLink>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell

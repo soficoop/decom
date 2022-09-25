@@ -5,6 +5,7 @@ import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionCard } from "../components/SuggestionCard";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { NewSuggestionFloatingButton } from "../components/NewSuggestionFloatingButton";
+import { numberColor } from "../theme";
 
 export const Community = () => {
   const theme = useTheme();
@@ -18,7 +19,7 @@ export const Community = () => {
         <>
           <TopHeaderTitleNav bgImage={selectedCommunity?.image} backTo={"/"} />
           <Stack
-            paddingX={4}
+            paddingX={3}
             marginTop={-4}
             borderRadius="32px 32px 0 0"
             bgcolor={theme.palette.background.paper}
@@ -40,13 +41,10 @@ export const Community = () => {
               <Typography variant="h3" display={"inline"} marginLeft={1.5}>
                 הצעות:
               </Typography>
-              <Typography variant="subtitle2" color="info" display="inline">
-                {suggestionsData.length}
-              </Typography>
               <Typography
-                variant="h3"
-                color={"rgba(1, 23, 86, 0.66)"}
-                display={"inline"}
+                variant="subtitle2"
+                color={numberColor}
+                display="inline"
               >
                 {suggestionsData.length}
               </Typography>

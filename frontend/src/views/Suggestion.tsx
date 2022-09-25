@@ -10,7 +10,7 @@ import {
   SuggetsionVotingUpCell,
 } from "../components/SuggestionVotingCell";
 import { useParams } from "react-router-dom";
-import { Suggestion as Sugg } from "../contexts/suggestions";
+import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
   const { suggestionsData } = useContext(SuggestionsContext);
@@ -23,7 +23,7 @@ export const Suggestion = () => {
   const { suggId } = useParams();
 
   const selectedSuggestion = suggestionsData.find(
-    (sugg: Sugg) => sugg.id === suggId
+    (sugg: ISuggestion) => sugg.id === suggId
   );
 
   const handleDownVote = () => {
