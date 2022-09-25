@@ -12,7 +12,6 @@ import ImageUploading, {
 import { SuggestionsContext } from "../contexts/suggestions";
 import { useNavigate } from "react-router-dom";
 import { uploadFile } from "../utils/functions";
-import { canUseLayoutEffect } from "@apollo/client/utilities";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -81,7 +80,7 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
 
   useEffect(() => {
     setImage(images[0]);
-  }, [images]);
+  }, [images, setImage]);
 
   const onChange = (
     imageList: ImageListType,
@@ -140,20 +139,9 @@ export const NewSuggestion = () => {
     setContent(e.target.value);
   };
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-
-    const imageID = image?.file && (await uploadFile(image.file));
-    console.log(imageID);
-
-    const addedSuggestion = await addSuggestion(
-      title,
-      content,
-      parseInt(imageID),
-      0
-    );
-    console.log(addedSuggestion);
-
+  async function handleSubmit() {
+    const imageID = image?.file && (await uploadFile(image.file))?.id;
+    await addSuggestion(title, content, imageID);
     navigate("success");
   }
 
@@ -164,39 +152,38 @@ export const NewSuggestion = () => {
         הצעה חדשה
       </Typography>
       <Stack>
-        <form onSubmit={handleSubmit}>
-          <InputBox marginY={1.5}>
-            <InputLabel>כותרת</InputLabel>
-            <TextField
-              placeholder="תנו שם ברור"
-              value={title}
-              onChange={onTitleChange}
-              fullWidth
-            />
-          </InputBox>
-          <ImageUpload setImage={setImage} />
-          <InputBox marginY={1.5}>
-            <InputLabel>פירוט ההצעה</InputLabel>
+        <InputBox marginY={1.5}>
+          <InputLabel>כותרת</InputLabel>
+          <TextField
+            placeholder="תנו שם ברור"
+            value={title}
+            onChange={onTitleChange}
+            fullWidth
+          />
+        </InputBox>
+        <ImageUpload setImage={setImage} />
+        <InputBox marginY={1.5}>
+          <InputLabel>פירוט ההצעה</InputLabel>
 
-            <TXTAREA
-              placeholder={`נסו להתייחס לנקודות הבאות:
+          <TXTAREA
+            placeholder={`נסו להתייחס לנקודות הבאות:
 
             סקירה מעמיקה ומקיפה של הסוגיה
             הנחות מוצא שהסוגיה מבתבססת עליהן
             פירוט הקריטריונים החשובים בבחירת פתרון`}
-              value={content}
-              onChange={onDescriptionChange}
-            />
-          </InputBox>
-          <Button
-            fullWidth
-            type="submit"
-            variant={title === "" || content === "" ? "outlined" : "primary"}
-            disabled={title === "" || content === ""}
-          >
-            פרסום סוגיה
-          </Button>
-        </form>
+            value={content}
+            onChange={onDescriptionChange}
+          />
+        </InputBox>
+        <Button
+          fullWidth
+          type="submit"
+          variant={title === "" || content === "" ? "outlined" : "primary"}
+          disabled={title === "" || content === ""}
+          onClick={handleSubmit}
+        >
+          פרסום סוגיה
+        </Button>
       </Stack>
     </Stack>
   );

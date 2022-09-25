@@ -1,12 +1,11 @@
 import { gql } from "@apollo/client";
-//
 
 export const addSuggestion = gql`
   mutation createSuggestion(
     $title: String!
     $content: String!
     $community: ID!
-    $image: ID!
+    $image: ID
   ) {
     createSuggestion(
       data: {
@@ -36,4 +35,3 @@ export const addSuggestion = gql`
     }
   }
 `;
-//  image: { data: { attributes: { url: $image } } }

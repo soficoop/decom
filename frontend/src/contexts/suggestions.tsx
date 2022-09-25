@@ -11,8 +11,7 @@ export interface SuggestionContext {
   addSuggestion: (
     title: string,
     content: string,
-    image: any,
-    community: number
+    image: number
   ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
   addSuggestionData: any;
   addSuggestionLoading: boolean;
@@ -75,7 +74,7 @@ function SuggestionsProvider() {
         })
       ) || [],
     suggestionsLoading: loading,
-    addSuggestion: (title, content, image, community) => {
+    addSuggestion: (title, content, image) => {
       return addSuggestion({
         variables: {
           title,
