@@ -141,8 +141,9 @@ export const NewSuggestion = () => {
 
   async function handleSubmit() {
     const imageID = image?.file && (await uploadFile(image.file))?.id;
-    await addSuggestion(title, content, imageID);
-    navigate("success");
+    const newSuggestion = await addSuggestion(title, content, imageID);
+    // console.log(newSuggestion);
+    navigate(`success/${newSuggestion.data.createSuggestion.data.id}`);
   }
 
   return (

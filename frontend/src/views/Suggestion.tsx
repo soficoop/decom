@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionsContext, CommunitiesContext } from "../contexts";
 import uparrow from "../assets/arrow-up.svg";
@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
+  const theme = useTheme();
   const { suggestionsData } = useContext(SuggestionsContext);
   const { selectedCommunity } = useContext(CommunitiesContext);
   const [votes, setVotes] = useState({ up: false, down: false });
@@ -35,8 +36,14 @@ export const Suggestion = () => {
         bgImage={selectedSuggestion?.image}
         backTo={selectedCommunity ? "/community/" + selectedCommunity.id : "/"}
       />
-      <Stack paddingX={1}>
-        <Typography align="center" variant="h2" marginTop={2}>
+      <Stack
+        paddingX={3}
+        marginTop={-4}
+        borderRadius="32px 32px 0 0"
+        bgcolor={theme.palette.background.paper}
+        direction="column"
+      >
+        <Typography align="center" variant="h2" marginTop={4} marginBottom={5}>
           {selectedSuggestion?.title}
         </Typography>
         <SuggestionVotingCenterContainer>
