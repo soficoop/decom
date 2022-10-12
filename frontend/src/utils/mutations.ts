@@ -35,3 +35,5 @@ export const addSuggestion = gql`
     }
   }
 `;
+
+export const updateVote = gql``;
