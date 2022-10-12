@@ -28,7 +28,7 @@ export const Suggestion = () => {
         setVote(localVotesOBJ[selectedCommunityId][suggId] || "");
       }
     }
-  });
+  }, [selectedCommunityId]);
 
   const updateLocalVote = (vt: string) => {
     let localVotes = window.localStorage.getItem("localVotes");
@@ -58,6 +58,28 @@ export const Suggestion = () => {
   const handleUpVote = () => {
     setVote("up");
     updateLocalVote("up");
+    if (
+      vote === "down" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updatelVotes(
+        selectedSuggestion.upvotes + 1,
+        selectedSuggestion.downvotes - 1
+      );
+    }
+    if (
+      vote === "" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updatelVotes(
+        selectedSuggestion?.upvotes + 1,
+        selectedSuggestion?.downvotes
+      );
+    }
   };
 
   const selectedSuggestion = suggestionsData.find(
@@ -67,6 +89,28 @@ export const Suggestion = () => {
   const handleDownVote = () => {
     setVote("down");
     updateLocalVote("down");
+    if (
+      vote === "up" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updatelVotes(
+        selectedSuggestion.upvotes - 1,
+        selectedSuggestion.downvotes + 1
+      );
+    }
+    if (
+      vote === "" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updatelVotes(
+        selectedSuggestion?.upvotes,
+        selectedSuggestion?.downvotes + 1
+      );
+    }
   };
   return (
     <Stack>

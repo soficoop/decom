@@ -36,4 +36,18 @@ export const addSuggestion = gql`
   }
 `;
 
-export const updateVote = gql``;
+export const updateSuggestion = gql`
+  mutation updateSuggestion(
+    $id: ID!
+    $score: Float!
+    $upvotes: Int!
+    $downvotes: Int!
+  ) {
+    updateSuggestion(
+      input: {
+        where: { id: $id }
+        data: { score: $score, upvotes: $upvotes, downvotes: $downvotes }
+      }
+    )
+  }
+`;

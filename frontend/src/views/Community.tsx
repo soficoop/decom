@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CommunitiesContext, SuggestionsContext } from "../contexts";
 
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionCard } from "../components/SuggestionCard";
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import { NewSuggestionFloatingButton } from "../components/NewSuggestionFloatingButton";
 import { numberColor } from "../theme";
 
@@ -12,6 +12,22 @@ export const Community = () => {
   const { loading, data, selectedCommunity } = useContext(CommunitiesContext);
   const { suggestionsLoading, suggestionsData } =
     useContext(SuggestionsContext);
+  const [votes, setVotes] = useState<any>({});
+  const selectedCommunityId = selectedCommunity?.id;
+
+  useEffect(() => {
+    let localVotes = localStorage.getItem("localVotes");
+    if (localVotes) {
+      let localVotesOBJ = JSON.parse(localVotes);
+      if (selectedCommunityId && localVotesOBJ) {
+        setVotes(localVotesOBJ[selectedCommunityId] || {});
+      }
+    }
+  }, [selectedCommunityId]);
+
+  const isPicked = (suggId: number) => {
+    if (suggId && votes) return votes[suggId.toString()];
+  };
 
   return (
     <Stack paddingX={0}>
@@ -60,6 +76,7 @@ export const Community = () => {
                   score={v.score}
                   upvotes={v.upvotes}
                   downvotes={v.downvotes}
+                  pick={v?.id && isPicked(v?.id)}
                 />
               ))}
             </Stack>
