@@ -31,6 +31,7 @@ const TXTAREA = styled.textarea`
 `;
 
 const StyledAddImageBox = styled(Box)`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,7 +91,7 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
   };
 
   return (
-    <Stack display={"flex"}>
+    <Stack display={"flex"} marginX={0.1}>
       <ImageUploading value={images} onChange={onChange} maxNumber={1}>
         {({ onImageUpload, onImageRemoveAll }) => (
           <div className="upload__image-wrapper">
@@ -146,14 +147,16 @@ export const NewSuggestion = () => {
   }
 
   return (
-    <Stack paddingX={0}>
+    <Stack paddingX={3}>
       <NewSuggestionTopNav titleColor="dark" />
       <Typography align="center" variant="h2">
         הצעה חדשה
       </Typography>
       <Stack>
         <InputBox marginY={1.5}>
-          <InputLabel>כותרת</InputLabel>
+          <InputLabel>
+            <b>כותרת</b>
+          </InputLabel>
           <TextField
             placeholder="תנו שם ברור"
             value={title}
@@ -163,7 +166,9 @@ export const NewSuggestion = () => {
         </InputBox>
         <ImageUpload setImage={setImage} />
         <InputBox marginY={1.5}>
-          <InputLabel>פירוט ההצעה</InputLabel>
+          <InputLabel>
+            <b>פירוט ההצעה</b>
+          </InputLabel>
 
           <TXTAREA
             placeholder={`נסו להתייחס לנקודות הבאות:
