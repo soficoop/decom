@@ -41,7 +41,6 @@ export const Suggestion = () => {
         marginTop={-4}
         borderRadius="32px 32px 0 0"
         bgcolor={theme.palette.background.paper}
-        direction="column"
       >
         <Typography align="center" variant="h2" marginTop={4} marginBottom={5}>
           {selectedSuggestion?.title}
