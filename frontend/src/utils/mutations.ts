@@ -37,17 +37,14 @@ export const addSuggestion = gql`
 `;
 
 export const updateSuggestion = gql`
-  mutation updateSuggestion(
-    $id: ID!
-    $score: Float!
-    $upvotes: Int!
-    $downvotes: Int!
-  ) {
+  mutation updateSuggestion($id: ID!, $upvotes: Int!, $downvotes: Int!) {
     updateSuggestion(
-      input: {
-        where: { id: $id }
-        data: { score: $score, upvotes: $upvotes, downvotes: $downvotes }
+      id: $id
+      data: { upvotes: $upvotes, downvotes: $downvotes }
+    ) {
+      data {
+        id
       }
-    )
+    }
   }
 `;

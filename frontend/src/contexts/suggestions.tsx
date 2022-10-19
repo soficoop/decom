@@ -1,21 +1,30 @@
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { createContext } from "react";
 import { Outlet, useParams } from "react-router-dom";
-import { addSuggestion as addSuggestionMutation } from "../utils/mutations";
+import {
+  addSuggestion as addSuggestionMutation,
+  updateSuggestion as updateSuggestionMutation,
+} from "../utils/mutations";
+import { suggestions as suggestionsQuery } from "../utils/queries";
 import { Suggestion } from "../types/entities";
 import { FetchResult } from "@apollo/client";
 
 export interface SuggestionContext {
-  suggestionsData: Suggestion[];
-  suggestionsLoading: any;
   addSuggestion: (
     title: string,
     content: string,
     image: number
   ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
   addSuggestionData: any;
-  addSuggestionLoading: boolean;
   addSuggestionError: any;
+  addSuggestionLoading: boolean;
+  suggestionsData: Suggestion[];
+  suggestionsLoading: any;
+  updateSuggestion: (
+    id: number,
+    upvotes: number,
+    downvotes: number
+  ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
 }
 
 const SuggestionsContext = createContext<SuggestionContext>(
@@ -26,32 +35,9 @@ function SuggestionsProvider() {
   const { communityId } = useParams();
   const commId = communityId && parseInt(communityId);
 
-  const { data, loading } = useQuery(
-    gql`
-      query suggestions($commId: ID!) {
-        suggestions(filters: { community: { id: { eq: $commId } } }) {
-          data {
-            id
-            attributes {
-              content
-              title
-              score
-              upvotes
-              downvotes
-              image {
-                data {
-                  attributes {
-                    url
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-    { variables: { commId } }
-  );
+  const { data, loading } = useQuery(suggestionsQuery, {
+    variables: { commId },
+  });
 
   const [
     addSuggestion,
@@ -64,16 +50,18 @@ function SuggestionsProvider() {
     refetchQueries: ["suggestions"],
   });
 
+  const [
+    updateSuggestion,
+    {
+      data: updateSuggestionData,
+      loading: updateSuggestionLoading,
+      error: updateSuggestionError,
+    },
+  ] = useMutation(updateSuggestionMutation, {
+    refetchQueries: ["suggestions"],
+  });
+
   const state: SuggestionContext = {
-    suggestionsData:
-      data?.suggestions?.data?.map(
-        (suggestion: { attributes: any; id: string }) => ({
-          ...suggestion.attributes,
-          id: suggestion.id,
-          image: suggestion.attributes.image?.data?.attributes?.url ?? "",
-        })
-      ) || [],
-    suggestionsLoading: loading,
     addSuggestion: (title, content, image) => {
       return addSuggestion({
         variables: {
@@ -85,8 +73,26 @@ function SuggestionsProvider() {
       });
     },
     addSuggestionData,
-    addSuggestionLoading,
     addSuggestionError,
+    addSuggestionLoading,
+    suggestionsData:
+      data?.suggestions?.data?.map(
+        (suggestion: { attributes: any; id: string }) => ({
+          ...suggestion.attributes,
+          id: suggestion.id,
+          image: suggestion.attributes.image?.data?.attributes?.url ?? "",
+        })
+      ) || [],
+    suggestionsLoading: loading,
+    updateSuggestion: (id, upvotes, downvotes) => {
+      return updateSuggestion({
+        variables: {
+          id,
+          upvotes,
+          downvotes,
+        },
+      });
+    },
   };
 
   return (

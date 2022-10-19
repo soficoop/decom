@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
-  const { suggestionsData } = useContext(SuggestionsContext);
+  const { suggestionsData, updateSuggestion } = useContext(SuggestionsContext);
   const { selectedCommunity } = useContext(CommunitiesContext);
   const [vote, setVote] = useState<string | undefined>();
   const { suggId } = useParams();
@@ -64,7 +64,8 @@ export const Suggestion = () => {
       selectedSuggestion.upvotes &&
       selectedSuggestion.downvotes
     ) {
-      updatelVotes(
+      updateSuggestion(
+        Number(suggId),
         selectedSuggestion.upvotes + 1,
         selectedSuggestion.downvotes - 1
       );
@@ -75,7 +76,8 @@ export const Suggestion = () => {
       selectedSuggestion.upvotes &&
       selectedSuggestion.downvotes
     ) {
-      updatelVotes(
+      updateSuggestion(
+        Number(suggId),
         selectedSuggestion?.upvotes + 1,
         selectedSuggestion?.downvotes
       );
@@ -95,7 +97,8 @@ export const Suggestion = () => {
       selectedSuggestion.upvotes &&
       selectedSuggestion.downvotes
     ) {
-      updatelVotes(
+      updateSuggestion(
+        Number(suggId),
         selectedSuggestion.upvotes - 1,
         selectedSuggestion.downvotes + 1
       );
@@ -106,7 +109,8 @@ export const Suggestion = () => {
       selectedSuggestion.upvotes &&
       selectedSuggestion.downvotes
     ) {
-      updatelVotes(
+      updateSuggestion(
+        Number(suggId),
         selectedSuggestion?.upvotes,
         selectedSuggestion?.downvotes + 1
       );
