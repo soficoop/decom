@@ -3,9 +3,10 @@ import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
 import successV from "../assets/successV.svg";
 import { useContext } from "react";
 import { CommunitiesContext } from "../contexts";
-
+import { useParams } from "react-router-dom";
 export const SendNewSuggestionSucess = () => {
   const { selectedCommunity } = useContext(CommunitiesContext);
+  const { successID } = useParams();
   return (
     <Stack>
       <NewSuggestionTopNav titleColor="dark" />
@@ -20,8 +21,13 @@ export const SendNewSuggestionSucess = () => {
         <Typography align="center" variant="h2" marginBottom={5}>
           הצעתך פורסמה בהצלחה!
         </Typography>
-        <Box padding={1}>
-          <Button fullWidth variant="primary" sx={{ marginY: 2 }}>
+        <Box paddingX={5} width="100%">
+          <Button
+            fullWidth
+            variant="primary"
+            sx={{ marginY: 2 }}
+            href={`/community/${selectedCommunity?.id}/suggestion/${successID}`}
+          >
             לצפייה בהצעה
           </Button>
           <Button
