@@ -9,9 +9,8 @@ import { numberColor } from "../theme";
 
 export const Community = () => {
   const theme = useTheme();
-  const { loading, data, selectedCommunity } = useContext(CommunitiesContext);
-  const { suggestionsLoading, suggestionsData } =
-    useContext(SuggestionsContext);
+  const { selectedCommunity } = useContext(CommunitiesContext);
+  const { suggestionsData } = useContext(SuggestionsContext);
   const [votes, setVotes] = useState<any>({});
   const selectedCommunityId = selectedCommunity?.id;
 
