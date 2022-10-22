@@ -91,7 +91,7 @@ const ImageUpload = ({ setImage }: ImageUploadProps) => {
   };
 
   return (
-    <Stack display={"flex"} marginX={0.1}>
+    <Stack display="flex">
       <ImageUploading value={images} onChange={onChange} maxNumber={1}>
         {({ onImageUpload, onImageRemoveAll }) => (
           <div className="upload__image-wrapper">
@@ -130,8 +130,7 @@ export const NewSuggestion = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<ImageType | null>(null);
-  const { addSuggestion, addSuggestionLoading, addSuggestionError } =
-    useContext(SuggestionsContext);
+  const { addSuggestion } = useContext(SuggestionsContext);
   const navigate = useNavigate();
   const onTitleChange = (e: any) => {
     setTitle(e.target.value);
