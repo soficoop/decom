@@ -46,6 +46,7 @@ interface SuggestionCardProps {
   score?: number;
   upvotes?: number;
   downvotes?: number;
+  pick?: string;
 }
 
 const CleanLink = styled(Link)`
@@ -61,6 +62,7 @@ export const SuggestionCard = ({
   score,
   upvotes,
   downvotes,
+  pick,
 }: SuggestionCardProps) => {
   const [votes, setVotes] = useState({ up: false, down: false });
 
@@ -94,13 +96,13 @@ export const SuggestionCard = ({
       </CleanLink>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell
-          isPicked={votes.down}
+          isPicked={pick === "down"}
           onClick={handleDownVote}
         >
           {downvotes}
           <img src={downarrow} alt="down arrow" />
         </SuggetsionVotingDownCell>
-        <SuggetsionVotingUpCell isPicked={votes.up} onClick={handleUpVote}>
+        <SuggetsionVotingUpCell isPicked={pick === "up"} onClick={handleUpVote}>
           {upvotes}
           <img src={uparrow} alt="up arrow" />
         </SuggetsionVotingUpCell>

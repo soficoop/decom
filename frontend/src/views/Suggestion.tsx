@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Stack, Typography, useTheme } from "@mui/material";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionsContext, CommunitiesContext } from "../contexts";
@@ -13,22 +13,109 @@ import { useParams } from "react-router-dom";
 import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
+  const { suggestionsData, updateSuggestion } = useContext(SuggestionsContext);
   const theme = useTheme();
-  const { suggestionsData } = useContext(SuggestionsContext);
   const { selectedCommunity } = useContext(CommunitiesContext);
-  const [votes, setVotes] = useState({ up: false, down: false });
-  const handleUpVote = () => {
-    setVotes({ up: !votes.up, down: false });
+  const [vote, setVote] = useState<string | undefined>();
+  const { suggId } = useParams();
+
+  const selectedCommunityId = selectedCommunity?.id;
+
+  useEffect(() => {
+    let localVotes = localStorage.getItem("localVotes");
+    if (localVotes) {
+      let localVotesOBJ = JSON.parse(localVotes);
+      if (selectedCommunityId && localVotesOBJ && suggId) {
+        setVote(localVotesOBJ[selectedCommunityId][suggId] || "");
+      }
+    }
+  }, [selectedCommunityId, suggId]);
+
+  const updateLocalVote = (vt: string) => {
+    let localVotes = window.localStorage.getItem("localVotes");
+
+    if (localVotes) {
+      let localVotesOBJ = JSON.parse(localVotes);
+
+      if (selectedCommunityId && localVotesOBJ && suggId) {
+        localVotesOBJ[selectedCommunityId][suggId] = vt;
+
+        window.localStorage.setItem(
+          "localVotes",
+          JSON.stringify(localVotesOBJ)
+        );
+      }
+    } else {
+      if (selectedCommunityId && suggId) {
+        const newObj = {
+          [selectedCommunityId]: { [suggId]: vt },
+        };
+        const stringifiedOBJ = JSON.stringify(newObj);
+        window.localStorage.setItem("localVotes", stringifiedOBJ);
+      }
+    }
   };
 
-  const { suggId } = useParams();
+  const handleUpVote = () => {
+    setVote("up");
+    updateLocalVote("up");
+    if (
+      vote === "down" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updateSuggestion(
+        Number(suggId),
+        selectedSuggestion.upvotes + 1,
+        selectedSuggestion.downvotes - 1
+      );
+    }
+    if (
+      vote === "" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updateSuggestion(
+        Number(suggId),
+        selectedSuggestion?.upvotes + 1,
+        selectedSuggestion?.downvotes
+      );
+    }
+  };
 
   const selectedSuggestion = suggestionsData.find(
     (sugg: ISuggestion) => sugg.id === suggId
   );
 
   const handleDownVote = () => {
-    setVotes({ down: !votes.down, up: false });
+    setVote("down");
+    updateLocalVote("down");
+    if (
+      vote === "up" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updateSuggestion(
+        Number(suggId),
+        selectedSuggestion.upvotes - 1,
+        selectedSuggestion.downvotes + 1
+      );
+    }
+    if (
+      vote === "" &&
+      selectedSuggestion &&
+      selectedSuggestion.upvotes &&
+      selectedSuggestion.downvotes
+    ) {
+      updateSuggestion(
+        Number(suggId),
+        selectedSuggestion?.upvotes,
+        selectedSuggestion?.downvotes + 1
+      );
+    }
   };
   return (
     <Stack>
@@ -47,14 +134,17 @@ export const Suggestion = () => {
         </Typography>
         <SuggestionVotingCenterContainer>
           <SuggetsionVotingDownCell
-            isPicked={votes.down}
+            isPicked={vote === "down"}
             onClick={handleDownVote}
           >
             {selectedSuggestion && selectedSuggestion.downvotes}
 
             <img src={downarrow} alt="down arrow" />
           </SuggetsionVotingDownCell>
-          <SuggetsionVotingUpCell isPicked={votes.up} onClick={handleUpVote}>
+          <SuggetsionVotingUpCell
+            isPicked={vote === "up"}
+            onClick={handleUpVote}
+          >
             {selectedSuggestion && selectedSuggestion.upvotes}
 
             <img src={uparrow} alt="up arrow" />
