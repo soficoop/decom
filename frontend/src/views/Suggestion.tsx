@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionsContext, CommunitiesContext } from "../contexts";
 import uparrow from "../assets/arrow-up.svg";
@@ -14,6 +14,7 @@ import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
   const { suggestionsData, updateSuggestion } = useContext(SuggestionsContext);
+  const theme = useTheme();
   const { selectedCommunity } = useContext(CommunitiesContext);
   const [vote, setVote] = useState<string | undefined>();
   const { suggId } = useParams();
@@ -28,7 +29,7 @@ export const Suggestion = () => {
         setVote(localVotesOBJ[selectedCommunityId][suggId] || "");
       }
     }
-  }, [selectedCommunityId]);
+  }, [selectedCommunityId, suggId]);
 
   const updateLocalVote = (vt: string) => {
     let localVotes = window.localStorage.getItem("localVotes");
@@ -122,8 +123,13 @@ export const Suggestion = () => {
         bgImage={selectedSuggestion?.image}
         backTo={selectedCommunity ? "/community/" + selectedCommunity.id : "/"}
       />
-      <Stack paddingX={1}>
-        <Typography align="center" variant="h2" marginTop={2}>
+      <Stack
+        paddingX={3}
+        marginTop={-4}
+        borderRadius="32px 32px 0 0"
+        bgcolor={theme.palette.background.paper}
+      >
+        <Typography align="center" variant="h2" marginTop={4} marginBottom={5}>
           {selectedSuggestion?.title}
         </Typography>
         <SuggestionVotingCenterContainer>

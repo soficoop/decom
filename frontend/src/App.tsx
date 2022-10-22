@@ -35,7 +35,7 @@ function App() {
                     <Route path="suggestion/:suggId" element={<Suggestion />} />
                     <Route path="new-suggestion" element={<NewSuggestion />} />
                     <Route
-                      path="new-suggestion/success"
+                      path="new-suggestion/success/:successID"
                       element={<SendNewSuggestionSucess />}
                     />
                   </Route>
