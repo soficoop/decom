@@ -182,8 +182,8 @@ export const NewSuggestion = () => {
         <Button
           fullWidth
           type="submit"
-          variant={title === "" || content === "" ? "outlined" : "primary"}
-          disabled={title === "" || content === ""}
+          variant={title && content ? "primary" : "outlined"}
+          disabled={!title || !content}
           onClick={handleSubmit}
         >
           פרסום סוגיה
