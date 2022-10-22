@@ -50,14 +50,7 @@ function SuggestionsProvider() {
     refetchQueries: ["suggestions"],
   });
 
-  const [
-    updateSuggestion,
-    {
-      data: updateSuggestionData,
-      loading: updateSuggestionLoading,
-      error: updateSuggestionError,
-    },
-  ] = useMutation(updateSuggestionMutation, {
+  const [updateSuggestion] = useMutation(updateSuggestionMutation, {
     refetchQueries: ["suggestions"],
   });
 
