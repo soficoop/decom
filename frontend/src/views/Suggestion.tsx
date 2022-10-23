@@ -54,7 +54,7 @@ export const Suggestion = () => {
   }
 
   function handleVote(type: "up" | "down") {
-    const voteMatrix = {
+    const existingVsNew = {
       "up.up": { up: -1, down: 0 },
       "up.down": { up: -1, down: 1 },
       "down.up": { up: 1, down: -1 },
@@ -67,8 +67,8 @@ export const Suggestion = () => {
 
     updateSuggestion(
       Number(selectedSuggestion?.id) || 0,
-      existingUpvotes + voteMatrix[`${existingVote}.${type}`].up,
-      existingDownvotes + voteMatrix[`${existingVote}.${type}`].down
+      existingUpvotes + existingVsNew[`${existingVote}.${type}`].up,
+      existingDownvotes + existingVsNew[`${existingVote}.${type}`].down
     );
     setExistingVote(type === existingVote ? "" : type);
     setLocalVote(type === existingVote ? "" : type);
