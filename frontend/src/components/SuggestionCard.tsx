@@ -3,13 +3,14 @@ import { Card, Typography, Stack, useTheme } from "@mui/material";
 import uparrow from "../assets/arrow-up.svg";
 import downarrow from "../assets/arrow-down.svg";
 import defaultcover from "../assets/defaultcardimage.svg";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   SuggetsionVotingUpCell,
   SuggetsionVotingDownCell,
 } from "../components/SuggestionVotingCell";
 import { truncateAfterWords } from "../utils/functions";
+import { SuggestionsContext, CommunitiesContext } from "../contexts";
 
 interface SuggestioImageProps {
   image?: string;
@@ -46,7 +47,7 @@ interface SuggestionCardProps {
   score?: number;
   upvotes?: number;
   downvotes?: number;
-  pick?: string;
+  pick: string;
 }
 
 const CleanLink = styled(Link)`
@@ -65,15 +66,62 @@ export const SuggestionCard = ({
   pick,
 }: SuggestionCardProps) => {
   const [votes, setVotes] = useState({ up: false, down: false });
+  const { updateSuggestion } = useContext(SuggestionsContext);
+  const { selectedCommunity } = useContext(CommunitiesContext);
+
+  const [existingVote, setExistingVote] = useState<"up" | "down" | "">("");
+
+  useEffect(() => {
+    if (pick === "up") setExistingVote("up");
+    if (pick === "") setExistingVote("");
+    if (pick === "down") setExistingVote("down");
+  }, [pick]);
 
   const theme = useTheme();
-  const handleUpVote = () => {
-    setVotes({ up: !votes.up, down: false });
-  };
+  const selectedCommunityId = selectedCommunity?.id;
 
-  const handleDownVote = () => {
-    setVotes({ down: !votes.down, up: false });
-  };
+  function setLocalVote(vt: string) {
+    let localVotes = JSON.parse(
+      window.localStorage.getItem("localVotes") || "{}"
+    );
+
+    if (Object.keys(localVotes).length) {
+      if (selectedCommunityId && localVotes && id) {
+        localVotes[selectedCommunityId][id] = vt;
+
+        window.localStorage.setItem("localVotes", JSON.stringify(localVotes));
+      }
+    } else {
+      if (selectedCommunityId && id) {
+        const newObj = {
+          [selectedCommunityId]: { [id]: vt },
+        };
+        const stringifiedOBJ = JSON.stringify(newObj);
+        window.localStorage.setItem("localVotes", stringifiedOBJ);
+      }
+    }
+  }
+
+  async function handleVote(type: "up" | "down") {
+    const existingVsNew = {
+      "up.up": { up: -1, down: 0 },
+      "up.down": { up: -1, down: 1 },
+      "down.up": { up: 1, down: -1 },
+      "down.down": { up: 0, down: -1 },
+      ".up": { up: 1, down: 0 },
+      ".down": { up: 0, down: 1 },
+    };
+    const existingUpvotes = upvotes || 0;
+    const existingDownvotes = downvotes || 0;
+
+    await updateSuggestion(
+      Number(id),
+      existingUpvotes + existingVsNew[`${existingVote}.${type}`].up,
+      existingDownvotes + existingVsNew[`${existingVote}.${type}`].down
+    );
+    setExistingVote(type === existingVote ? "" : type);
+    setLocalVote(type === existingVote ? "" : type);
+  }
 
   return (
     <Card variant="outlined">
@@ -96,13 +144,16 @@ export const SuggestionCard = ({
       </CleanLink>
       <SuggestionVotingFooter>
         <SuggetsionVotingDownCell
-          isPicked={pick === "down"}
-          onClick={handleDownVote}
+          isPicked={existingVote === "down"}
+          onClick={() => handleVote(`down`)}
         >
           {downvotes}
           <img src={downarrow} alt="down arrow" />
         </SuggetsionVotingDownCell>
-        <SuggetsionVotingUpCell isPicked={pick === "up"} onClick={handleUpVote}>
+        <SuggetsionVotingUpCell
+          isPicked={existingVote === "up"}
+          onClick={() => handleVote(`up`)}
+        >
           {upvotes}
           <img src={uparrow} alt="up arrow" />
         </SuggetsionVotingUpCell>
