@@ -16,7 +16,7 @@ export const Suggestion = () => {
   const { suggestionsData, updateSuggestion } = useContext(SuggestionsContext);
   const theme = useTheme();
   const { selectedCommunity } = useContext(CommunitiesContext);
-  const [vote, setVote] = useState<string | undefined>();
+  const [existingVote, setExistingVote] = useState<"up" | "down" | "">("");
   const { suggId } = useParams();
 
   const selectedCommunityId = selectedCommunity?.id;
@@ -26,24 +26,21 @@ export const Suggestion = () => {
     if (localVotes) {
       let localVotesOBJ = JSON.parse(localVotes);
       if (selectedCommunityId && localVotesOBJ && suggId) {
-        setVote(localVotesOBJ[selectedCommunityId][suggId] || "");
+        setExistingVote(localVotesOBJ[selectedCommunityId][suggId] || "");
       }
     }
   }, [selectedCommunityId, suggId]);
 
-  const updateLocalVote = (vt: string) => {
-    let localVotes = window.localStorage.getItem("localVotes");
+  function setLocalVote(vt: string) {
+    let localVotes = JSON.parse(
+      window.localStorage.getItem("localVotes") || "{}"
+    );
 
     if (localVotes) {
-      let localVotesOBJ = JSON.parse(localVotes);
+      if (selectedCommunityId && localVotes && suggId) {
+        localVotes[selectedCommunityId][suggId] = vt;
 
-      if (selectedCommunityId && localVotesOBJ && suggId) {
-        localVotesOBJ[selectedCommunityId][suggId] = vt;
-
-        window.localStorage.setItem(
-          "localVotes",
-          JSON.stringify(localVotesOBJ)
-        );
+        window.localStorage.setItem("localVotes", JSON.stringify(localVotes));
       }
     } else {
       if (selectedCommunityId && suggId) {
@@ -54,69 +51,33 @@ export const Suggestion = () => {
         window.localStorage.setItem("localVotes", stringifiedOBJ);
       }
     }
-  };
+  }
 
-  const handleUpVote = () => {
-    setVote("up");
-    updateLocalVote("up");
-    if (
-      vote === "down" &&
-      selectedSuggestion &&
-      selectedSuggestion.upvotes &&
-      selectedSuggestion.downvotes
-    ) {
-      updateSuggestion(
-        Number(suggId),
-        selectedSuggestion.upvotes + 1,
-        selectedSuggestion.downvotes - 1
-      );
-    }
-    if (
-      vote === "" &&
-      selectedSuggestion &&
-      selectedSuggestion.upvotes &&
-      selectedSuggestion.downvotes
-    ) {
-      updateSuggestion(
-        Number(suggId),
-        selectedSuggestion?.upvotes + 1,
-        selectedSuggestion?.downvotes
-      );
-    }
-  };
+  function handleVote(type: "up" | "down") {
+    const voteMatrix = {
+      "up.up": { up: -1, down: 0 },
+      "up.down": { up: -1, down: 1 },
+      "down.up": { up: 1, down: -1 },
+      "down.down": { up: 0, down: -1 },
+      ".up": { up: 1, down: 0 },
+      ".down": { up: 0, down: 1 },
+    };
+    const existingUpvotes = selectedSuggestion?.upvotes || 0;
+    const existingDownvotes = selectedSuggestion?.downvotes || 0;
+
+    updateSuggestion(
+      Number(selectedSuggestion?.id) || 0,
+      existingUpvotes + voteMatrix[`${existingVote}.${type}`].up,
+      existingDownvotes + voteMatrix[`${existingVote}.${type}`].down
+    );
+    setExistingVote(type === existingVote ? "" : type);
+    setLocalVote(type === existingVote ? "" : type);
+  }
 
   const selectedSuggestion = suggestionsData.find(
     (sugg: ISuggestion) => sugg.id === suggId
   );
 
-  const handleDownVote = () => {
-    setVote("down");
-    updateLocalVote("down");
-    if (
-      vote === "up" &&
-      selectedSuggestion &&
-      selectedSuggestion.upvotes &&
-      selectedSuggestion.downvotes
-    ) {
-      updateSuggestion(
-        Number(suggId),
-        selectedSuggestion.upvotes - 1,
-        selectedSuggestion.downvotes + 1
-      );
-    }
-    if (
-      vote === "" &&
-      selectedSuggestion &&
-      selectedSuggestion.upvotes &&
-      selectedSuggestion.downvotes
-    ) {
-      updateSuggestion(
-        Number(suggId),
-        selectedSuggestion?.upvotes,
-        selectedSuggestion?.downvotes + 1
-      );
-    }
-  };
   return (
     <Stack>
       <TopHeaderTitleNav
@@ -134,16 +95,16 @@ export const Suggestion = () => {
         </Typography>
         <SuggestionVotingCenterContainer>
           <SuggetsionVotingDownCell
-            isPicked={vote === "down"}
-            onClick={handleDownVote}
+            isPicked={existingVote === "down"}
+            onClick={() => handleVote("down")}
           >
             {selectedSuggestion && selectedSuggestion.downvotes}
 
             <img src={downarrow} alt="down arrow" />
           </SuggetsionVotingDownCell>
           <SuggetsionVotingUpCell
-            isPicked={vote === "up"}
-            onClick={handleUpVote}
+            isPicked={existingVote === "up"}
+            onClick={() => handleVote("up")}
           >
             {selectedSuggestion && selectedSuggestion.upvotes}
 
