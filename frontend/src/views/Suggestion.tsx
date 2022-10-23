@@ -36,7 +36,7 @@ export const Suggestion = () => {
       window.localStorage.getItem("localVotes") || "{}"
     );
 
-    if (localVotes) {
+    if (Object.keys(localVotes).length) {
       if (selectedCommunityId && localVotes && suggId) {
         localVotes[selectedCommunityId][suggId] = vt;
 
