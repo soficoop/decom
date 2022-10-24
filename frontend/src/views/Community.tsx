@@ -64,19 +64,22 @@ export const Community = () => {
           </Typography>
         </Stack>
         <Stack spacing={3}>
-          {suggestionsData.map((v) => (
-            <SuggestionCard
-              key={v.id}
-              id={v.id}
-              title={v.title}
-              content={v.content}
-              image={v?.image}
-              score={v.score}
-              upvotes={v.upvotes}
-              downvotes={v.downvotes}
-              pick={v?.id && isPicked(v?.id)}
-            />
-          ))}
+          {suggestionsData.map(
+            (v) =>
+              v.id && (
+                <SuggestionCard
+                  key={v.id}
+                  id={v.id}
+                  title={v.title}
+                  content={v.content}
+                  image={v?.image}
+                  score={v.score}
+                  upvotes={v.upvotes}
+                  downvotes={v.downvotes}
+                  pick={v?.id && isPicked(v?.id)}
+                />
+              )
+          )}
         </Stack>
         <Box flexGrow={1} />
         <NewSuggestionFloatingButton />

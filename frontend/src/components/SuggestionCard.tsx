@@ -40,7 +40,7 @@ const SuggestionVotingFooter = styled.div`
 `;
 
 interface SuggestionCardProps {
-  id?: number;
+  id: number;
   image?: string;
   title?: string;
   content?: string;
@@ -65,7 +65,6 @@ export const SuggestionCard = ({
   downvotes,
   pick,
 }: SuggestionCardProps) => {
-  const [votes, setVotes] = useState({ up: false, down: false });
   const { updateSuggestion } = useContext(SuggestionsContext);
   const { selectedCommunity } = useContext(CommunitiesContext);
 
@@ -81,25 +80,17 @@ export const SuggestionCard = ({
   const selectedCommunityId = selectedCommunity?.id;
 
   function setLocalVote(vt: string) {
+    if (!selectedCommunityId) {
+      return;
+    }
     let localVotes = JSON.parse(
       window.localStorage.getItem("localVotes") || "{}"
     );
-
-    if (Object.keys(localVotes).length) {
-      if (selectedCommunityId && localVotes && id) {
-        localVotes[selectedCommunityId][id] = vt;
-
-        window.localStorage.setItem("localVotes", JSON.stringify(localVotes));
-      }
-    } else {
-      if (selectedCommunityId && id) {
-        const newObj = {
-          [selectedCommunityId]: { [id]: vt },
-        };
-        const stringifiedOBJ = JSON.stringify(newObj);
-        window.localStorage.setItem("localVotes", stringifiedOBJ);
-      }
-    }
+    localVotes[selectedCommunityId] = {
+      ...localVotes[selectedCommunityId],
+      [id]: vt,
+    };
+    window.localStorage.setItem("localVotes", JSON.stringify(localVotes));
   }
 
   async function handleVote(type: "up" | "down") {

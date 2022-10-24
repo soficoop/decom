@@ -31,26 +31,18 @@ export const Suggestion = () => {
     }
   }, [selectedCommunityId, suggId]);
 
-  function setLocalVote(vt: string) {
+  function setLocalVote(vt: "up" | "down" | "") {
+    if (!selectedCommunityId || !suggId) {
+      return;
+    }
     let localVotes = JSON.parse(
       window.localStorage.getItem("localVotes") || "{}"
     );
-
-    if (Object.keys(localVotes).length) {
-      if (selectedCommunityId && localVotes && suggId) {
-        localVotes[selectedCommunityId][suggId] = vt;
-
-        window.localStorage.setItem("localVotes", JSON.stringify(localVotes));
-      }
-    } else {
-      if (selectedCommunityId && suggId) {
-        const newObj = {
-          [selectedCommunityId]: { [suggId]: vt },
-        };
-        const stringifiedOBJ = JSON.stringify(newObj);
-        window.localStorage.setItem("localVotes", stringifiedOBJ);
-      }
-    }
+    localVotes[selectedCommunityId] = {
+      ...localVotes[selectedCommunityId],
+      [suggId]: vt,
+    };
+    window.localStorage.setItem("localVotes", JSON.stringify(localVotes));
   }
 
   function handleVote(type: "up" | "down") {
