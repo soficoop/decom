@@ -146,49 +146,52 @@ export const NewSuggestion = () => {
   }
 
   return (
-    <Stack paddingX={3}>
+    <>
       <NewSuggestionTopNav titleColor="dark" />
-      <Typography align="center" variant="h2">
-        הצעה חדשה
-      </Typography>
-      <Stack>
-        <InputBox marginY={1.5}>
-          <InputLabel>
-            <b>כותרת</b>
-          </InputLabel>
-          <TextField
-            placeholder="תנו שם ברור"
-            value={title}
-            onChange={onTitleChange}
-            fullWidth
-          />
-        </InputBox>
-        <ImageUpload setImage={setImage} />
-        <InputBox marginY={1.5}>
-          <InputLabel>
-            <b>פירוט ההצעה</b>
-          </InputLabel>
+      <Stack paddingX={2}>
+        <Typography align="center" variant="h2">
+          הצעה חדשה
+        </Typography>
+        <Stack>
+          <InputBox marginY={1.5}>
+            <InputLabel>
+              <b>כותרת</b>
+            </InputLabel>
+            <TextField
+              placeholder="תנו שם ברור"
+              value={title}
+              onChange={onTitleChange}
+              fullWidth
+            />
+          </InputBox>
+          <ImageUpload setImage={setImage} />
+          <InputBox marginY={1.5}>
+            <InputLabel>
+              <b>פירוט ההצעה</b>
+            </InputLabel>
 
-          <TXTAREA
-            placeholder={`נסו להתייחס לנקודות הבאות:
+            <TXTAREA
+              placeholder={`נסו להתייחס לנקודות הבאות:
 
             סקירה מעמיקה ומקיפה של הסוגיה
             הנחות מוצא שהסוגיה מבתבססת עליהן
             פירוט הקריטריונים החשובים בבחירת פתרון`}
-            value={content}
-            onChange={onDescriptionChange}
-          />
-        </InputBox>
-        <Button
-          fullWidth
-          type="submit"
-          variant={title && content ? "primary" : "outlined"}
-          disabled={!title || !content}
-          onClick={handleSubmit}
-        >
-          פרסום סוגיה
-        </Button>
+              value={content}
+              onChange={onDescriptionChange}
+            />
+          </InputBox>
+          <Button
+            fullWidth
+            type="submit"
+            color="primary"
+            size="large"
+            disabled={!title || !content}
+            onClick={handleSubmit}
+          >
+            פרסום סוגיה
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };

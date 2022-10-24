@@ -2,8 +2,6 @@ import { createTheme } from "@mui/material";
 const primaryColor = "#8BD4DD";
 const secondaryColor = "#011756";
 const mainBlackColor = "#000000";
-const disabledColor = "#D3D6E0";
-const whiteColor = "#FFFFFF";
 export const numberColor = "rgba(1, 23, 86, 0.66)";
 
 declare module "@mui/material/Button" {
@@ -59,49 +57,20 @@ export const theme = createTheme({
       },
     },
     MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: "600",
+        },
+      },
+      defaultProps: {
+        disableElevation: true,
+        variant: "contained",
+      },
       variants: [
         {
-          props: { variant: "primary" },
+          props: { size: "large" },
           style: {
-            disableElevation: true,
             height: "56px",
-            fontStyle: "normal",
-            fontWeight: "600",
-            fontSize: "16px",
-            lineHeight: "24px",
-            color: secondaryColor,
-            borderRadius: "16px",
-            background: primaryColor,
-          },
-        },
-        {
-          props: { variant: "trans" },
-          style: {
-            disableElevation: true,
-            height: "56px",
-            fontStyle: "normal",
-            fontWeight: "600",
-            fontSize: "16px",
-            lineHeight: "24px",
-            color: secondaryColor,
-            borderRadius: "16px",
-            background: whiteColor,
-            border: "1px solid " + secondaryColor,
-          },
-        },
-        {
-          props: { variant: "outlined" },
-          style: {
-            disableElevation: true,
-            height: "56px",
-            fontStyle: "normal",
-            fontWeight: "600",
-            fontSize: "16px",
-            lineHeight: "24px",
-            color: whiteColor,
-            borderRadius: "16px",
-            background: disabledColor,
-            border: "1px solid " + secondaryColor,
           },
         },
       ],

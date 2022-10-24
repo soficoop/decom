@@ -19,7 +19,7 @@ export const SuggetsionVotingUpCell = styled.div`
   font-size: 16px;
   line-height: 24px;
   gap: 1rem;
-  border-radius: 8px 0 0 8px;
+  cursor: pointer;
   border-right: 1px solid #000000;
 `;
 export const SuggetsionVotingDownCell = styled.div`
@@ -37,7 +37,7 @@ export const SuggetsionVotingDownCell = styled.div`
   font-size: 16px;
   line-height: 24px;
   gap: 1rem;
-  border-radius: 0 8px 8px 0;
+  cursor: pointer;
   border-left: 1px solid #000000;
 `;
 
@@ -50,5 +50,6 @@ export const SuggestionVotingCenterContainer = styled.div`
   padding: 0px;
   border: 2px solid #000000;
   border-radius: 8px;
+  overflow: hidden;
   margin-bottom: 40px;
 `;

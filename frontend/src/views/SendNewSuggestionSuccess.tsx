@@ -24,7 +24,7 @@ export const SendNewSuggestionSucess = () => {
         <Box paddingX={5} width="100%">
           <Button
             fullWidth
-            variant="primary"
+            size="large"
             sx={{ marginY: 2 }}
             href={`/community/${selectedCommunity?.id}/suggestion/${successID}`}
           >
@@ -32,7 +32,9 @@ export const SendNewSuggestionSucess = () => {
           </Button>
           <Button
             fullWidth
-            variant="trans"
+            size="large"
+            variant="outlined"
+            color="secondary"
             href={`/community/${selectedCommunity?.id}`}
           >
             חזרה לעמוד הבית
