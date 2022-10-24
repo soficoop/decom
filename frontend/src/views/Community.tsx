@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { CommunitiesContext, SuggestionsContext } from "../contexts";
 
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
@@ -11,22 +11,6 @@ export const Community = () => {
   const theme = useTheme();
   const { selectedCommunity } = useContext(CommunitiesContext);
   const { suggestionsData } = useContext(SuggestionsContext);
-  const [votes, setVotes] = useState<any>({});
-  const selectedCommunityId = selectedCommunity?.id;
-
-  useEffect(() => {
-    let localVotes = localStorage.getItem("localVotes");
-    if (localVotes) {
-      let localVotesOBJ = JSON.parse(localVotes);
-      if (selectedCommunityId && localVotesOBJ) {
-        setVotes(localVotesOBJ[selectedCommunityId] || {});
-      }
-    }
-  }, [selectedCommunityId]);
-
-  const isPicked = (suggId: number) => {
-    if (suggId && votes) return votes[suggId.toString()];
-  };
 
   if (!selectedCommunity) {
     return null;
@@ -65,20 +49,7 @@ export const Community = () => {
         </Stack>
         <Stack spacing={3}>
           {suggestionsData.map(
-            (v) =>
-              v.id && (
-                <SuggestionCard
-                  key={v.id}
-                  id={v.id}
-                  title={v.title}
-                  content={v.content}
-                  image={v?.image}
-                  score={v.score}
-                  upvotes={v.upvotes}
-                  downvotes={v.downvotes}
-                  pick={v?.id && isPicked(v?.id)}
-                />
-              )
+            (v) => v.id && <SuggestionCard key={v.id} suggestion={v} />
           )}
         </Stack>
         <Box flexGrow={1} />

@@ -15,4 +15,5 @@ export interface Suggestion {
   score?: number;
   upvotes?: number;
   downvotes?: number;
+  existingVote: "up" | "down" | "";
 }

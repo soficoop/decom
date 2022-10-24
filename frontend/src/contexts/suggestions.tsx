@@ -20,6 +20,7 @@ export interface SuggestionContext {
   addSuggestionLoading: boolean;
   suggestionsData: Suggestion[];
   suggestionsLoading: any;
+  vote(suggestion: Suggestion, type: "up" | "down"): Promise<void>;
   updateSuggestion: (
     id: number,
     upvotes: number,
@@ -74,6 +75,8 @@ function SuggestionsProvider() {
           ...suggestion.attributes,
           id: suggestion.id,
           image: suggestion.attributes.image?.data?.attributes?.url ?? "",
+          existingVote:
+            localStorage.getItem(`${communityId}.${suggestion.id}`) || "",
         })
       ) || [],
     suggestionsLoading: loading,
@@ -85,6 +88,34 @@ function SuggestionsProvider() {
           downvotes,
         },
       });
+    },
+    async vote(suggestion, type) {
+      const existingVsNew = {
+        "up.up": { up: -1, down: 0 },
+        "up.down": { up: -1, down: 1 },
+        "down.up": { up: 1, down: -1 },
+        "down.down": { up: 0, down: -1 },
+        ".up": { up: 1, down: 0 },
+        ".down": { up: 0, down: 1 },
+      };
+      const existingUpvotes = suggestion.upvotes || 0;
+      const existingDownvotes = suggestion.downvotes || 0;
+
+      await updateSuggestion({
+        variables: {
+          id: suggestion.id,
+          upvotes:
+            existingUpvotes +
+            existingVsNew[`${suggestion.existingVote}.${type}`].up,
+          downvotes:
+            existingDownvotes +
+            existingVsNew[`${suggestion.existingVote}.${type}`].down,
+        },
+      });
+      localStorage.setItem(
+        `${communityId}.${suggestion.id}`,
+        type === suggestion.existingVote ? "" : type
+      );
     },
   };
 
