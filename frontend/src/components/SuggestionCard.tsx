@@ -62,7 +62,7 @@ export const SuggestionCard = ({ suggestion }: SuggestionCardProps) => {
           <Stack
             direction="column"
             textAlign="right"
-            height="156px"
+            minHeight={156}
             padding="1rem 0.5rem"
             borderBottom={`1px solid ${theme.palette.secondary.main}`}
           >
