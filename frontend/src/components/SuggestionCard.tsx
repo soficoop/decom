@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Card, Typography, Stack, useTheme } from "@mui/material";
+import { Card, Typography, Stack, useTheme, Theme } from "@mui/material";
 import uparrow from "../assets/arrow-up.svg";
 import downarrow from "../assets/arrow-down.svg";
 import defaultcover from "../assets/defaultcardimage.svg";
@@ -12,6 +12,7 @@ import {
 import { truncateAfterWords } from "../utils/functions";
 import { SuggestionsContext } from "../contexts";
 import { Suggestion } from "../types/entities";
+import { secondaryColor } from "../theme";
 
 interface SuggestioImageProps {
   image?: string;
@@ -25,6 +26,7 @@ const SuggestioImage = styled.div`
     props.image
       ? "background-image:url(" + props.image + ");"
       : "background-image:url(" + defaultcover + ");"}
+  background-color: ${secondaryColor};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
