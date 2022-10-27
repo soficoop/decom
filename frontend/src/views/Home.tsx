@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useContext } from "react";
 import { CommunitiesContext } from "../contexts";
 import { CommunityCard } from "../components/CommunityCard";
@@ -13,7 +13,7 @@ export function Home() {
       ) : (
         <Stack gap="16px">
           {data.map((community) => (
-            <CommunityCard community={community} />
+            <CommunityCard community={community} key={community.id} />
           ))}
         </Stack>
       )}
