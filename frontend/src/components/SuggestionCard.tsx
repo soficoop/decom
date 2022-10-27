@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { Card, Typography, Stack, useTheme, Theme } from "@mui/material";
+import { Card, Typography, Stack, useTheme } from "@mui/material";
 import uparrow from "../assets/arrow-up.svg";
 import downarrow from "../assets/arrow-down.svg";
-import defaultcover from "../assets/defaultcardimage.svg";
+
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { CleanLink, CardImage } from "./SmallComponents";
 import {
   SuggetsionVotingUpCell,
   SuggetsionVotingDownCell,
@@ -12,25 +12,6 @@ import {
 import { truncateAfterWords } from "../utils/functions";
 import { SuggestionsContext } from "../contexts";
 import { Suggestion } from "../types/entities";
-import { secondaryColor } from "../theme";
-
-interface SuggestioImageProps {
-  image?: string;
-}
-const SuggestioImage = styled.div`
-  box-sizing: border-box;
-  height: 160px;
-  width: 100%;
-
-  ${(props: SuggestioImageProps) =>
-    props.image
-      ? "background-image:url(" + props.image + ");"
-      : "background-image:url(" + defaultcover + ");"}
-  background-color: ${secondaryColor};
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-`;
 
 const SuggestionVotingFooter = styled.div`
   box-sizing: border-box;
@@ -46,11 +27,6 @@ interface SuggestionCardProps {
   suggestion: Suggestion;
 }
 
-const CleanLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-`;
-
 export const SuggestionCard = ({ suggestion }: SuggestionCardProps) => {
   const { vote } = useContext(SuggestionsContext);
 
@@ -60,7 +36,7 @@ export const SuggestionCard = ({ suggestion }: SuggestionCardProps) => {
     <Card variant="outlined">
       <CleanLink to={`suggestion/${suggestion.id}`}>
         <>
-          <SuggestioImage image={suggestion.image} />
+          <CardImage image={suggestion.image} />
           <Stack
             direction="column"
             textAlign="right"
