@@ -40,6 +40,11 @@
       "target": "api::suggestion.suggestion",
       "private": true,
       "mappedBy": "community"
+    },
+    "suggestionCount": {
+      "type": "integer",
+      "default": 0,
+      "required": false
     }
   }
 }
