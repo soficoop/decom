@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Stack, Typography, useTheme, Collapse } from "@mui/material";
+import { Stack, Typography, useTheme, Collapse, Box } from "@mui/material";
 import HomeTitle from "../assets/HomeTitle.svg";
 import downArrow from "../assets/chevron-down.svg";
 import upArrow from "../assets/chevron-up.svg";
@@ -10,30 +10,25 @@ interface TopDrawerProps {
 
 export const TopDrawer = ({ drawerText }: TopDrawerProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const theme = useTheme();
   return (
     <Stack
-      bgcolor={theme.palette.secondary.main}
-      paddingTop={2}
-      justifyContent="center"
+      bgcolor="secondary.main"
+      padding={5}
       alignItems="center"
-      minHeight="141.11px"
-      borderRadius={"0 0 32px 32px"}
-      zIndex="9"
+      position="relative"
+      borderRadius="0 0 32px 32px"
       marginBottom={3}
       boxShadow="0px 4px 24px rgba(0, 0, 0, 0.16);"
     >
-      <img src={HomeTitle} alt="home title icon" width="148.84px" />
-      <Typography fontSize={"13px"} color={theme.palette.primary.main}>
-        קהילות מקבלות החלטות
-      </Typography>
+      <Box>
+        <img src={HomeTitle} alt="home title icon" width="148.84px" />
+        <Typography variant="subtitle1" color="primary">
+          קהילות מקבלות החלטות
+        </Typography>
+      </Box>
       <Collapse in={open}>
-        <Typography
-          variant="body1"
-          width={"347px"}
-          color={"#FFFFFF"}
-          marginY={5}
-        >
+        <Box padding={2.5} />
+        <Typography variant="body1" color="white">
           {drawerText}
         </Typography>
       </Collapse>
@@ -42,8 +37,8 @@ export const TopDrawer = ({ drawerText }: TopDrawerProps) => {
         src={open ? upArrow : downArrow}
         alt="down arrow"
         style={{
-          position: "relative",
-          bottom: `${open ? "-10px" : "-30px"}`,
+          position: "absolute",
+          bottom: -10,
           cursor: "pointer",
         }}
         onClick={() => {
