@@ -1,9 +1,16 @@
-import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { useContext } from "react";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Stack,
+  Typography,
+  Button,
+} from "@mui/material";
+import { useContext, useState } from "react";
 import { CommunitiesContext } from "../contexts";
 import { Link } from "react-router-dom";
 import { TopDrawer } from "../components/TopDrawer";
-
+import { LoginDialog } from "../components/LoginDialog";
 const exampleText = `
 לורם איפסום דולור סיט אמט, קונסקטורר אדיפיסינג אלית הועניב היושבב שערש שמחויט - שלושע ותלברו חשלו שעותלשך וחאית נובש ערששף. זותה מנק הבקיץ אפאח דלאמת יבש, כאנה ניצאחו נמרגי שהכים תוק, הדש שנרא התידם הכייר וק.
 
@@ -14,13 +21,23 @@ const exampleText = `
 export function Home() {
   const { loading, data } = useContext(CommunitiesContext);
 
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Stack>
       {loading ? (
         <Typography>Loading...</Typography>
       ) : (
         <Stack gap="16px">
+          <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+          <Button
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
+            open login dialog
+          </Button>
           <TopDrawer drawerText={exampleText} />
+
           {data.map((community) => (
             <Link
               to={`community/${community.id}`}

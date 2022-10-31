@@ -16,6 +16,7 @@ const CommunitiesContext = createContext<{
     description: undefined,
     image: undefined,
     password: undefined,
+    requiresPassword: undefined,
   },
 });
 
@@ -30,6 +31,7 @@ function CommunitiesProvider() {
           attributes {
             name
             description
+            requiresPassword
             image {
               data {
                 attributes {
