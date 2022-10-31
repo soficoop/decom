@@ -5,6 +5,8 @@ export interface Community {
   image: string | undefined;
   suggestions?: Suggestion[];
   password: string | undefined;
+  suggestionCount: number | undefined;
+  requiresPassword: boolean | undefined;
 }
 
 export interface Suggestion {

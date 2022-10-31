@@ -44,7 +44,7 @@ const SuggestionCounterContainer = styled.div`
 `;
 
 interface SuggestionCounterProps {
-  count: number;
+  count?: number;
 }
 export const SuggestionCounter = ({ count }: SuggestionCounterProps) => {
   return (

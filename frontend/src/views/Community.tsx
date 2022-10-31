@@ -44,7 +44,7 @@ export const Community = () => {
             הצעות:
           </Typography>
           <Typography variant="subtitle2" color={numberColor} display="inline">
-            {suggestionsData.length}
+            {selectedCommunity.suggestionCount}
           </Typography>
         </Stack>
         <Stack spacing={3}>
