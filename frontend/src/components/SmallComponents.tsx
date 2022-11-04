@@ -14,7 +14,6 @@ interface CardImageProps {
   image?: string;
 }
 export const CardImage = styled.div`
-  box-sizing: border-box;
   height: 160px;
   width: 100%;
 
@@ -29,7 +28,6 @@ export const CardImage = styled.div`
 `;
 
 const SuggestionCounterContainer = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -51,10 +49,10 @@ export const SuggestionCounter = ({ count }: SuggestionCounterProps) => {
     <SuggestionCounterContainer>
       <img src={lightbulb} alt="lightbulb icon" />
       <Typography
-        fontSize={"14px"}
-        color={"#247079"}
+        fontSize={14}
+        color="#247079"
         fontWeight={400}
-        lineHeight={"22px"}
+        lineHeight={2.75}
       >
         {count} הצעות
       </Typography>
