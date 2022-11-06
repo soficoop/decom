@@ -4,7 +4,7 @@ import defaultcover from "../assets/defaultcardimage.svg";
 import lightbulb from "../assets/lightbulb.svg";
 
 import { secondaryColor } from "../theme";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 export const CleanLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -59,3 +59,11 @@ export const SuggestionCounter = ({ count }: SuggestionCounterProps) => {
     </SuggestionCounterContainer>
   );
 };
+
+export const InputBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 100%;
+`;
