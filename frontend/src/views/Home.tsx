@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Stack,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { CommunitiesContext } from "../contexts";
 import { CommunityCard } from "../components/CommunityCard";
