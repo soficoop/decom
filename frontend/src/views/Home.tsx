@@ -18,20 +18,12 @@ export function Home() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Stack>
+      <TopDrawer />
+      <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
       {loading ? (
         <Typography>Loading...</Typography>
       ) : (
-        <Stack gap="16px">
-          <LoginDialog isOpen={isOpen} setIsOpen={setIsOpen} />
-          <Button
-            onClick={() => {
-              setIsOpen(true);
-            }}
-          >
-            open login dialog
-          </Button>
-          <TopDrawer />
-
+        <Stack gap={2} paddingX={3}>
           {data.map((community) => (
             <CommunityCard community={community} key={community.id} />
           ))}
