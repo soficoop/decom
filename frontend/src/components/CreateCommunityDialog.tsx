@@ -39,16 +39,18 @@ const StyledTextArea = styled(TextareaAutosize)`
   }
 `;
 
+const defaultInfo = {
+  fullname: "",
+  email: "",
+  phone: "",
+  details: "",
+};
+
 export const CreateCommunityDialog = ({
   isOpen,
   setWhoIsOpen,
 }: CreateCommunityDialogProps) => {
-  const [formInfo, setFormInfo] = useState({
-    fullname: "",
-    email: "",
-    phone: "",
-    details: "",
-  });
+  const [formInfo, setFormInfo] = useState(defaultInfo);
 
   const handleClose = () => {
     setWhoIsOpen("none");
@@ -156,6 +158,10 @@ export const CreateCommunityDialog = ({
             formInfo.phone === "" ||
             formInfo.details === ""
           }
+          onClick={() => {
+            setFormInfo(defaultInfo);
+            setWhoIsOpen("create-community-success");
+          }}
         >
           שליחת בקשה
         </Button>

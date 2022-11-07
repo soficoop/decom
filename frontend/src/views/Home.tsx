@@ -6,6 +6,7 @@ import { TopDrawer } from "../components/TopDrawer";
 import { LoginDialog } from "../components/LoginDialog";
 import { JoinCommunityDialog } from "../components/JoinCommunityDialog";
 import { CreateCommunityDialog } from "../components/CreateCommunityDialog";
+import { CreateCommunitySuccessDialog } from "../components/CreateCommunitySuccessDialog";
 import { Community } from "../types/entities";
 const exampleText = `
 לורם איפסום דולור סיט אמט, קונסקטורר אדיפיסינג אלית הועניב היושבב שערש שמחויט - שלושע ותלברו חשלו שעותלשך וחאית נובש ערששף. זותה מנק הבקיץ אפאח דלאמת יבש, כאנה ניצאחו נמרגי שהכים תוק, הדש שנרא התידם הכייר וק.
@@ -39,11 +40,15 @@ export function Home() {
             isOpen={isOpen === "create-community"}
             setWhoIsOpen={setWhoIsOpen}
           />
+          <CreateCommunitySuccessDialog
+            isOpen={isOpen === "create-community-success"}
+            setWhoIsOpen={setWhoIsOpen}
+          />
           <TopDrawer drawerText={exampleText} />
 
           <Stack
             textAlign="center"
-            width={380}
+            width={340}
             alignSelf="center"
             padding="32px 0"
             gap="12px"
