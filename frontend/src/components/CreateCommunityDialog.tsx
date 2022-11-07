@@ -12,12 +12,10 @@ import {
   styled,
 } from "@mui/material";
 
-import { Community } from "../types/entities";
 import rightArrow from "../assets/chevron-right.svg";
-interface LoginDialogProps {
+interface CreateCommunityDialogProps {
   isOpen: boolean;
   setWhoIsOpen: (v: string) => void;
-  selectedCommunity?: Community;
 }
 
 const StyledTextArea = styled(TextareaAutosize)`
@@ -41,14 +39,14 @@ const StyledTextArea = styled(TextareaAutosize)`
   }
 `;
 
-export const JoinCommunityDialog = ({
+export const CreateCommunityDialog = ({
   isOpen,
   setWhoIsOpen,
-  selectedCommunity,
-}: LoginDialogProps) => {
+}: CreateCommunityDialogProps) => {
   const [formInfo, setFormInfo] = useState({
     fullname: "",
     email: "",
+    phone: "",
     details: "",
   });
 
@@ -74,23 +72,23 @@ export const JoinCommunityDialog = ({
           cursor: "pointer",
         }}
         onClick={() => {
-          setWhoIsOpen("login");
+          setWhoIsOpen("");
         }}
       />
       <Stack
         textAlign="center"
         gap={1}
         paddingX={3}
-        paddingTop={3}
+        paddingTop={1}
         paddingBottom={3}
         alignItems="center"
         width={380}
         maxWidth="100%"
       >
-        <Typography variant="body2" textAlign="center">
-          בקשת הצטרפות לקהילה
+        <Typography variant="h2">בקשה להקמת קהילה</Typography>
+        <Typography fontSize={"12px"}>
+          אנא מלאו את הפרטים ונצור אתכם קשר בהקדם
         </Typography>
-        <Typography variant="h2">{selectedCommunity?.name}</Typography>
 
         <InputBox>
           <InputLabel>
@@ -118,10 +116,22 @@ export const JoinCommunityDialog = ({
         </InputBox>
         <InputBox>
           <InputLabel>
+            <b>טלפון</b>
+          </InputLabel>
+          <TextField
+            placeholder="050-1234567"
+            name="phone"
+            value={formInfo.phone}
+            onChange={handleChange}
+            fullWidth
+          />
+        </InputBox>
+        <InputBox>
+          <InputLabel>
             <b>פירוט הבקשה</b>
           </InputLabel>
           <StyledTextArea
-            placeholder="זה המקום לספר על עצמך ועל הקשר שלך לקהילה"
+            placeholder="זה המקום לפרט על הקהילה אותה תרצו להקים"
             name="details"
             value={formInfo.details}
             onChange={handleChange}
@@ -143,11 +153,11 @@ export const JoinCommunityDialog = ({
           disabled={
             formInfo.fullname === "" ||
             formInfo.email === "" ||
+            formInfo.phone === "" ||
             formInfo.details === ""
           }
-          style={{ height: "56px" }}
         >
-          שלח בקשה
+          שליחת בקשה
         </Button>
       </Stack>
     </Dialog>
