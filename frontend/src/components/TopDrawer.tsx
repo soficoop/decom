@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Stack, Typography, useTheme, Collapse, Box } from "@mui/material";
+import { Stack, Typography, Collapse, Box } from "@mui/material";
 import HomeTitle from "../assets/HomeTitle.svg";
 import downArrow from "../assets/chevron-down.svg";
 import upArrow from "../assets/chevron-up.svg";
