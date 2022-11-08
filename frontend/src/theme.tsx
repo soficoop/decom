@@ -3,6 +3,7 @@ const primaryColor = "#8BD4DD";
 export const secondaryColor = "#011756";
 const mainBlackColor = "#000000";
 export const numberColor = "rgba(1, 23, 86, 0.66)";
+export const lightGreyColor = "#e2e7f4";
 
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {

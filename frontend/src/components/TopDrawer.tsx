@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { Stack, Typography, useTheme, Collapse, Box } from "@mui/material";
+import { Stack, Typography, Collapse, Box } from "@mui/material";
 import HomeTitle from "../assets/HomeTitle.svg";
 import downArrow from "../assets/chevron-down.svg";
 import upArrow from "../assets/chevron-up.svg";
 
-interface TopDrawerProps {
-  drawerText: string;
-}
-
-export const TopDrawer = ({ drawerText }: TopDrawerProps) => {
+export const TopDrawer = () => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Stack
@@ -29,7 +25,12 @@ export const TopDrawer = ({ drawerText }: TopDrawerProps) => {
       <Collapse in={open}>
         <Box padding={2.5} />
         <Typography variant="body1" color="white">
-          {drawerText}
+          היום יותר מתמיד, הבחירה היא בידיים שלנו. כל אחת ואחד מאיתנו יכולים
+          וצריכים להוביל.
+        </Typography>
+        <Typography variant="body1" color="white">
+          decom היא פלטפורמה עבור קבוצות וארגונים שבהם כולם יכולים להציע, להצביע
+          ולהחליט - ביחד.
         </Typography>
       </Collapse>
 

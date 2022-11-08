@@ -1,4 +1,4 @@
-import { Stack, Typography, Card, Button } from "@mui/material";
+import { Stack, Typography, Button, Card, CardContent } from "@mui/material";
 import { useContext, useState } from "react";
 import { CommunitiesContext } from "../contexts";
 import { CommunityCard } from "../components/CommunityCard";
@@ -8,12 +8,7 @@ import { JoinCommunityDialog } from "../components/JoinCommunityDialog";
 import { CreateCommunityDialog } from "../components/CreateCommunityDialog";
 import { CreateCommunitySuccessDialog } from "../components/CreateCommunitySuccessDialog";
 import { Community } from "../types/entities";
-const exampleText = `
-לורם איפסום דולור סיט אמט, קונסקטורר אדיפיסינג אלית הועניב היושבב שערש שמחויט - שלושע ותלברו חשלו שעותלשך וחאית נובש ערששף. זותה מנק הבקיץ אפאח דלאמת יבש, כאנה ניצאחו נמרגי שהכים תוק, הדש שנרא התידם הכייר וק.
-
-קונסקטורר אדיפיסינג אלית. סת אלמנקום ניסי נון ניבאה. דס איאקוליס וולופטה דיאם. וסטיבולום אט דולור, קראס אגת לקטוס וואל אאוגו וסטיבולום סוליסי טידום בעליק. קונדימנטום קורוס בליקרה, נונסטי קלובר בריקנה סטום, לפריקך תצטריק לרטי.
-
-`;
+import { lightGreyColor } from "../theme";
 
 export function Home() {
   const { loading, data } = useContext(CommunitiesContext);
@@ -22,10 +17,11 @@ export function Home() {
   const [selectedCommunity, saveClickedCommunity] = useState<Community>();
   return (
     <Stack>
+      <TopDrawer />
       {loading ? (
         <Typography>Loading...</Typography>
       ) : (
-        <Stack gap={2}>
+        <Stack gap={2} paddingX={3}>
           <LoginDialog
             isOpen={isOpen === "login"}
             setWhoIsOpen={setWhoIsOpen}
@@ -44,30 +40,30 @@ export function Home() {
             isOpen={isOpen === "create-community-success"}
             setWhoIsOpen={setWhoIsOpen}
           />
-          <TopDrawer drawerText={exampleText} />
 
-          <Stack
-            textAlign="center"
-            width={340}
-            alignSelf="center"
-            padding="32px 0"
-            gap="12px"
-            alignItems="center"
-            borderRadius={"16px"}
-            border="1px solid #E2E7F4"
+          <Card
+            variant="outlined"
+            sx={{
+              borderColor: lightGreyColor,
+              borderWidth: 1,
+            }}
           >
-            <Typography fontWeight={500}>
-              מעוניינים להקים קהילה חדשה?
-            </Typography>
-            <Button
-              sx={{ width: "213px", height: "56px" }}
-              onClick={() => {
-                setWhoIsOpen("create-community");
-              }}
-            >
-              <Typography fontWeight={600}>צור קשר</Typography>
-            </Button>
-          </Stack>
+            <Stack alignItems="center" gap={1.5} paddingY={3} paddingX={6}>
+              <Typography variant="body2" textAlign="center">
+                מעוניינים להקים קהילה חדשה?
+              </Typography>
+              <Button
+                size="large"
+                fullWidth
+                onClick={() => {
+                  setWhoIsOpen("create-community");
+                }}
+              >
+                <Typography fontWeight={600}>צור קשר</Typography>
+              </Button>
+            </Stack>
+          </Card>
+          <Typography variant="h2">קהילות</Typography>
 
           {data.map((community) => (
             <CommunityCard
