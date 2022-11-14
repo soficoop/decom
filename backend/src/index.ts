@@ -29,18 +29,26 @@ export default {
           middlewares: [
             async (next, parent, args, context, info) => {
               const communityId = args?.filters?.community?.id?.eq;
-              if (!communityId) {
-                throw new Error('communityId is required');
-              }
-              const password = context.koaContext.headers['x-password'];
-              const community = await strapi.entityService.findOne('api::community.community', communityId);
-              if (community.requiresPassword && community.password !== password) {
-                throw new Error('Invalid password');
-              }
-              return next(parent, args, context, info);
+              return nextIfPasswordIsValid(communityId, context, strapi, next, parent, args, info);
             }
           ]
-        }
+        },
+        'Mutation.createSuggestion': {
+          middlewares: [
+            async (next, parent, args, context, info) => {
+              const communityId = args?.data?.community;
+              return nextIfPasswordIsValid(communityId, context, strapi, next, parent, args, info);
+            }
+          ]
+        },
+        'Mutation.updateSuggestion': {
+          middlewares: [
+            async (next, parent, args, context, info) => {
+              const suggestion = await strapi.entityService.findOne('api::suggestion.suggestion', args.id);
+              return nextIfPasswordIsValid(suggestion.community.id, context, strapi, next, parent, args, info);
+            }
+          ]
+        },
       }
     });
   },
@@ -54,3 +62,16 @@ export default {
    */
   bootstrap(/*{ strapi }*/) { },
 };
+
+async function nextIfPasswordIsValid(communityId, context, strapi, next, parent, args, info) {
+  if (!communityId) {
+    throw new Error('communityId is required');
+  }
+  const password = context.koaContext.headers['x-password'];
+  const community = await strapi.entityService.findOne('api::community.community', communityId);
+  if (community.requiresPassword && community.password !== password) {
+    throw new Error('Invalid password');
+  }
+  return next(parent, args, context, info);
+}
+
