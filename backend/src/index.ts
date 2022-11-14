@@ -8,20 +8,36 @@ export default {
    */
   register({ strapi }) {
     strapi.plugin('graphql').service('extension').use({
+      typeDefs: `
+        type Query {
+          isPasswordValid(communityId: ID!, password: String!): Boolean!
+        }
+        `,
+      resolvers: {
+        Query: {
+          isPasswordValid: async (obj, { communityId, password }) => {
+            const community = await strapi.entityService.findOne('api::community.community', communityId);
+            return community.password === password;
+          },
+        }
+      },
       resolversConfig: {
-        // 'Query.suggestions': {
-        //   middlewares: [
-        //     async (next, parent, args, context, info) => {
-        //       const password = context.koaContext.headers['x-password'];
-        //       if (!password) {
-        //         throw new Error('No password provided');
-        //       }
-        //       const suggestions = await next(parent, args, context, info);
-        //       suggestions.nodes = suggestions.nodes.filter(suggestion => suggestion.community.password === password);
-        //       return suggestions;
-        //     }
-        //   ]
-        // }
+        'Query.isPasswordValid': {
+          auth: false,
+          // 'Query.suggestions': {
+          //   middlewares: [
+          //     async (next, parent, args, context, info) => {
+          //       const password = context.koaContext.headers['x-password'];
+          //       if (!password) {
+          //         throw new Error('No password provided');
+          //       }
+          //       const suggestions = await next(parent, args, context, info);
+          //       suggestions.nodes = suggestions.nodes.filter(suggestion => suggestion.community.password === password);
+          //       return suggestions;
+          //     }
+          //   ]
+          // }
+        }
       }
     });
   },
