@@ -24,19 +24,22 @@ export default {
       resolversConfig: {
         'Query.isPasswordValid': {
           auth: false,
-          // 'Query.suggestions': {
-          //   middlewares: [
-          //     async (next, parent, args, context, info) => {
-          //       const password = context.koaContext.headers['x-password'];
-          //       if (!password) {
-          //         throw new Error('No password provided');
-          //       }
-          //       const suggestions = await next(parent, args, context, info);
-          //       suggestions.nodes = suggestions.nodes.filter(suggestion => suggestion.community.password === password);
-          //       return suggestions;
-          //     }
-          //   ]
-          // }
+        },
+        'Query.suggestions': {
+          middlewares: [
+            async (next, parent, args, context, info) => {
+              const communityId = args?.filters?.community?.id?.eq;
+              if (!communityId) {
+                throw new Error('communityId is required');
+              }
+              const password = context.koaContext.headers['x-password'];
+              const community = await strapi.entityService.findOne('api::community.community', communityId);
+              if (community.requiresPassword && community.password !== password) {
+                throw new Error('Invalid password');
+              }
+              return next(parent, args, context, info);
+            }
+          ]
         }
       }
     });
