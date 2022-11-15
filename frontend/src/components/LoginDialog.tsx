@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -12,6 +12,7 @@ import {
 import lock from "../assets/login-lock.svg";
 
 import { Community } from "../types/entities";
+import { CommunitiesContext } from "../contexts";
 
 interface LoginDialogProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const LoginDialog = ({
   const handleClose = () => {
     setWhoIsOpen("none");
   };
+  const { passwordInput, setPasswordInput } = useContext(CommunitiesContext);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -76,6 +78,7 @@ export const LoginDialog = ({
             disabled={password === ""}
             style={{ height: "56px" }}
             onClick={() => {
+              setPasswordInput(password);
               if (password === selectedCommunity?.password) {
                 navigate(`community/${selectedCommunity.id}`);
               } else {

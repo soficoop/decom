@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { Community } from "../types/entities";
 import { useParams, Outlet } from "react-router-dom";
 
@@ -7,6 +7,8 @@ const CommunitiesContext = createContext<{
   data: Community[];
   loading: boolean;
   selectedCommunity: Community | undefined;
+  passwordInput: string | undefined;
+  setPasswordInput: any;
 }>({
   data: [],
   loading: false,
@@ -19,11 +21,13 @@ const CommunitiesContext = createContext<{
     suggestionCount: undefined,
     requiresPassword: undefined,
   },
+  passwordInput: undefined,
+  setPasswordInput: undefined,
 });
 
 function CommunitiesProvider() {
   const { communityId } = useParams();
-
+  const [passwordInput, setPasswordInput] = useState("");
   const { data, loading } = useQuery(gql`
     query {
       communities {
@@ -66,6 +70,8 @@ function CommunitiesProvider() {
         data: commData,
         loading,
         selectedCommunity,
+        passwordInput,
+        setPasswordInput,
       }}
     >
       <Outlet />
