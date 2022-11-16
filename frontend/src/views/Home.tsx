@@ -6,12 +6,6 @@ import { TopDrawer } from "../components/TopDrawer";
 import { LoginDialog } from "../components/LoginDialog";
 import { JoinCommunityDialog } from "../components/JoinCommunityDialog";
 import { Community } from "../types/entities";
-const exampleText = `
-לורם איפסום דולור סיט אמט, קונסקטורר אדיפיסינג אלית הועניב היושבב שערש שמחויט - שלושע ותלברו חשלו שעותלשך וחאית נובש ערששף. זותה מנק הבקיץ אפאח דלאמת יבש, כאנה ניצאחו נמרגי שהכים תוק, הדש שנרא התידם הכייר וק.
-
-קונסקטורר אדיפיסינג אלית. סת אלמנקום ניסי נון ניבאה. דס איאקוליס וולופטה דיאם. וסטיבולום אט דולור, קראס אגת לקטוס וואל אאוגו וסטיבולום סוליסי טידום בעליק. קונדימנטום קורוס בליקרה, נונסטי קלובר בריקנה סטום, לפריקך תצטריק לרטי.
-
-`;
 
 export function Home() {
   const { loading, data } = useContext(CommunitiesContext);
@@ -20,10 +14,11 @@ export function Home() {
   const [selectedCommunity, saveClickedCommunity] = useState<Community>();
   return (
     <Stack>
+      <TopDrawer />
       {loading ? (
         <Typography>Loading...</Typography>
       ) : (
-        <Stack gap={2}>
+        <Stack gap={2} paddingX={3}>
           <LoginDialog
             isOpen={isOpen === "login"}
             setWhoIsOpen={setWhoIsOpen}
@@ -34,7 +29,6 @@ export function Home() {
             setWhoIsOpen={setWhoIsOpen}
             selectedCommunity={selectedCommunity}
           />
-          <TopDrawer drawerText={exampleText} />
           {data.map((community) => (
             <CommunityCard
               community={community}

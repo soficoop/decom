@@ -7,7 +7,7 @@ export default {
     event.params.data.score = calculateScore(new Date(), event.params.data.upvotes, event.params.data.downvotes);
   },
   async afterCreate(event) {
-    await updateSuggestionsInCommunity(event.result.community.id);
+    await updateSuggestionsInCommunity(event.params.data.community);
   },
   async afterDelete(event) {
     const communities = await strapi.entityService.findMany('api::community.community', { _limit: -1 });

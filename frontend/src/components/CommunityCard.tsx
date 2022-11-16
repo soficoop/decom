@@ -22,7 +22,6 @@ export const CommunityCard = ({
         position: "relative",
         boxShadow: "2px 2px 0px #000000",
         border: "2px solid #011756",
-        margin: "8px",
       }}
     >
       {community.requiresPassword && (
