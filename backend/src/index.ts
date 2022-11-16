@@ -8,20 +8,47 @@ export default {
    */
   register({ strapi }) {
     strapi.plugin('graphql').service('extension').use({
+      typeDefs: `
+        type Query {
+          isPasswordValid(communityId: ID!, password: String!): Boolean!
+        }
+        `,
+      resolvers: {
+        Query: {
+          isPasswordValid: async (obj, { communityId, password }) => {
+            const community = await strapi.entityService.findOne('api::community.community', communityId);
+            return community.password === password;
+          },
+        }
+      },
       resolversConfig: {
-        // 'Query.suggestions': {
-        //   middlewares: [
-        //     async (next, parent, args, context, info) => {
-        //       const password = context.koaContext.headers['x-password'];
-        //       if (!password) {
-        //         throw new Error('No password provided');
-        //       }
-        //       const suggestions = await next(parent, args, context, info);
-        //       suggestions.nodes = suggestions.nodes.filter(suggestion => suggestion.community.password === password);
-        //       return suggestions;
-        //     }
-        //   ]
-        // }
+        'Query.isPasswordValid': {
+          auth: false,
+        },
+        'Query.suggestions': {
+          middlewares: [
+            async (next, parent, args, context, info) => {
+              const communityId = args?.filters?.community?.id?.eq;
+              return nextIfPasswordIsValid(communityId, context, strapi, next, parent, args, info);
+            }
+          ]
+        },
+        'Mutation.createSuggestion': {
+          middlewares: [
+            async (next, parent, args, context, info) => {
+              const communityId = args?.data?.community;
+              return nextIfPasswordIsValid(communityId, context, strapi, next, parent, args, info);
+            }
+          ]
+        },
+        'Mutation.updateSuggestion': {
+          middlewares: [
+            async (next, parent, args, context, info) => {
+              const suggestion = await strapi.entityService.findOne('api::suggestion.suggestion', args.id);
+              return nextIfPasswordIsValid(suggestion.community.id, context, strapi, next, parent, args, info);
+            }
+          ]
+        },
       }
     });
   },
@@ -35,3 +62,16 @@ export default {
    */
   bootstrap(/*{ strapi }*/) { },
 };
+
+async function nextIfPasswordIsValid(communityId, context, strapi, next, parent, args, info) {
+  if (!communityId) {
+    throw new Error('communityId is required');
+  }
+  const password = context.koaContext.headers['x-password'];
+  const community = await strapi.entityService.findOne('api::community.community', communityId);
+  if (community.requiresPassword && community.password !== password) {
+    throw new Error('Invalid password');
+  }
+  return next(parent, args, context, info);
+}
+
