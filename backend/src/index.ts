@@ -44,7 +44,7 @@ export default {
         'Mutation.updateSuggestion': {
           middlewares: [
             async (next, parent, args, context, info) => {
-              const suggestion = await strapi.entityService.findOne('api::suggestion.suggestion', args.id);
+              const suggestion = await strapi.entityService.findOne('api::suggestion.suggestion', args.id, { populate: ['community'] });
               return nextIfPasswordIsValid(suggestion.community.id, context, strapi, next, parent, args, info);
             }
           ]
