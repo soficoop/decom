@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { Community } from "../types/entities";
 import { useParams, Outlet } from "react-router-dom";
 
@@ -7,6 +7,8 @@ const CommunitiesContext = createContext<{
   data: Community[];
   loading: boolean;
   selectedCommunity: Community | undefined;
+  validatePassword: any;
+  communityPassword: string | undefined;
 }>({
   data: [],
   loading: false,
@@ -19,10 +21,29 @@ const CommunitiesContext = createContext<{
     suggestionCount: undefined,
     requiresPassword: undefined,
   },
+  validatePassword: undefined,
+  communityPassword: undefined,
 });
 
 function CommunitiesProvider() {
   const { communityId } = useParams();
+  const [commPassword, setCommPassword] = useState<string>("");
+  // if valid password save to commPassword
+
+  const validatePassword = (password: string) => {
+    const { data, loading, error } = useQuery(
+      gql`
+      query {
+        isPasswordValid($communityId:communityId $password:password)
+      }
+    `,
+      { variables: { communityId, password } }
+    );
+
+    if (data.data.isPasswordValid) {
+      setCommPassword(password);
+    }
+  };
 
   const { data, loading } = useQuery(gql`
     query {
@@ -66,6 +87,8 @@ function CommunitiesProvider() {
         data: commData,
         loading,
         selectedCommunity,
+        validatePassword,
+        communityPassword: commPassword,
       }}
     >
       <Outlet />

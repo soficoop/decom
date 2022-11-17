@@ -5,7 +5,6 @@ import {
   Dialog,
   Stack,
   TextField,
-  Card,
   InputLabel,
   Button,
   TextareaAutosize,
@@ -13,9 +12,11 @@ import {
 } from "@mui/material";
 
 import rightArrow from "../assets/chevron-right.svg";
+
 interface CreateCommunityDialogProps {
   isOpen: boolean;
-  setWhoIsOpen: (v: string) => void;
+  onClose: () => void;
+  onSubmit: () => void;
 }
 
 const StyledTextArea = styled(TextareaAutosize)`
@@ -48,20 +49,17 @@ const defaultInfo = {
 
 export const CreateCommunityDialog = ({
   isOpen,
-  setWhoIsOpen,
+  onClose,
+  onSubmit,
 }: CreateCommunityDialogProps) => {
   const [formInfo, setFormInfo] = useState(defaultInfo);
-
-  const handleClose = () => {
-    setWhoIsOpen("none");
-  };
 
   const handleChange = (e: any) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
   };
 
   return (
-    <Dialog onClose={handleClose} open={isOpen}>
+    <Dialog onClose={onClose} open={isOpen}>
       <img
         src={rightArrow}
         alt="right arrow"
@@ -73,9 +71,7 @@ export const CreateCommunityDialog = ({
           right: "16px",
           cursor: "pointer",
         }}
-        onClick={() => {
-          setWhoIsOpen("");
-        }}
+        onClick={onClose}
       />
       <Stack
         textAlign="center"
@@ -160,7 +156,7 @@ export const CreateCommunityDialog = ({
           }
           onClick={() => {
             setFormInfo(defaultInfo);
-            setWhoIsOpen("create-community-success");
+            onSubmit();
           }}
         >
           שליחת בקשה

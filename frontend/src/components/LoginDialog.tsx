@@ -1,43 +1,51 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import {
-  Dialog,
-  Stack,
-  Typography,
-  TextField,
-  Button,
-  Card,
-} from "@mui/material";
+import { useState, useContext } from "react";
+import { CommunitiesContext } from "../contexts/communities";
+import { Dialog, Stack, Typography, TextField, Button } from "@mui/material";
 import lock from "../assets/login-lock.svg";
-
+import { JoinCommunityDialog } from "./JoinCommunityDialog";
 import { Community } from "../types/entities";
 
 interface LoginDialogProps {
   isOpen: boolean;
-  setWhoIsOpen: (v: string) => void;
+  onClose: () => void;
+  onJoin: () => void;
+  onLogin: () => void;
   selectedCommunity?: Community;
 }
 
 export const LoginDialog = ({
   isOpen,
-  setWhoIsOpen,
+  onClose,
+  onJoin,
+  onLogin,
   selectedCommunity,
 }: LoginDialogProps) => {
-  const handleClose = () => {
-    setWhoIsOpen("none");
-  };
+  const [isJoin, setIsJoin] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const navigate = useNavigate();
+  const { validatePassword } = useContext(CommunitiesContext);
+  // use community context
+  // isPasswordValid - function inside comm context
+  // if ok run onLoginSuccess
 
   const handlePasswordChange = (e: any) => {
     setPassword(e.target.value);
     setError(false);
   };
 
+  if (isJoin)
+    return (
+      <JoinCommunityDialog
+        isOpen={isOpen}
+        selectedCommunity={selectedCommunity}
+        onClose={onClose}
+        onJoin={onJoin}
+        onBack={() => setIsJoin(false)}
+      />
+    );
+
   return (
-    <Dialog onClose={handleClose} open={isOpen}>
+    <Dialog onClose={onClose} open={isOpen}>
       <Stack
         textAlign="center"
         gap={1}
@@ -74,11 +82,8 @@ export const LoginDialog = ({
           disabled={password === ""}
           style={{ height: "56px" }}
           onClick={() => {
-            if (password === selectedCommunity?.password) {
-              navigate(`community/${selectedCommunity.id}`);
-            } else {
-              setError(true);
-            }
+            validatePassword(password);
+            onLogin();
           }}
         >
           כניסה
@@ -87,9 +92,7 @@ export const LoginDialog = ({
           variant="body2"
           marginTop="8px"
           sx={{ textDecoration: "underline", cursor: "pointer" }}
-          onClick={() => {
-            setWhoIsOpen("join");
-          }}
+          onClick={() => setIsJoin(true)}
         >
           אני רוצה להצטרף לקהילה
         </Typography>

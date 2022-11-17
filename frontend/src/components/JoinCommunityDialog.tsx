@@ -15,7 +15,9 @@ import { Community } from "../types/entities";
 import rightArrow from "../assets/chevron-right.svg";
 interface LoginDialogProps {
   isOpen: boolean;
-  setWhoIsOpen: (v: string) => void;
+  onClose: () => void;
+  onJoin: () => void;
+  onBack: () => void;
   selectedCommunity?: Community;
 }
 
@@ -42,8 +44,10 @@ const StyledTextArea = styled(TextareaAutosize)`
 
 export const JoinCommunityDialog = ({
   isOpen,
-  setWhoIsOpen,
+  onClose,
   selectedCommunity,
+  onJoin,
+  onBack,
 }: LoginDialogProps) => {
   const [formInfo, setFormInfo] = useState({
     fullname: "",
@@ -51,16 +55,12 @@ export const JoinCommunityDialog = ({
     details: "",
   });
 
-  const handleClose = () => {
-    setWhoIsOpen("none");
-  };
-
   const handleChange = (e: any) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
   };
 
   return (
-    <Dialog onClose={handleClose} open={isOpen}>
+    <Dialog onClose={onClose} open={isOpen}>
       <img
         src={rightArrow}
         alt="right arrow"
@@ -72,9 +72,7 @@ export const JoinCommunityDialog = ({
           right: "16px",
           cursor: "pointer",
         }}
-        onClick={() => {
-          setWhoIsOpen("login");
-        }}
+        onClick={onBack}
       />
       <Stack
         textAlign="center"
@@ -145,6 +143,7 @@ export const JoinCommunityDialog = ({
             formInfo.details === ""
           }
           style={{ height: "56px" }}
+          onClick={onJoin}
         >
           שלח בקשה
         </Button>

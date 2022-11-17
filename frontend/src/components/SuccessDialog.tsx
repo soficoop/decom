@@ -1,24 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { Dialog, Stack, Typography, TextField, Button } from "@mui/material";
+import { Dialog, Stack, Typography, Button } from "@mui/material";
 import successV from "../assets/successV.svg";
 
-interface CreateCommunitySuccessDialogProps {
+interface SuccessDialogProps {
   isOpen: boolean;
-  setWhoIsOpen: (v: string) => void;
+  onClose: () => void;
 }
 
-export const CreateCommunitySuccessDialog = ({
-  isOpen,
-  setWhoIsOpen,
-}: CreateCommunitySuccessDialogProps) => {
-  const handleClose = () => {
-    setWhoIsOpen("none");
-  };
-
+export const SuccessDialog = ({ isOpen, onClose }: SuccessDialogProps) => {
   return (
-    <Dialog onClose={handleClose} open={isOpen}>
+    <Dialog onClose={onClose} open={isOpen}>
       <Stack
         textAlign="center"
         gap={2}
@@ -48,9 +38,7 @@ export const CreateCommunitySuccessDialog = ({
             backgroundColor: "white",
             height: "54px",
           }}
-          onClick={() => {
-            setWhoIsOpen("");
-          }}
+          onClick={onClose}
         >
           <Typography color="#011756" fontWeight={600}>
             חזרה לעמוד הראשי

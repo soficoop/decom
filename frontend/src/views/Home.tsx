@@ -1,20 +1,39 @@
-import { Stack, Typography, Button, Card, CardContent } from "@mui/material";
+import { Stack, Typography, Button, Card } from "@mui/material";
 import { useContext, useState } from "react";
 import { CommunitiesContext } from "../contexts";
 import { CommunityCard } from "../components/CommunityCard";
 import { TopDrawer } from "../components/TopDrawer";
 import { LoginDialog } from "../components/LoginDialog";
-import { JoinCommunityDialog } from "../components/JoinCommunityDialog";
+
 import { CreateCommunityDialog } from "../components/CreateCommunityDialog";
-import { CreateCommunitySuccessDialog } from "../components/CreateCommunitySuccessDialog";
+import { SuccessDialog } from "../components/SuccessDialog";
 import { Community } from "../types/entities";
 import { lightGreyColor } from "../theme";
 
 export function Home() {
   const { loading, data } = useContext(CommunitiesContext);
 
-  const [isOpen, setWhoIsOpen] = useState("none");
+  const [visibleDialog, setVisibleDialog] = useState("");
+
   const [selectedCommunity, saveClickedCommunity] = useState<Community>();
+
+  const handleClose = () => {
+    setVisibleDialog("");
+  };
+
+  const handleCreateCommunitySuccess = () => {
+    setVisibleDialog("success");
+    //mutation
+  };
+  const handleJoinCommunitySuccess = () => {
+    setVisibleDialog("success");
+    //mutation
+  };
+  const handleLoginSubmit = () => {
+    // isPasswordValid
+    // navigate to community after login (isPasswordValid) success
+  };
+
   return (
     <Stack>
       <TopDrawer />
@@ -23,22 +42,21 @@ export function Home() {
       ) : (
         <Stack gap={2} paddingX={3}>
           <LoginDialog
-            isOpen={isOpen === "login"}
-            setWhoIsOpen={setWhoIsOpen}
+            isOpen={visibleDialog === "login"}
             selectedCommunity={selectedCommunity}
+            onClose={handleClose}
+            onJoin={handleJoinCommunitySuccess}
+            onLogin={handleLoginSubmit}
           />
-          <JoinCommunityDialog
-            isOpen={isOpen === "join"}
-            setWhoIsOpen={setWhoIsOpen}
-            selectedCommunity={selectedCommunity}
-          />
+
           <CreateCommunityDialog
-            isOpen={isOpen === "create-community"}
-            setWhoIsOpen={setWhoIsOpen}
+            isOpen={visibleDialog === "create-community"}
+            onClose={handleClose}
+            onSubmit={handleCreateCommunitySuccess}
           />
-          <CreateCommunitySuccessDialog
-            isOpen={isOpen === "create-community-success"}
-            setWhoIsOpen={setWhoIsOpen}
+          <SuccessDialog
+            isOpen={visibleDialog === "success"}
+            onClose={handleClose}
           />
 
           <Card
@@ -56,7 +74,7 @@ export function Home() {
                 size="large"
                 fullWidth
                 onClick={() => {
-                  setWhoIsOpen("create-community");
+                  setVisibleDialog("create-community");
                 }}
               >
                 <Typography fontWeight={600}>צור קשר</Typography>
@@ -69,7 +87,7 @@ export function Home() {
             <CommunityCard
               community={community}
               key={community.id}
-              setWhoIsOpen={setWhoIsOpen}
+              setWhoIsOpen={setVisibleDialog}
               saveClickedCommuinty={saveClickedCommunity}
             />
           ))}

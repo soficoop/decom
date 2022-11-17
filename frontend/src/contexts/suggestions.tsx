@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@apollo/client";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import {
   addSuggestion as addSuggestionMutation,
@@ -8,6 +8,7 @@ import {
 import { suggestions as suggestionsQuery } from "../utils/queries";
 import { Suggestion } from "../types/entities";
 import { FetchResult } from "@apollo/client";
+import { CommunitiesContext } from "../contexts/communities";
 
 export interface SuggestionContext {
   addSuggestion: (
@@ -36,8 +37,11 @@ function SuggestionsProvider() {
   const { communityId } = useParams();
   const commId = communityId && parseInt(communityId);
 
+  const { communityPassword } = useContext(CommunitiesContext);
+
   const { data, loading } = useQuery(suggestionsQuery, {
     variables: { commId },
+    context: { Headers: { "x-password": communityPassword } },
   });
 
   const [
