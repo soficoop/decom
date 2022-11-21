@@ -24,6 +24,15 @@ export function Home() {
     setVisibleDialog("");
   };
 
+  function handleCommunityClick(community: Community) {
+    setSelectedCommunity(community);
+    if (community.requiresPassword) {
+      setVisibleDialog("login");
+      return;
+    }
+    navigate(`/community/${community.id}`);
+  }
+
   const handleCreateCommunitySuccess = () => {
     setVisibleDialog("success");
     //mutation
@@ -93,8 +102,7 @@ export function Home() {
             <CommunityCard
               community={community}
               key={community.id}
-              setWhoIsOpen={setVisibleDialog}
-              saveClickedCommuinty={setSelectedCommunity}
+              onClick={() => handleCommunityClick(community)}
             />
           ))}
         </Stack>
