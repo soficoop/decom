@@ -4,7 +4,7 @@ import defaultcover from "../assets/defaultcardimage.svg";
 import lightbulb from "../assets/lightbulb.svg";
 
 import { secondaryColor } from "../theme";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Stack } from "@mui/material";
 export const CleanLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -34,7 +34,6 @@ const SuggestionCounterContainer = styled.div`
   align-items: center;
   padding: 6px 8px 6px 12px;
   gap: 6px;
-  width: 101px;
   height: 36px;
   background: rgba(139, 212, 221, 0.25);
   border-radius: 8px;
@@ -46,17 +45,19 @@ interface SuggestionCounterProps {
 }
 export const SuggestionCounter = ({ count }: SuggestionCounterProps) => {
   return (
-    <SuggestionCounterContainer>
-      <img src={lightbulb} alt="lightbulb icon" />
-      <Typography
-        fontSize={14}
-        color="#247079"
-        fontWeight={400}
-        lineHeight={2.75}
-      >
-        {count} הצעות
-      </Typography>
-    </SuggestionCounterContainer>
+    <Stack direction="row">
+      <SuggestionCounterContainer>
+        <img src={lightbulb} alt="lightbulb icon" />
+        <Typography
+          fontSize={14}
+          color="#247079"
+          fontWeight={400}
+          lineHeight={2.75}
+        >
+          {count} הצעות
+        </Typography>
+      </SuggestionCounterContainer>
+    </Stack>
   );
 };
 
