@@ -26,3 +26,9 @@ export const suggestions = gql`
     }
   }
 `;
+
+export const isPasswordValid = gql`
+  query isPasswordValid($password: String!, $communityId: ID!) {
+    isPasswordValid(communityId: $communityId, password: $password)
+  }
+`;

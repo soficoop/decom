@@ -6,19 +6,10 @@ import { useParams, Outlet } from "react-router-dom";
 const CommunitiesContext = createContext<{
   data: Community[];
   loading: boolean;
-  selectedCommunity: Community | undefined;
+  selectedCommunity?: Community;
 }>({
   data: [],
   loading: false,
-  selectedCommunity: {
-    id: undefined,
-    name: undefined,
-    description: undefined,
-    image: undefined,
-    password: undefined,
-    suggestionCount: undefined,
-    requiresPassword: undefined,
-  },
 });
 
 function CommunitiesProvider() {

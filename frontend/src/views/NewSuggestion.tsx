@@ -12,6 +12,7 @@ import ImageUploading, {
 import { SuggestionsContext } from "../contexts/suggestions";
 import { useNavigate } from "react-router-dom";
 import { uploadFile } from "../utils/functions";
+import { InputBox } from "../components/SmallComponents";
 
 const TXTAREA = styled.textarea`
   font-family: Noto Sans Hebrew, sans-serif;
@@ -42,14 +43,6 @@ const StyledAddImageBox = styled(Box)`
   background: #ffffff;
   border: 1px dashed #011756;
   border-radius: 8px;
-`;
-
-const InputBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  min-width: 100%;
 `;
 
 interface ImagePreviewContainerProps {

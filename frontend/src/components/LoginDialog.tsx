@@ -1,48 +1,93 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import { CommunitiesContext } from "../contexts/communities";
 import { Dialog, Stack, Typography, TextField, Button } from "@mui/material";
 import lock from "../assets/login-lock.svg";
+import { JoinCommunityDialog } from "./JoinCommunityDialog";
+import { Community } from "../types/entities";
+import { ApiContext } from "../contexts";
+
 interface LoginDialogProps {
   isOpen: boolean;
-  setIsOpen: (o: boolean) => void;
+  onClose: () => void;
+  onJoin: () => void;
+  onLoginSuccess: (password: string) => void;
+  selectedCommunity: Community;
 }
 
-export const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+export const LoginDialog = ({
+  isOpen,
+  onClose,
+  onJoin,
+  onLoginSuccess,
+  selectedCommunity,
+}: LoginDialogProps) => {
+  const [isJoin, setIsJoin] = useState(false);
   const [password, setPassword] = useState("");
-  const handlePasswordChange = (e: any) => {
+  const [error, setError] = useState(false);
+  const { isPasswordValid } = useContext(ApiContext);
+
+  function handleClose() {
+    setIsJoin(false);
+    setPassword("");
+    setError(false);
+    onClose();
+  }
+
+  async function handleLoginClick() {
+    const isValid = await isPasswordValid(password, selectedCommunity.id);
+    if (isValid) {
+      onLoginSuccess(password);
+    } else {
+      setError(true);
+    }
+  }
+
+  function handlePasswordChange(e: any) {
     setPassword(e.target.value);
-  };
+    setError(false);
+  }
+
+  if (isJoin)
+    return (
+      <JoinCommunityDialog
+        isOpen={isOpen}
+        selectedCommunity={selectedCommunity}
+        onClose={handleClose}
+        onJoin={onJoin}
+        onBack={() => setIsJoin(false)}
+      />
+    );
 
   return (
-    <Dialog onClose={handleClose} open={isOpen}>
+    <Dialog onClose={onClose} open={isOpen}>
       <Stack
         textAlign="center"
-        paddingY={8}
-        gap={3}
+        gap={1}
         paddingX={3}
+        paddingTop={3}
+        paddingBottom={3}
         alignItems="center"
+        width={380}
+        maxWidth="100%"
       >
         <img
           src={lock}
           alt="lock icon"
           style={{ width: "56px", height: "56px" }}
         />
-        <Typography variant="h1" marginTop="24px">
-          קהילה זו מוגנת בסיסמא
-        </Typography>
-        <Typography variant="body2" marginTop="8px">
-          הכניסו את הסיסמא על מנת להמשיך
-        </Typography>
+        <Typography variant="h2">קהילה זו מוגנת בסיסמא</Typography>
+        <Typography variant="body2">הכניסו את הסיסמא על מנת להמשיך</Typography>
         <TextField
           type="password"
           fullWidth
-          style={{ margin: "24px 0", height: "48px" }}
           value={password}
           onChange={handlePasswordChange}
         />
+        {error && (
+          <Typography color="#C3356B" fontSize={14} lineHeight={"22px"}>
+            הסיסמא שגויה
+          </Typography>
+        )}
         <Button
           fullWidth
           type="submit"
@@ -50,13 +95,15 @@ export const LoginDialog = ({ isOpen, setIsOpen }: LoginDialogProps) => {
           size="large"
           disabled={password === ""}
           style={{ height: "56px" }}
+          onClick={handleLoginClick}
         >
           כניסה
         </Button>
         <Typography
           variant="body2"
           marginTop="8px"
-          sx={{ textDecoration: "underline" }}
+          sx={{ textDecoration: "underline", cursor: "pointer" }}
+          onClick={() => setIsJoin(true)}
         >
           אני רוצה להצטרף לקהילה
         </Typography>
