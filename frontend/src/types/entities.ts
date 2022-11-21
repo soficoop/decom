@@ -1,10 +1,10 @@
 export interface Community {
-  name: string | undefined;
-  id: string | undefined;
-  description: string | undefined;
-  image: string | undefined;
+  name?: string;
+  id: string;
+  description?: string;
+  image?: string;
   suggestions?: Suggestion[];
-  password: string | undefined;
+  password?: string;
   suggestionCount?: number;
   requiresPassword?: boolean;
 }

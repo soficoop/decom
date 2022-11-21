@@ -6,11 +6,13 @@ import {
 } from "@apollo/client";
 import { createContext, useEffect, useState } from "react";
 import { apiUrl } from "../utils/constants";
+import { isPasswordValid as isPasswordValidQuery } from "../utils/queries";
 
 const ApiContext = createContext<{
   password?: string;
   setPassword: (value: string) => void;
-}>({ setPassword: () => {} });
+  isPasswordValid: (password: string, communityId: string) => Promise<boolean>;
+}>({ setPassword: () => {}, isPasswordValid: async () => false });
 
 function ApiProvider({ children }: { children: JSX.Element }) {
   const [password, setPassword] = useState<string>();
@@ -21,6 +23,18 @@ function ApiProvider({ children }: { children: JSX.Element }) {
     })
   );
 
+  async function isPasswordValid(password: string, communityId: string) {
+    const { data } = await client.query({
+      query: isPasswordValidQuery,
+      variables: { password, communityId },
+    });
+    if (data.isPasswordValid) {
+      setPassword(password);
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
     if (password) {
       setClient(
@@ -28,7 +42,7 @@ function ApiProvider({ children }: { children: JSX.Element }) {
           uri: apiUrl,
           cache: new InMemoryCache(),
           headers: {
-            "x-password": password,
+            authorization: `Basic ${password}`,
           },
         })
       );
@@ -37,7 +51,7 @@ function ApiProvider({ children }: { children: JSX.Element }) {
 
   return (
     <ApolloProvider client={client}>
-      <ApiContext.Provider value={{ password, setPassword }}>
+      <ApiContext.Provider value={{ password, setPassword, isPasswordValid }}>
         {children}
       </ApiContext.Provider>
     </ApolloProvider>
