@@ -67,7 +67,7 @@ async function nextIfPasswordIsValid(communityId, context, strapi, next, parent,
   if (!communityId) {
     throw new Error('communityId is required');
   }
-  const password = context.koaContext.headers['x-password'];
+  const password = context.koaContext.headers.authorization?.split(' ')?.[1];
   const community = await strapi.entityService.findOne('api::community.community', communityId);
   if (community.requiresPassword && community.password !== password) {
     throw new Error('Invalid password');

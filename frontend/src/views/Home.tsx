@@ -1,6 +1,6 @@
 import { Stack, Typography, Button, Card } from "@mui/material";
 import { useContext, useState } from "react";
-import { CommunitiesContext } from "../contexts";
+import { ApiContext, CommunitiesContext } from "../contexts";
 import { CommunityCard } from "../components/CommunityCard";
 import { TopDrawer } from "../components/TopDrawer";
 import { LoginDialog } from "../components/LoginDialog";
@@ -9,13 +9,16 @@ import { CreateCommunityDialog } from "../components/CreateCommunityDialog";
 import { SuccessDialog } from "../components/SuccessDialog";
 import { Community } from "../types/entities";
 import { lightGreyColor } from "../theme";
+import { useNavigate } from "react-router-dom";
 
 export function Home() {
   const { loading, data } = useContext(CommunitiesContext);
+  const { setPassword } = useContext(ApiContext);
+  const navigate = useNavigate();
 
   const [visibleDialog, setVisibleDialog] = useState("");
 
-  const [selectedCommunity, saveClickedCommunity] = useState<Community>();
+  const [selectedCommunity, setSelectedCommunity] = useState<Community>();
 
   const handleClose = () => {
     setVisibleDialog("");
@@ -29,10 +32,12 @@ export function Home() {
     setVisibleDialog("success");
     //mutation
   };
-  const handleLoginSubmit = () => {
-    // isPasswordValid
-    // navigate to community after login (isPasswordValid) success
-  };
+
+  function handleLoginSuccess(password: string) {
+    setVisibleDialog("");
+    setPassword(password);
+    navigate(`/community/${selectedCommunity?.id}`);
+  }
 
   return (
     <Stack>
@@ -41,14 +46,15 @@ export function Home() {
         <Typography>Loading...</Typography>
       ) : (
         <Stack gap={2} paddingX={3}>
-          <LoginDialog
-            isOpen={visibleDialog === "login"}
-            selectedCommunity={selectedCommunity}
-            onClose={handleClose}
-            onJoin={handleJoinCommunitySuccess}
-            onLogin={handleLoginSubmit}
-          />
-
+          {selectedCommunity && (
+            <LoginDialog
+              isOpen={visibleDialog === "login"}
+              selectedCommunity={selectedCommunity}
+              onClose={handleClose}
+              onJoin={handleJoinCommunitySuccess}
+              onLoginSuccess={handleLoginSuccess}
+            />
+          )}
           <CreateCommunityDialog
             isOpen={visibleDialog === "create-community"}
             onClose={handleClose}
@@ -88,7 +94,7 @@ export function Home() {
               community={community}
               key={community.id}
               setWhoIsOpen={setVisibleDialog}
-              saveClickedCommuinty={saveClickedCommunity}
+              saveClickedCommuinty={setSelectedCommunity}
             />
           ))}
         </Stack>

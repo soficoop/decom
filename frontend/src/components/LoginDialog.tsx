@@ -4,41 +4,55 @@ import { Dialog, Stack, Typography, TextField, Button } from "@mui/material";
 import lock from "../assets/login-lock.svg";
 import { JoinCommunityDialog } from "./JoinCommunityDialog";
 import { Community } from "../types/entities";
+import { ApiContext } from "../contexts";
 
 interface LoginDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onJoin: () => void;
-  onLogin: () => void;
-  selectedCommunity?: Community;
+  onLoginSuccess: (password: string) => void;
+  selectedCommunity: Community;
 }
 
 export const LoginDialog = ({
   isOpen,
   onClose,
   onJoin,
-  onLogin,
+  onLoginSuccess,
   selectedCommunity,
 }: LoginDialogProps) => {
   const [isJoin, setIsJoin] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const { validatePassword } = useContext(CommunitiesContext);
-  // use community context
-  // isPasswordValid - function inside comm context
-  // if ok run onLoginSuccess
+  const { isPasswordValid } = useContext(ApiContext);
 
-  const handlePasswordChange = (e: any) => {
+  function handleClose() {
+    setIsJoin(false);
+    setPassword("");
+    setError(false);
+    onClose();
+  }
+
+  async function handleLoginClick() {
+    const isValid = await isPasswordValid(password, selectedCommunity.id);
+    if (isValid) {
+      onLoginSuccess(password);
+    } else {
+      setError(true);
+    }
+  }
+
+  function handlePasswordChange(e: any) {
     setPassword(e.target.value);
     setError(false);
-  };
+  }
 
   if (isJoin)
     return (
       <JoinCommunityDialog
         isOpen={isOpen}
         selectedCommunity={selectedCommunity}
-        onClose={onClose}
+        onClose={handleClose}
         onJoin={onJoin}
         onBack={() => setIsJoin(false)}
       />
@@ -81,10 +95,7 @@ export const LoginDialog = ({
           size="large"
           disabled={password === ""}
           style={{ height: "56px" }}
-          onClick={() => {
-            validatePassword(password);
-            onLogin();
-          }}
+          onClick={handleLoginClick}
         >
           כניסה
         </Button>
