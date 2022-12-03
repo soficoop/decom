@@ -48,3 +48,48 @@ export const updateSuggestion = gql`
     }
   }
 `;
+
+export const createCommunityIdea = gql`
+  mutation createCommunityIdea(
+    $fullname: String!
+    $email: String!
+    $phone: String!
+    $content: String!
+  ) {
+    createCommunityIdea(
+      data: {
+        fullname: $fullname
+        email: $email
+        phone: $phone
+        content: $content
+      }
+    ) {
+      data {
+        id
+        attributes {
+          fullname
+          email
+          phone
+          content
+        }
+      }
+    }
+  }
+`;
+
+export const joinCommunity = gql`
+  mutation joinRequest($fullname: String!, $email: String!, $details: String!) {
+    joinRequest(
+      data: { fullname: $fullname, email: $email, details: $details }
+    ) {
+      data {
+        id
+        attributes {
+          fullname
+          email
+          details
+        }
+      }
+    }
+  }
+`;
