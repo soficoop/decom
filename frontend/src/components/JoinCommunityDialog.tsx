@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { InputBox } from "./SmallComponents";
 import {
   Typography,
@@ -10,7 +10,7 @@ import {
   TextareaAutosize,
   styled,
 } from "@mui/material";
-
+import { CommunitiesContext } from "../contexts";
 import { Community } from "../types/entities";
 import rightArrow from "../assets/chevron-right.svg";
 interface LoginDialogProps {
@@ -54,6 +54,8 @@ export const JoinCommunityDialog = ({
     email: "",
     details: "",
   });
+
+  const { joinCommunity } = useContext(CommunitiesContext);
 
   const handleChange = (e: any) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
@@ -143,7 +145,14 @@ export const JoinCommunityDialog = ({
             formInfo.details === ""
           }
           style={{ height: "56px" }}
-          onClick={onJoin}
+          onClick={async () => {
+            await joinCommunity(
+              formInfo.fullname,
+              formInfo.email,
+              formInfo.details
+            );
+            onJoin();
+          }}
         >
           שלח בקשה
         </Button>
