@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { InputBox } from "./SmallComponents";
 import {
   Typography,
@@ -10,7 +10,7 @@ import {
   TextareaAutosize,
   styled,
 } from "@mui/material";
-
+import { CommunitiesContext } from "../contexts";
 import rightArrow from "../assets/chevron-right.svg";
 
 interface CreateCommunityDialogProps {
@@ -53,7 +53,7 @@ export const CreateCommunityDialog = ({
   onSubmit,
 }: CreateCommunityDialogProps) => {
   const [formInfo, setFormInfo] = useState(defaultInfo);
-
+  const { createCommunityIdea } = useContext(CommunitiesContext);
   const handleChange = (e: any) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
   };
@@ -154,9 +154,16 @@ export const CreateCommunityDialog = ({
             formInfo.phone === "" ||
             formInfo.details === ""
           }
-          onClick={() => {
-            setFormInfo(defaultInfo);
+          onClick={async () => {
+            await createCommunityIdea(
+              formInfo.fullname,
+              formInfo.email,
+              formInfo.phone,
+              formInfo.details
+            );
+
             onSubmit();
+            setFormInfo(defaultInfo);
           }}
         >
           שליחת בקשה
