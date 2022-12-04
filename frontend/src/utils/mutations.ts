@@ -79,7 +79,7 @@ export const createCommunityIdea = gql`
 
 export const joinCommunity = gql`
   mutation joinRequest($fullname: String!, $email: String!, $details: String!) {
-    joinRequest(
+    createJoinRequest(
       data: { fullname: $fullname, email: $email, details: $details }
     ) {
       data {
