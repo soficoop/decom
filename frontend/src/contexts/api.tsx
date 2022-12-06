@@ -22,9 +22,7 @@ function ApiProvider({ children }: { children: JSX.Element }) {
     new ApolloClient({
       uri: apiUrl,
       cache: new InMemoryCache(),
-      headers: password
-      ? { authorization: `Basic ${password}` }
-      : undefined
+      headers: password ? { authorization: `Basic ${password}` } : undefined,
     })
   );
 
