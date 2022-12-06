@@ -15,7 +15,9 @@ const ApiContext = createContext<{
 }>({ setPassword: () => {}, isPasswordValid: async () => false });
 
 function ApiProvider({ children }: { children: JSX.Element }) {
-  const [password, setPassword] = useState<string>();
+  const [password, setPassword] = useState<string>(
+    sessionStorage.getItem("password") || ""
+  );
   const [client, setClient] = useState<ApolloClient<NormalizedCacheObject>>(
     new ApolloClient({
       uri: apiUrl,
@@ -51,7 +53,16 @@ function ApiProvider({ children }: { children: JSX.Element }) {
 
   return (
     <ApolloProvider client={client}>
-      <ApiContext.Provider value={{ password, setPassword, isPasswordValid }}>
+      <ApiContext.Provider
+        value={{
+          password,
+          setPassword: (value: string) => {
+            setPassword(value);
+            sessionStorage.setItem("password", value);
+          },
+          isPasswordValid,
+        }}
+      >
         {children}
       </ApiContext.Provider>
     </ApolloProvider>
