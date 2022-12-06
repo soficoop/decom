@@ -13,7 +13,8 @@ import { useParams } from "react-router-dom";
 import { Suggestion as ISuggestion } from "../types/entities";
 
 export const Suggestion = () => {
-  const { suggestionsData, vote } = useContext(SuggestionsContext);
+  const { suggestionsData, vote, isLoadingSuggestions } =
+    useContext(SuggestionsContext);
   const theme = useTheme();
   const { selectedCommunity } = useContext(CommunitiesContext);
   const { suggId } = useParams();
@@ -22,8 +23,12 @@ export const Suggestion = () => {
     (sugg: ISuggestion) => sugg.id === suggId
   );
 
+  if (isLoadingSuggestions) {
+    return <div>בטעינה...</div>;
+  }
+
   if (!selectedSuggestion) {
-    return <div>Not found</div>;
+    return <div>אירעה שגיאה</div>;
   }
 
   return (

@@ -19,7 +19,7 @@ export interface SuggestionContext {
   addSuggestionError: any;
   addSuggestionLoading: boolean;
   suggestionsData: Suggestion[];
-  suggestionsLoading: any;
+  isLoadingSuggestions: boolean;
   vote(suggestion: Suggestion, type: "up" | "down"): Promise<void>;
   updateSuggestion: (
     id: number,
@@ -79,7 +79,7 @@ function SuggestionsProvider() {
             localStorage.getItem(`${communityId}.${suggestion.id}`) || "",
         })
       ) || [],
-    suggestionsLoading: loading,
+    isLoadingSuggestions: loading,
     updateSuggestion: (id, upvotes, downvotes) => {
       return updateSuggestion({
         variables: {
