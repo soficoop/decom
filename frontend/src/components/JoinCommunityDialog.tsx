@@ -13,7 +13,6 @@ import {
 import { CommunitiesContext } from "../contexts";
 import { Community } from "../types/entities";
 import rightArrow from "../assets/chevron-right.svg";
-import { checkIfEmailIsValid } from "../utils/functions";
 interface LoginDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -57,19 +56,9 @@ export const JoinCommunityDialog = ({
   });
 
   const { joinCommunity } = useContext(CommunitiesContext);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
   const handleChange = (e: any) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
-    if (
-      formInfo.fullname !== "" &&
-      formInfo.email !== "" &&
-      formInfo.details !== "" &&
-      checkIfEmailIsValid(formInfo.email)
-    ) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
   };
 
   return (
@@ -150,7 +139,11 @@ export const JoinCommunityDialog = ({
           type="submit"
           color="primary"
           size="large"
-          disabled={isButtonDisabled}
+          disabled={
+            formInfo.fullname === "" ||
+            formInfo.email === "" ||
+            formInfo.details === ""
+          }
           style={{ height: "56px" }}
           onClick={async () => {
             await joinCommunity(

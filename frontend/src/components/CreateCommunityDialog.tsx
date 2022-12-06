@@ -11,8 +11,6 @@ import {
   styled,
 } from "@mui/material";
 import { CommunitiesContext } from "../contexts";
-import { checkIfEmailIsValid } from "../utils/functions";
-
 import rightArrow from "../assets/chevron-right.svg";
 
 interface CreateCommunityDialogProps {
@@ -56,21 +54,8 @@ export const CreateCommunityDialog = ({
 }: CreateCommunityDialogProps) => {
   const [formInfo, setFormInfo] = useState(defaultInfo);
   const { createCommunityIdea } = useContext(CommunitiesContext);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  //
   const handleChange = (e: any) => {
     setFormInfo({ ...formInfo, [e.target.name]: e.target.value });
-    if (
-      formInfo.fullname !== "" &&
-      formInfo.email !== "" &&
-      formInfo.phone !== "" &&
-      formInfo.details !== "" &&
-      checkIfEmailIsValid(formInfo.email)
-    ) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
   };
 
   return (
@@ -163,7 +148,12 @@ export const CreateCommunityDialog = ({
           type="submit"
           color="primary"
           size="large"
-          disabled={isButtonDisabled}
+          disabled={
+            formInfo.fullname === "" ||
+            formInfo.email === "" ||
+            formInfo.phone === "" ||
+            formInfo.details === ""
+          }
           onClick={async () => {
             await createCommunityIdea(
               formInfo.fullname,
