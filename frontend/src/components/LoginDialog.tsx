@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import { CommunitiesContext } from "../contexts/communities";
 import { Dialog, Stack, Typography, TextField, Button } from "@mui/material";
 import lock from "../assets/login-lock.svg";
 import { JoinCommunityDialog } from "./JoinCommunityDialog";
@@ -67,7 +66,6 @@ export const LoginDialog = ({
         paddingTop={3}
         paddingBottom={3}
         alignItems="center"
-        width={380}
         maxWidth="100%"
       >
         <img
@@ -76,7 +74,9 @@ export const LoginDialog = ({
           style={{ width: "56px", height: "56px" }}
         />
         <Typography variant="h2">קהילה זו מוגנת בסיסמא</Typography>
-        <Typography variant="body2">הכניסו את הסיסמא על מנת להמשיך</Typography>
+        <Typography variant="subtitle1" color="secondary.main">
+          הכניסו את הסיסמא על מנת להמשיך
+        </Typography>
         <TextField
           type="password"
           fullWidth

@@ -33,6 +33,18 @@ export const theme = createTheme({
     borderRadius: 16,
   },
   components: {
+    MuiDialog: {
+      defaultProps: {
+        maxWidth: "xs",
+        fullWidth: true,
+      },
+      styleOverrides: {
+        paper: {
+          boxShadow: `2px 2px 0px ${mainBlackColor}`,
+          border: `2px solid ${secondaryColor}`,
+        },
+      },
+    },
     MuiCard: {
       variants: [
         {
@@ -75,6 +87,24 @@ export const theme = createTheme({
           },
         },
       ],
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            "& input": {
+              padding: "12px 8px",
+            },
+            "& fieldset": {
+              border: "2px solid black",
+              borderRadius: 8,
+            },
+            "&.Mui-focused fieldset": {
+              border: "2px solid black",
+            },
+          },
+        },
+      },
     },
   },
   typography: {

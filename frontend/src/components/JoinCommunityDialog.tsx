@@ -1,15 +1,6 @@
 import { useState, useContext } from "react";
 import { InputBox } from "./SmallComponents";
-import {
-  Typography,
-  Dialog,
-  Stack,
-  TextField,
-  InputLabel,
-  Button,
-  TextareaAutosize,
-  styled,
-} from "@mui/material";
+import { Typography, Dialog, Stack, TextField, Button } from "@mui/material";
 import { CommunitiesContext } from "../contexts";
 import { Community } from "../types/entities";
 import rightArrow from "../assets/chevron-right.svg";
@@ -21,27 +12,6 @@ interface LoginDialogProps {
   onBack: () => void;
   selectedCommunity?: Community;
 }
-
-const StyledTextArea = styled(TextareaAutosize)`
-  ::-webkit-input-placeholder {
-    font-family: "Noto Sans Hebrew";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 26px;
-    text-align: right;
-    color: rgba(1, 23, 86, 0.5);
-  }
-  ::-moz-placeholder {
-    font-family: "Noto Sans Hebrew";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 26px;
-    text-align: right;
-    color: rgba(1, 23, 86, 0.5);
-  }
-`;
 
 export const JoinCommunityDialog = ({
   isOpen,
@@ -89,23 +59,22 @@ export const JoinCommunityDialog = ({
       />
       <Stack
         textAlign="center"
-        gap={1}
+        gap={2}
         paddingX={3}
         paddingTop={3}
         paddingBottom={3}
         alignItems="center"
-        width={380}
-        maxWidth="100%"
+        width="100%"
       >
-        <Typography variant="body2" textAlign="center">
-          בקשת הצטרפות לקהילה
-        </Typography>
-        <Typography variant="h2">{selectedCommunity?.name}</Typography>
+        <Stack alignItems="center">
+          <Typography variant="body2" textAlign="center">
+            בקשת הצטרפות לקהילה
+          </Typography>
+          <Typography variant="h2">{selectedCommunity?.name}</Typography>
+        </Stack>
 
         <InputBox>
-          <InputLabel>
-            <b>שם מלא</b>
-          </InputLabel>
+          <Typography variant="subtitle1">שם מלא</Typography>
           <TextField
             placeholder="ישראל ישראלי"
             name="fullname"
@@ -115,9 +84,7 @@ export const JoinCommunityDialog = ({
           />
         </InputBox>
         <InputBox>
-          <InputLabel>
-            <b>אימייל</b>
-          </InputLabel>
+          <Typography variant="subtitle1">אימייל</Typography>
           <TextField
             placeholder="israel@israeli.com"
             name="email"
@@ -127,22 +94,15 @@ export const JoinCommunityDialog = ({
           />
         </InputBox>
         <InputBox>
-          <InputLabel>
-            <b>פירוט הבקשה</b>
-          </InputLabel>
-          <StyledTextArea
+          <Typography variant="subtitle1">פירוט הבקשה</Typography>
+          <TextField
+            multiline
+            rows={5}
             placeholder="זה המקום לספר על עצמך ועל הקשר שלך לקהילה"
             name="details"
             value={formInfo.details}
             onChange={handleChange}
-            style={{
-              width: "100%",
-              height: "120px",
-              padding: "16px",
-              borderRadius: "8px",
-              border: "1px solid #000000",
-              fontSize: "16px",
-            }}
+            fullWidth
           />
         </InputBox>
         <Button

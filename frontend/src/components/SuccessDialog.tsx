@@ -16,7 +16,6 @@ export const SuccessDialog = ({ isOpen, onClose }: SuccessDialogProps) => {
         paddingTop={3}
         paddingBottom={3}
         alignItems="center"
-        width={380}
         maxWidth="100%"
       >
         <img

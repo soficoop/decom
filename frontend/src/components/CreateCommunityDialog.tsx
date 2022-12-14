@@ -1,15 +1,6 @@
 import { useState, useContext } from "react";
 import { InputBox } from "./SmallComponents";
-import {
-  Typography,
-  Dialog,
-  Stack,
-  TextField,
-  InputLabel,
-  Button,
-  TextareaAutosize,
-  styled,
-} from "@mui/material";
+import { Typography, Dialog, Stack, TextField, Button } from "@mui/material";
 import { CommunitiesContext } from "../contexts";
 import { checkIfEmailIsValid } from "../utils/functions";
 
@@ -20,27 +11,6 @@ interface CreateCommunityDialogProps {
   onClose: () => void;
   onSubmit: () => void;
 }
-
-const StyledTextArea = styled(TextareaAutosize)`
-  ::-webkit-input-placeholder {
-    font-family: "Noto Sans Hebrew";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 26px;
-    text-align: right;
-    color: rgba(1, 23, 86, 0.5);
-  }
-  ::-moz-placeholder {
-    font-family: "Noto Sans Hebrew";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 26px;
-    text-align: right;
-    color: rgba(1, 23, 86, 0.5);
-  }
-`;
 
 const defaultInfo = {
   fullname: "",
@@ -90,23 +60,21 @@ export const CreateCommunityDialog = ({
       />
       <Stack
         textAlign="center"
-        gap={1}
+        gap={2}
         paddingX={3}
         paddingTop={1}
         paddingBottom={3}
         alignItems="center"
-        width={380}
-        maxWidth="100%"
       >
-        <Typography variant="h2">בקשה להקמת קהילה</Typography>
-        <Typography fontSize={"12px"}>
-          אנא מלאו את הפרטים ונצור אתכם קשר בהקדם
-        </Typography>
+        <Stack alignItems="center">
+          <Typography variant="h2">בקשה להקמת קהילה</Typography>
+          <Typography fontSize="12px">
+            אנא מלאו את הפרטים ונצור אתכם קשר בהקדם
+          </Typography>
+        </Stack>
 
-        <InputBox>
-          <InputLabel>
-            <b>שם מלא</b>
-          </InputLabel>
+        <InputBox display="flex" gap={1}>
+          <Typography variant="subtitle1">שם מלא</Typography>
           <TextField
             placeholder="ישראל ישראלי"
             name="fullname"
@@ -115,10 +83,8 @@ export const CreateCommunityDialog = ({
             fullWidth
           />
         </InputBox>
-        <InputBox>
-          <InputLabel>
-            <b>אימייל</b>
-          </InputLabel>
+        <InputBox display="flex" gap={1}>
+          <Typography variant="subtitle1">אימייל</Typography>
           <TextField
             placeholder="israel@israeli.com"
             name="email"
@@ -127,10 +93,8 @@ export const CreateCommunityDialog = ({
             fullWidth
           />
         </InputBox>
-        <InputBox>
-          <InputLabel>
-            <b>טלפון</b>
-          </InputLabel>
+        <InputBox display="flex" gap={1}>
+          <Typography variant="subtitle1">טלפון</Typography>
           <TextField
             placeholder="050-1234567"
             name="phone"
@@ -139,23 +103,16 @@ export const CreateCommunityDialog = ({
             fullWidth
           />
         </InputBox>
-        <InputBox>
-          <InputLabel>
-            <b>פירוט הבקשה</b>
-          </InputLabel>
-          <StyledTextArea
+        <InputBox display="flex" gap={1}>
+          <Typography variant="subtitle1">פירוט הבקשה</Typography>
+          <TextField
             placeholder="זה המקום לפרט על הקהילה אותה תרצו להקים"
             name="details"
             value={formInfo.details}
             onChange={handleChange}
-            style={{
-              width: "100%",
-              height: "120px",
-              padding: "16px",
-              borderRadius: "8px",
-              border: "1px solid #000000",
-              fontSize: "16px",
-            }}
+            fullWidth
+            rows={5}
+            multiline
           />
         </InputBox>
         <Button

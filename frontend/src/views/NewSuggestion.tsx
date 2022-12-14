@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import { NewSuggestionTopNav } from "../components/TopHeaderTitleNav";
-import { InputLabel, TextField, Button, Box, useTheme } from "@mui/material";
+import { TextField, Button, Box, useTheme } from "@mui/material";
 import styled from "@emotion/styled";
 import addImage from "../assets/add-image.svg";
 import trashIcon from "../assets/trashIcon.svg";
@@ -13,23 +13,6 @@ import { SuggestionsContext } from "../contexts/suggestions";
 import { useNavigate } from "react-router-dom";
 import { uploadFile } from "../utils/functions";
 import { InputBox } from "../components/SmallComponents";
-
-const TXTAREA = styled.textarea`
-  font-family: Noto Sans Hebrew, sans-serif;
-  width: 100%;
-  height: 248px;
-  background: #ffffff;
-  border-radius: 8px;
-  text-align: right;
-  color: #000000;
-  border: 2px solid #011756;
-  padding: 16px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
-  white-space: pre-line;
-`;
 
 const StyledAddImageBox = styled(Box)`
   box-sizing: border-box;
@@ -146,10 +129,8 @@ export const NewSuggestion = () => {
           הצעה חדשה
         </Typography>
         <Stack>
-          <InputBox marginY={1.5}>
-            <InputLabel>
-              <b>כותרת</b>
-            </InputLabel>
+          <InputBox display="flex" gap={1} marginY={1.5}>
+            <Typography variant="subtitle1">כותרת</Typography>
             <TextField
               placeholder="תנו שם ברור"
               value={title}
@@ -158,17 +139,18 @@ export const NewSuggestion = () => {
             />
           </InputBox>
           <ImageUpload setImage={setImage} />
-          <InputBox marginY={1.5}>
-            <InputLabel>
-              <b>פירוט ההצעה</b>
-            </InputLabel>
+          <InputBox display="flex" gap={1} marginY={1.5}>
+            <Typography variant="subtitle1">פירוט ההצעה</Typography>
 
-            <TXTAREA
+            <TextField
+              multiline
+              rows={8}
+              fullWidth
               placeholder={`נסו להתייחס לנקודות הבאות:
 
-            סקירה מעמיקה ומקיפה של הסוגיה
-            הנחות מוצא שהסוגיה מבתבססת עליהן
-            פירוט הקריטריונים החשובים בבחירת פתרון`}
+סקירה מעמיקה ומקיפה של הסוגיה
+הנחות מוצא שהסוגיה מבתבססת עליהן
+פירוט הקריטריונים החשובים בבחירת פתרון`}
               value={content}
               onChange={onDescriptionChange}
             />
