@@ -41,10 +41,11 @@ export const SuggestionCard = ({ suggestion }: SuggestionCardProps) => {
             direction="column"
             textAlign="right"
             minHeight={156}
-            padding="1rem 0.5rem"
+            padding={2}
+            gap={1.5}
             borderBottom={`1px solid ${theme.palette.secondary.main}`}
           >
-            <Typography variant="h1">{suggestion.title}</Typography>
+            <Typography variant="h2">{suggestion.title}</Typography>
             <Typography variant="body1">
               {truncateAfterWords(suggestion.content ?? "", 20)}
             </Typography>
