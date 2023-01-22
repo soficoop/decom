@@ -1,16 +1,26 @@
-import { useContext } from "react";
-import { CommunitiesContext, SuggestionsContext } from "../contexts";
+import { useContext, useState } from "react";
+import {
+  ApiContext,
+  CommunitiesContext,
+  SuggestionsContext,
+} from "../contexts";
 
 import { TopHeaderTitleNav } from "../components/TopHeaderTitleNav";
 import { SuggestionCard } from "../components/SuggestionCard";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { NewSuggestionFloatingButton } from "../components/NewSuggestionFloatingButton";
 import { numberColor } from "../theme";
+import { LoginDialog } from "../components/LoginDialog";
+import { useNavigate } from "react-router-dom";
+import { SuccessDialog } from "../components/SuccessDialog";
 
 export const Community = () => {
   const theme = useTheme();
   const { selectedCommunity } = useContext(CommunitiesContext);
   const { suggestionsData } = useContext(SuggestionsContext);
+  const { password, setPassword } = useContext(ApiContext);
+  const [hadSentJoinRequest, setHadSentJoinRequest] = useState(false);
+  const navigate = useNavigate();
 
   if (!selectedCommunity) {
     return null;
@@ -18,6 +28,17 @@ export const Community = () => {
 
   return (
     <Stack minHeight="100vh">
+      <LoginDialog
+        isOpen={!!selectedCommunity.requiresPassword && !password}
+        selectedCommunity={selectedCommunity}
+        onClose={() => navigate("/")}
+        onJoin={() => setHadSentJoinRequest(true)}
+        onLoginSuccess={setPassword}
+      />
+      <SuccessDialog
+        isOpen={hadSentJoinRequest}
+        onClose={() => navigate("/")}
+      />
       <TopHeaderTitleNav bgImage={selectedCommunity?.image} backTo={"/"} />
       <Stack
         paddingX={3}
