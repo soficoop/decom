@@ -146,11 +146,7 @@ export const NewSuggestion = () => {
               multiline
               rows={8}
               fullWidth
-              placeholder={`נסו להתייחס לנקודות הבאות:
-
-סקירה מעמיקה ומקיפה של הסוגיה
-הנחות מוצא שהסוגיה מבתבססת עליהן
-פירוט הקריטריונים החשובים בבחירת פתרון`}
+              placeholder="הסבירו בצורה פשוטה ובהירה את ההצעה"
               value={content}
               onChange={onDescriptionChange}
             />
