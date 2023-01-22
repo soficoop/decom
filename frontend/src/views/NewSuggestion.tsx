@@ -159,7 +159,7 @@ export const NewSuggestion = () => {
             disabled={!title || !content}
             onClick={handleSubmit}
           >
-            פרסום סוגיה
+            פרסום הצעה
           </Button>
         </Stack>
       </Stack>
