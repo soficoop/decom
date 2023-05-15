@@ -5,6 +5,7 @@ export const suggestions = gql`
     suggestions(
       filters: { community: { id: { eq: $commId } } }
       sort: "score:DESC"
+      pagination: { limit: 100 }
     ) {
       data {
         id
